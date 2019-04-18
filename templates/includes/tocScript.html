@@ -54,6 +54,7 @@
       window.addEventListener('scroll', scrollCheck);
     });
     window.addEventListener('resize', fixToc);
+    window.addEventListener('orientationchange', fixToc);
 
     var tocLinks = document.querySelectorAll('aside #toc a');
     for (var i = 0; i < tocLinks.length; ++i) {

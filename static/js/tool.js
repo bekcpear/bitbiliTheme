@@ -396,7 +396,7 @@ chBg.addEventListener('click', function() {
 var docFooter = document.querySelector('footer');
 var footerHeight = parseInt(getCompSty(docFooter, 'height'));
 function htsTools() {
-  var innerW = window.innerWidth;
+  var innerW = document.body.clientWidth;
   if (innerW < 1110) {
     bc = bcLL;
     bcl = '#fff';
@@ -463,7 +463,7 @@ menuList.setAttribute('id', 'footerMenu');
 var appendBox = document.createElement('div');
 docFooter.appendChild(appendBox);
 function rdMenu() {
-  var innerW = window.innerWidth;
+  var innerW = document.body.clientWidth;
   if (innerW <= 1110) {
     appendBox.appendChild(menuList);
   } else {
@@ -474,7 +474,96 @@ function rdMenu() {
 }
 rdMenu();
 
+// wrap pre and table
+var tables = document.querySelectorAll('article table');
+var pres   = document.querySelectorAll('article pre');
+var mainDi = document.querySelector('#main');
+function wrapElsSetWidth(e, tName) {
+  var w  = parseFloat(getCompSty(e.querySelector(tName), 'width'));
+  var wI = document.body.clientWidth;
+  var mL = parseFloat(getCompSty(mainDi, 'margin-left'));
+  var pL = parseFloat(getCompSty(mainDi, 'padding-left'));
+  var pN = e;
+  while (pN.id != 'main') {
+    mL += parseFloat(getCompSty(pN, 'margin-left'));
+    pL += parseFloat(getCompSty(pN, 'padding-left'));
+    pN = pN.parentNode;
+  }
+  if (wI < w) {
+    w = wI;
+  }
+  e.style.left = (wI / 2 - w / 2 - mL - pL) + 'px';
+  e.style.width = w + 'px';
+}
+async function wrapEls(els, tName) {
+  for (var i = 0; i < els.length; ++i) {
+    var marginT = window.getComputedStyle(els[i], null).getPropertyValue('margin-top');
+    var marginB = window.getComputedStyle(els[i], null).getPropertyValue('margin-bottom');
+    els[i].style.width = 'fit-content';
+    els[i].style.minWidth = '100%';
+    els[i].style.overFlow = 'visiable';
+    els[i].style.marginTop = 0;
+    els[i].style.marginBottom = 0;
+    var wrapper = document.createElement('div');
+    wrapper.className = "elWrapper"
+    wrapper.style.marginTop = marginT;
+    wrapper.style.marginBottom = marginB;
+    var adjWrapper = document.createElement('button');
+    adjWrapper.className = 'expand';
+    adjWrapper.addEventListener('click', function() {
+      if (this.className == 'expand') {
+        wrapElsSetWidth(this.parentNode, tName);
+        this.className = 'compress';
+      } else {
+        this.parentNode.style.left = ''; 
+        this.parentNode.style.width = '';
+        this.className = 'expand';
+      }
+    });
+    wrapper.appendChild(adjWrapper);
+    els[i].parentNode.insertBefore(wrapper, els[i]);
+    wrapper.appendChild(els[i].parentNode.removeChild(els[i]));
+  }
+};
+async function checkElsWidth(els, tName) {
+  for (var i = 0; i < els.length; ++i) {
+    if (els[i].parentNode.className == 'elWrapper') {
+      var w  = parseFloat(window.getComputedStyle(els[i], null).getPropertyValue("width"));
+      var wp = parseFloat(window.getComputedStyle(els[i].parentNode.parentNode, null).getPropertyValue("width"));
+      var b  = els[i].parentNode.firstChild;
+      if (w > wp) {
+        b.style.display = "block";
+        b.parentNode.style.overflowX = "scroll";
+        if (b.className == 'compress') {
+          wrapElsSetWidth(els[i].parentNode, tName);
+        }
+      } else {
+        b.style.display = "";
+        b.parentNode.style.overflowX = "";
+        b.className = 'expand';
+        els[i].parentNode.style.left = '';
+        els[i].parentNode.style.width = '';
+      }
+    }
+  }
+}
+
+window.addEventListener('load', function(){
+  wrapEls(tables, 'table');
+  wrapEls(pres, 'pre');
+  checkElsWidth(tables, 'table');
+  checkElsWidth(pres, 'pre');
+});
+
 window.addEventListener('resize', function(){
   htsTools();
   rdMenu();
+  checkElsWidth(tables, 'table');
+  checkElsWidth(pres, 'pre');
+});
+window.addEventListener('orientationchange', function(){
+  htsTools();
+  rdMenu();
+  checkElsWidth(tables, 'table');
+  checkElsWidth(pres, 'pre');
 });
