@@ -1,0 +1,10 @@
+            {% if article %}
+            {% set page = article %}
+            {% endif %}
+            <div id="ctrl">
+              <a id="commentsCount" class="hidden-print" href="#comments" ><span class="disqus-comment-count" data-disqus-identifier="{{ page.slug }}"></span></a>
+              <a id="showSourceCode" class="hidden-print" href="/{{page.slug}}.rst.html">显示源码</a>
+              <a id="showArticle" class="hidden-print" href="#">返回原文</a>
+              {% if article %}
+              {% endif %}
+            </div>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/page.css" rel="stylesheet" />
+  {% endblock %}
+
+      {% block content %}
+        {% if articles %}
+      <div id="article-list">
+          {% block listtitle %}
+          {% endblock %}
+          {% for article in (articles_page.object_list if articles_page else articles) %}
+        <section>
+          <hr class="hidden" />
+          <a href="/{{ article.url }}">
+            <h2>{{ article.title }}</h2>
+          </a>
+          <summary>
+            {{ article.summary }}
+          </summary>
+        </section>
+          {% endfor %}
+      </div>
+        {% endif %}
+        {% include 'includes/pagination.html' %}
+
+      {% endblock content %}

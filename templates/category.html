@@ -1,0 +1,20 @@
+{% extends "article_list.html" %}
+
+  {% block title %}{{ category }} - {{ SITENAME }}{% endblock %}
+
+  {% block meta %}
+  <meta name="author" content="{{ AUTHOR }}" />
+  <meta name="keywords" content="{{ category }}" />
+  {% endblock %}
+
+          {% block feed %}
+          <a href="{{ SITEURL }}/feeds/{{ category|lower }}.rss.xml">
+            <span>订阅类别 {{ category }}</span>
+          </a>
+          {% endblock %}
+
+        {% block listtitle %}
+        <div id="listtitle">
+          <a href="/categories.html">{{ category }} 类别</a>
+        </div>
+        {% endblock %}

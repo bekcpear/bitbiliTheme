@@ -1,0 +1,15 @@
+#main {
+  max-width: 860px; }
+  @media all and (min-width: 1310px) {
+    #main {
+      max-width: 860px;
+      width: calc(100% - 50px);
+      padding-left: 0; } }
+  @media all and (min-width: 1110px) {
+    #main #centre {
+      width: 100%; } }
+  @media all and (min-width: 1110px) {
+    #main aside {
+      display: none; } }
+
+/*# sourceMappingURL=page.css.map */

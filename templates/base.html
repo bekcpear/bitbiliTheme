@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="{% block html_lang %}zh-Hans{% endblock %}">
+<head>
+  <meta charset="utf-8">
+  <title>{% macro title() -%}{% block title %}{{ SITENAME }}{% endblock %}{%- endmacro %}{{title()}}</title>
+  <!-- Using the latest rendering mode for IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+
+  <link rel="icon" type="image/png" href="/static/images/fav.png" sizes="600x600" />
+  <link rel="manifest" href="/static/manifest.json" />
+  <link rel="apple-touch-icon" type="image/png" href="/static/images/touch.png" sizes="600x600" />
+  <link rel="mask-icon" href="/static/images/mask-icon.svg" color="#162d50" />
+  {# Favicons are a touchy subject. also can see: http://stackoverflow.com/a/23851464/872397 #}
+
+  <meta name="theme-color" content="#fdfdfd" />
+  <meta name="msapplication-navbutton-color" content="#fdfdfd" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#fdfdfd" />
+  {% block canonical_rel %}{% endblock %}
+  {% block meta %}
+  <meta name="author" content="{{ AUTHOR }}" />
+  <meta name="description" content="{{ SITEDESC }}" />
+  {% endblock %}
+
+  {# Open Graph tags #}
+  {% block opengraph %}
+  <!-- Open Graph tags -->
+    {% if OPEN_GRAPH_FB_APP_ID %}
+  <meta property="fb:app_id" content="{{ OPEN_GRAPH_FB_APP_ID }}" />
+    {% endif %}
+  <meta property="og:site_name" content="{{ SITENAME }}" />
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="{{ SITENAME }}" />
+  <meta property="og:url" content="{{ SITEURL }}" />
+  <meta property="og:description" content="{{ SITEDESC }}" />
+    {% if OPEN_GRAPH_IMAGE %}
+  <meta property="og:image" content="{{ SITEURL }}/{{ OPEN_GRAPH_IMAGE }}" />
+    {% endif %}
+  {% endblock %}
+
+  <link href="/{{ THEME_STATIC_DIR }}/css/style.css" rel="stylesheet" />
+  <link href="/{{ THEME_STATIC_DIR }}/css/pygments/{{ PYGMENTS_STYLE|default('native') }}.css" rel="stylesheet" />
+  {% block othercss %}
+  {% endblock %}
+
+  {% if FEED_ATOM %}
+  <link href="{{ SITEURL }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed" />
+  {% endif %}
+  {% if FEED_RSS %}
+  <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+  {% endif %}
+  {% block indentJudge %}
+  {% endblock %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "url": "{{ MAINSITEURL }}",
+      "logo": "{{ MAINSITEURL }}/static/images/favicon/favicon-96x96.png"
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ SITENAME }}",
+      "alternateName": "{{ SITECNAME }}",
+      "url": "{{ MAINSITEURL }}"
+    }
+  </script>
+  {% block schemaMeta %}
+  {% endblock %}
+  {% if SERVICEWORKER %}
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        cacheName = 'sw-precache-moego-me';
+        caches.has(cacheName).then(function(existed) {
+          if (existed) {
+            caches.open(cacheName).then(function(cache) {
+              var url = document.URL
+              if ( ! url.endsWith("html")) url = url + "index.html";
+              cache.match(url, {ignoreSearch: true}).then(function(response) {
+                if (response) {
+                  response.text().then(function(content) {
+                    var oldC = content;
+                    navigator.serviceWorker.addEventListener('message', event => {
+                      if (event.data.msg == "newInstalled") {
+                        setTimeout(function() {
+                          caches.open(cacheName).then(function(cache) {
+                            cache.match(url, {ignoreSearch: true}).then(function(response) {
+                              if (response) {
+                                response.text().then(function(content) {
+                                  if (! (oldC === content)) {
+                                    var popr    = document.createElement("div");
+                                    var popr_t0 = document.createTextNode("当前页存在较新的版本，点击");
+                                    var popr_a  = document.createElement("a");
+                                    var popr_at = document.createTextNode("这里");
+                                    var popr_t1 = document.createTextNode("刷新");
+
+                                    popr_a.href=url;
+                                    popr_a.style="color: #fff; font-weight: bold; margin: 0 5px; text-decoration: underline dotted;";
+                                    popr_a.appendChild(popr_at);
+                                    popr.appendChild(popr_t0);
+                                    popr.appendChild(popr_a);
+                                    popr.appendChild(popr_t1);
+                                    popr.id    = "popr";
+                                    popr.style = "position: fixed; top: -100px; left: 0; padding: 20px 10px; width: 100%; box-sizing: border-box; text-align: center; background-color: #2c5aa0; color: #fff; font-weight: bold; z-index: 99; transition-property: top; transition-duration: 0.1s;";
+
+                                    var popr_d  = document.createElement("a");
+                                    var popr_dt = document.createTextNode("忽略");
+                                    popr_d.appendChild(popr_dt);
+                                    popr_d.style = "display: block; padding: 5px 10px; box-sizing: border-box; position: absolute; bottom: -25px; right: 0; font-size: 10px; line-height: 1.5em; text-decoration: none; color: #fff; background-color: #2c5aa0; cursor: pointer;";
+                                    popr_d.addEventListener("click", function() {
+                                      popr.style.top = "-100px";
+                                      setTimeout(function() {
+                                        popr.style.display = "none";
+                                      }, 500);
+                                    });
+                                    popr.appendChild(popr_d);
+                                    document.body.appendChild(popr);
+                                    setTimeout(function() {
+                                      popr.style.top = 0;
+                                    }, 100);
+                                  }
+                                });
+                              }
+                            });
+                          });
+                        }, 1000);
+                      }
+                    });
+                  });
+                }
+              });
+            });
+          }
+        });
+
+        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+  {% endif %}
+  <script>
+    window.addEventListener('load', function() {
+      (async function() {
+        var cx = '016855202528329427677:gpowcz722_s';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    });
+  </script>
+</head>
+<body>
+
+  <div style="display:none" id="title">{{ title() }}</div>
+  <header>
+    <nav>
+    </nav>
+    <div id="search" class="hidden-print"><gcse:search></gcse:search></div>
+    <div id="logo">
+      <span></span>
+      <a href="/" title="{{ SITENAME }}">
+        <img src="{{ SITELOGO }}" />
+      </a>
+    </div>
+    <div id="menu" class="hidden-print">
+      <ul>
+        <li>
+          <a href="/{{ TAGS_URL | default('tags.html') }}">
+            <span>文章标签</span>
+          </a>
+        </li>
+        <li>
+          <a href="/{{ BLOGROLL_PAGE | default('blogroll.html') }}">
+            <span>一些博客</span>
+          </a>
+        </li>
+        <li>
+          {% block feed %}
+          <a href="/{{ FEED_URL | default('feeds/rss.xml') }}">
+            <span>订阅全站</span>
+          </a>
+          {% endblock %}
+        </li>
+      </ul>
+    </div>
+  </header>
+  <script>
+    function setBackground(c) {
+      var bd = document.getElementsByTagName('body')[0];
+      var lg = document.querySelector('body #logo a');
+      if (c !== null) {
+        bd.style.backgroundColor = c;
+        lg.style.backgroundColor = c;
+      } else {
+        bd.style.backgroundColor = '';
+        lg.style.backgroundColor = '';
+      }
+    }
+    var bgColor = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent('bgColor').replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+    if (bgColor != null) {
+      setBackground(bgColor);
+    }
+  </script>
+  <div id="main">
+    <div id="centre">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <aside>
+      {% block toc %}
+      {% endblock %}
+    </aside>
+    <div class="clearfix"></div>
+  </div>
+
+  {% include 'includes/footer.html' %}
+
+  {% include 'includes/ga.html' %}
+
+  {% block scripts %}{% endblock %}
+  <script>
+    window.addEventListener('load', function() {
+      var externalLinks = document.querySelectorAll('a.external');
+      for (var i = 0; i < externalLinks.length; i++) {
+        if(externalLinks[i].href !== '') {
+          var reg = /^http[s]?:[/]{2}[a-zA-Z0-9:\-\.]+[/]{1}/i;
+          if (externalLinks[i].href.search('#') === 0
+            || externalLinks[i].href.search(externalLinks[i].baseURI.match(reg) != null
+                                            ?
+                                            externalLinks[i].baseURI.match(reg)[0]
+                                            :
+                                            '^M8nUbdHCEfe0069nYgJa6sVvvsJLiTM2') === 0) {
+            externalLinks[i].classList.remove('external');
+          } else {
+            externalLinks[i].target = '_blank';
+            if (externalLinks[i].firstChild.textContent.match(/^\s*http[s]?:/i) === null) {
+              var lPrint = document.createElement('span');
+              lPrint.appendChild(document.createTextNode(' (' + externalLinks[i].href + ')' ));
+              lPrint.className = 'hidden-screen';
+              externalLinks[i].appendChild(lPrint);
+            }
+          }
+        }
+      }
+      // for img
+      var imgs = document.querySelectorAll('#centre img');
+      async function setImgC(e) {
+        var ow = e.naturalWidth;
+        var cw = parseFloat(window.getComputedStyle(e, null).getPropertyValue('width'));
+        if (ow > cw) {
+          if (e.classList != undefined) {
+            e.classList.add('smalled');
+          } else {
+            e.className = 'smalled';
+          }
+          var cuw = 0;
+          var cuh = 0;
+          if (e.style.width == undefined || e.style.width == '') {
+            e.style.width = '100%';
+          } else {
+            cuw = e.style.width;
+            cuh = e.style.height;
+          }
+          e.addEventListener('click', function() {
+            if (e.classList.contains('expanded')) {
+              if (cuw == 0) {
+                e.style.width = '100%';
+                e.style.height = '';
+              } else {
+                e.style.width = cuw;
+                e.style.height = cuh;
+              }
+              e.style.left = '';
+              e.classList.remove('expanded');
+            } else {
+              e.style.width = ow + 'px';
+              if (cuh == 0) {
+                e.style.height = '';
+              } else {
+                e.style.height = (ow / parseFloat(cuw) * parseFloat(cuh)) + 'px';
+              }
+              if (window.innerWidth > ow) {
+                var pw = parseFloat(window.getComputedStyle(e.parentNode, null).getPropertyValue('width'));
+                if (ow > pw) {
+                  e.style.left = '-' + ((ow - pw) / 2) + 'px';
+                }
+              }
+              e.classList.add('expanded');
+            }
+          });
+        }
+      }
+      for (var i = 0; i < imgs.length; ++i) {
+        if (imgs[i].naturalWidth != 0) {
+          setImgC(imgs[i]);
+        } else {
+          imgs[i].addEventListener('load', function() {
+            setImgC(imgs[i]);
+          });
+        }
+      }
+    });
+  </script>
+  <script src='/theme/js/tool.js'></script>
+</body>
+</html>

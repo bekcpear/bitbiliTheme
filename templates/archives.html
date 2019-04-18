@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+  {% block title %}归档 - {{ SITENAME }}{% endblock %}
+
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/page.css" rel="stylesheet" />
+  {% endblock %}
+
+      {% block content %}
+      <div id="page" class="archives">
+        <h1>归档</h1>
+        <ul>
+          {% for article in dates %}
+          <li>
+            <span class="timestamp"><time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time></span>
+            <a href="/{{ article.url }}">{{ article.title }}{% if article.subtitle %} - {{ article.subtitle }}{% endif %}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <h5>共 {{ dates | count }} 篇</h5>
+      </div>
+      {% endblock %}

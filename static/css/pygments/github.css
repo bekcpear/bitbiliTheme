@@ -1,0 +1,73 @@
+.highlight pre .err { color: #a61717; background-color: #e3d2d2; }
+
+.highlight pre .ow { font-weight: bold; }
+.highlight pre .o,
+.highlight pre .kc,
+.highlight pre .kd,
+.highlight pre .kn,
+.highlight pre .kp,
+.highlight pre .kr,
+.highlight pre .kt,
+.highlight pre .k { color: #000000; font-weight: bold; }
+.highlight pre .kt { color: #445588; }
+
+.highlight pre .c,
+.highlight pre .ch,
+.highlight pre .cm,
+.highlight pre .c1 { color: #999999; font-style: italic; font-size: 90%; }
+.highlight pre .cp { color: #999999; font-weight: bold; font-size: 90%; }
+.highlight pre .cs { color: #999999; font-weight: bold; font-style: italic; font-size: 90%; }
+
+.highlight pre .gd { color: #000000; background-color: #ffdddd; }
+.highlight pre .gd .x { color: #000000; background-color: #ffaaaa; }
+.highlight pre .ge { color: #000000; font-style: italic; }
+.highlight pre .gr { color: #aa0000; }
+.highlight pre .gh { color: #999999; }
+.highlight pre .gi { color: #000000; background-color: #ddffdd; }
+.highlight pre .gi .x { color: #000000; background-color: #aaffaa; }
+.highlight pre .go { color: #888888; }
+.highlight pre .gp { color: #555555; }
+.highlight pre .gs { font-weight: bold; }
+.highlight pre .gu { color: #aaaaaa; }
+.highlight pre .gt { color: #aa0000; }
+
+.highlight pre .m,
+.highlight pre .mf,
+.highlight pre .mb,
+.highlight pre .mh,
+.highlight pre .mi,
+.highlight pre .mo,
+.highlight pre .il { color: #009999; }
+
+.highlight pre .s,
+.highlight pre .sb,
+.highlight pre .sc,
+.highlight pre .sd,
+.highlight pre .s1,
+.highlight pre .s2,
+.highlight pre .se,
+.highlight pre .sh,
+.highlight pre .si,
+.highlight pre .sx { color: #dd1144; }
+.highlight pre .sr { color: #009926; }
+.highlight pre .ss { color: #990073; }
+
+.highlight pre .n { color: #333333; }
+.highlight pre .no,
+.highlight pre .nv,
+.highlight pre .vc,
+.highlight pre .vg,
+.highlight pre .vi,
+.highlight pre .na { color: #008080; }
+.highlight pre .nb { color: #0086b3; }
+.highlight pre .bp { color: #999999; }
+.highlight pre .nc { color: #445588; font-weight: bold; }
+.highlight pre .ni { color: #800080; }
+.highlight pre .ne,
+.highlight pre .nf { color: #990000; font-weight: bold; }
+.highlight pre .nn { color: #555555; }
+.highlight pre .nt { color: #000080; }
+.highlight pre .nd { color: #3c5d5d; font-weight: bold; }
+.highlight pre .nl { color: #990000; font-weight: bold; }
+
+.highlight pre .w { color: #bbbbbb; }

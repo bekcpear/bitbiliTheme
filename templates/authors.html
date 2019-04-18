@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+  {% block title %}所有作者 - {{ SITENAME }}{% endblock %}
+
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/page.css" rel="stylesheet" />
+  {% endblock %}
+
+      {% block content %}
+      <div id="page" class="authors">
+        <h1>所有作者</h1>
+        <ul>
+          {% for author, articles in authors|sort %}
+          <li>
+            <a href="/{{ author.url }}">{{ author }}</a>
+            <span>共 {{ articles|count }} 篇</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+  {% block title %}分类 - {{ SITENAME }}{% endblock %}
+
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/page.css" rel="stylesheet" />
+  {% endblock %}
+
+      {% block content %}
+      <div id="page" class="categories">
+        <h1>所有分类</h1>
+        <ul>
+          {% for category, articles in categories %}
+          <li>
+            <a href="/{{category.url}}">{{ category }}</a>
+            <span>（共 {{ articles|count }} 篇）</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endblock %}

@@ -1,0 +1,22 @@
+// style for moego.me
+
+@import 'variable.scss';
+
+#main {
+  max-width: $cewd;
+  @media all and (min-width: $cewd + 2 * ($aswd + $aswdm) + 50px) {
+    max-width: $cewd;
+    width: calc(100% - 50px);
+    padding-left: 0;
+  }
+  #centre {
+    @media all and (min-width: $cewd + $aswd + $aswdm + 50px) {
+      width: 100%;
+    }
+  }
+  aside {
+    @media all and (min-width: $cewd + $aswd + $aswdm + 50px) {
+      display: none;
+    }
+  }
+}

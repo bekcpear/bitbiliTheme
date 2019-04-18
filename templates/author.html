@@ -1,0 +1,15 @@
+{% extends "article_list.html" %}
+
+  {% block title %}由 {{ author }} 所作的文章 - {{ SITENAME }}{% endblock %}
+
+          {% block feed %}
+          <a href="{{ SITEURL }}/feeds/{{ author|lower }}.rss.xml">
+            <span>订阅作者 {{ author }}</span>
+          </a>
+          {% endblock %}
+
+        {% block listtitle %}
+        <div id="listtitle">
+          <a href="/authors.html">{{author}} 所作</a>
+        </div>
+        {% endblock %}

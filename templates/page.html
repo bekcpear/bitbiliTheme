@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block html_lang %}{{ page.lang }}{% endblock %}
+  {% block title %}{{ page.title }}&ensp;-&ensp;{{ SITENAME }}{% endblock %}
+
+  {% block meta %}
+    {% if page.author %}
+  <meta name="author" content="{{ page.author }}" />
+    {% else %}
+  <meta name="author" content="{{ AUTHOR }}" />
+    {% endif %}
+    {% if page.summary %}
+  <meta name="description" content="{{ page.summary|striptags|escape }}" />
+    {% endif %}
+  {% endblock %}
+
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/page.css" rel="stylesheet" />
+  {% endblock %}
+
+  {% block indentJudge %}
+    {% if (page.lang == 'zh' or page.lang == 'zh-Hans' or page.lang == 'zh-Hant') and page.indent %}
+  <style>
+    p {
+      text-indent: 2em;
+    }
+  </style>
+    {% endif %}
+  {% endblock %}
+
+  {% block opengraph %}
+    {% if OPEN_GRAPH_FB_APP_ID %}
+  <meta property="fb:app_id" content="{{ OPEN_GRAPH_FB_APP_ID }}"/>
+    {% endif %}
+  <meta property="og:site_name" content="{{ SITENAME }}" />
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="{{ page.title|striptags|escape }}"/>
+  <meta property="og:url" content="{{ SITEURL }}/{{ page.url }}"/>
+  <meta property="og:description" content="{{ page.summary|striptags|escape }}" />
+    {% if page.og_image %}
+  <meta property="og:image" content="{{ SITEURL }}/{{ page.og_image }}"/>
+    {% elif OPEN_GRAPH_IMAGE %}
+  <meta property="og:image" content="{{ SITEURL }}/{{ OPEN_GRAPH_IMAGE }}"/>
+    {% endif %}
+  {% endblock %}
+
+  {% block canonical_rel %}
+  <link rel="canonical" href="{{ SITEURL }}/{{ page.url }}">
+  {% endblock %}
+
+      {% block content %}
+      <div id="page">
+        <article>
+          <div id="header">
+            <div id="headline">
+              <h1>{{ page.title }}</h1>
+            </div>
+            {% include 'includes/ctrlANDcommentscount.html' %}
+
+          </div>
+          <div id="content">
+            {{ page.content }}
+          </div>
+          <div id="source" style="display: none;">
+          </div>
+        </article>
+        {% include 'includes/comments.html' %}
+
+      </div>
+      {% endblock %}
+  {% block scripts %}
+  {% include 'includes/pageANDarticleScript.html' %}
+  {% endblock %}
