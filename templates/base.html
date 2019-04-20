@@ -38,7 +38,7 @@
     {% endif %}
   {% endblock %}
 
-  <link href="/{{ THEME_STATIC_DIR }}/css/style.css" rel="stylesheet" />
+  <link href="/{{ THEME_STATIC_DIR }}/css/style.min.css" rel="stylesheet" />
   <link href="/{{ THEME_STATIC_DIR }}/css/pygments/{{ PYGMENTS_STYLE|default('native') }}.css" rel="stylesheet" />
   {% block othercss %}
   {% endblock %}
@@ -153,11 +153,21 @@
       (async function() {
         var cx = '016855202528329427677:gpowcz722_s';
         var gcse = document.createElement('script');
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
         gcse.type = 'text/javascript';
         gcse.async = true;
-        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
         var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(gcse, s);
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', function() {
+          s.parentNode.insertBefore(gcse, s);
+        });
+        xhr.addEventListener('error', function() {
+          console.log("Here may be a '" + gcse.src + "' CORS error occured. It's not a mistake but a connection check for those don't have access to Google.");
+          s.parentNode.insertBefore(gcse, s);
+        });
+        xhr.open('HEAD', gcse.src);
+        xhr.timeout = 3000;
+        xhr.send();
       })();
     });
   </script>
@@ -253,63 +263,6 @@
               externalLinks[i].appendChild(lPrint);
             }
           }
-        }
-      }
-      // for img
-      var imgs = document.querySelectorAll('#centre img');
-      async function setImgC(e) {
-        var ow = e.naturalWidth;
-        var cw = parseFloat(window.getComputedStyle(e, null).getPropertyValue('width'));
-        if (ow > cw) {
-          if (e.classList != undefined) {
-            e.classList.add('smalled');
-          } else {
-            e.className = 'smalled';
-          }
-          var cuw = 0;
-          var cuh = 0;
-          if (e.style.width == undefined || e.style.width == '') {
-            e.style.width = '100%';
-          } else {
-            cuw = e.style.width;
-            cuh = e.style.height;
-          }
-          e.addEventListener('click', function() {
-            if (e.classList.contains('expanded')) {
-              if (cuw == 0) {
-                e.style.width = '100%';
-                e.style.height = '';
-              } else {
-                e.style.width = cuw;
-                e.style.height = cuh;
-              }
-              e.style.left = '';
-              e.classList.remove('expanded');
-            } else {
-              e.style.width = ow + 'px';
-              if (cuh == 0) {
-                e.style.height = '';
-              } else {
-                e.style.height = (ow / parseFloat(cuw) * parseFloat(cuh)) + 'px';
-              }
-              if (window.innerWidth > ow) {
-                var pw = parseFloat(window.getComputedStyle(e.parentNode, null).getPropertyValue('width'));
-                if (ow > pw) {
-                  e.style.left = '-' + ((ow - pw) / 2) + 'px';
-                }
-              }
-              e.classList.add('expanded');
-            }
-          });
-        }
-      }
-      for (var i = 0; i < imgs.length; ++i) {
-        if (imgs[i].naturalWidth != 0) {
-          setImgC(imgs[i]);
-        } else {
-          imgs[i].addEventListener('load', function() {
-            setImgC(imgs[i]);
-          });
         }
       }
     });

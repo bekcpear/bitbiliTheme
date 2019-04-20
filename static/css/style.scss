@@ -134,7 +134,7 @@ ul, menu, dir {
 #menu {
   display: block;
   position: absolute;
-  top: $heh / 600 * 68 - 1;
+  top: $heh / 600 * 68;
   right: -270px;
   z-index: 1;
   transition-property: right;
@@ -151,12 +151,12 @@ ul, menu, dir {
       font-size: $sis;
       line-height: 1.5em;
       a {
-        color: $ifg;
+        color: $fgt;
         padding: 5px 10px;
-        background-color: $bc;
+        background-color: $bct;
         text-decoration: none;
         &:hover {
-          background-color: lighten($bc, 5%);
+          background-color: $bctd;
         }
       }
     }
@@ -175,6 +175,11 @@ ul, menu, dir {
       display: table-cell;
       a {
         display: block;
+        color: $ifg;
+        background-color: $bc;
+        &:hover {
+          background-color: lighten($bc, 5%);
+        }
       }
     }
   }
@@ -183,13 +188,13 @@ ul, menu, dir {
 #search {
   position: absolute;
   z-index: 10;
-  top: $heh / 600 * 68 - 1;
+  top: $heh / 600 * 68;
   left: 0;
   transition-property: left;
   transition-duration: 0.1s;
-  height: $sis * 2;
   > div:first-child {
     max-width: 230px;
+    height: $sis * 2;
     display: inline-block;
     vertical-align: top;
     > div.gsc-control-cse {
@@ -209,7 +214,7 @@ ul, menu, dir {
             border-collapse: collapse;
             td.gsc-input {
               padding: 3px;
-              background-color: #e8eaee;
+              background-color: $bct;
               div.gsc-input-box {
                 border: none;
                 background-color: transparent;
@@ -634,10 +639,13 @@ header {
             &.smalled {
               left: 0;
               z-index: 1;
-              cursor: pointer;
+              cursor: zoom-in;
               max-width: unset;
               transition-duration: 0.1s;
               transition-property: width, height, left;
+              &.maximized {
+                cursor: zoom-out;
+              }
             }
           }
           dl {

@@ -86,7 +86,7 @@ ul, menu, dir {
 #menu, #footerMenu {
   display: block;
   position: absolute;
-  top: 16px;
+  top: 17px;
   right: -270px;
   z-index: 1;
   transition-property: right;
@@ -103,12 +103,12 @@ ul, menu, dir {
       font-size: 12px;
       line-height: 1.5em; }
       #menu ul li a, #footerMenu ul li a {
-        color: #fdfdfd;
+        color: #757575;
         padding: 5px 10px;
-        background-color: #162d50;
+        background-color: #162d5009;
         text-decoration: none; }
         #menu ul li a:hover, #footerMenu ul li a:hover {
-          background-color: #1c3864; }
+          background-color: #162d500f; }
 
 #footerMenu {
   position: relative;
@@ -121,18 +121,22 @@ ul, menu, dir {
     #footerMenu ul li {
       display: table-cell; }
       #footerMenu ul li a {
-        display: block; }
+        display: block;
+        color: #fdfdfd;
+        background-color: #162d50; }
+        #footerMenu ul li a:hover {
+          background-color: #1c3864; }
 
 #search, #footerSearch {
   position: absolute;
   z-index: 10;
-  top: 16px;
+  top: 17px;
   left: 0;
   transition-property: left;
-  transition-duration: 0.1s;
-  height: 24px; }
+  transition-duration: 0.1s; }
   #search > div:first-child, #footerSearch > div:first-child {
     max-width: 230px;
+    height: 24px;
     display: inline-block;
     vertical-align: top; }
     #search > div:first-child > div.gsc-control-cse, #footerSearch > div:first-child > div.gsc-control-cse {
@@ -150,7 +154,7 @@ ul, menu, dir {
             border-collapse: collapse; }
             #search > div:first-child > div.gsc-control-cse form table.gsc-search-box tbody td.gsc-input, #footerSearch > div:first-child > div.gsc-control-cse form table.gsc-search-box tbody td.gsc-input {
               padding: 3px;
-              background-color: #e8eaee; }
+              background-color: #162d5009; }
               #search > div:first-child > div.gsc-control-cse form table.gsc-search-box tbody td.gsc-input div.gsc-input-box, #footerSearch > div:first-child > div.gsc-control-cse form table.gsc-search-box tbody td.gsc-input div.gsc-input-box {
                 border: none;
                 background-color: transparent; }
@@ -498,10 +502,12 @@ header {
             #main #centre #article article #content img.smalled, #main #centre #page article #content img.smalled {
               left: 0;
               z-index: 1;
-              cursor: pointer;
+              cursor: zoom-in;
               max-width: unset;
               transition-duration: 0.1s;
               transition-property: width, height, left; }
+              #main #centre #article article #content img.smalled.maximized, #main #centre #page article #content img.smalled.maximized {
+                cursor: zoom-out; }
           #main #centre #article article #content dl dt, #main #centre #page article #content dl dt {
             font-weight: bold;
             text-indent: initial; }

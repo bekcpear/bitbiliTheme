@@ -396,7 +396,7 @@ chBg.addEventListener('click', function() {
 var docFooter = document.querySelector('footer');
 var footerHeight = parseInt(getCompSty(docFooter, 'height'));
 function htsTools() {
-  var innerW = document.body.clientWidth;
+  var innerW = document.documentElement.clientWidth;
   if (innerW < 1110) {
     bc = bcLL;
     bcl = '#fff';
@@ -463,7 +463,7 @@ menuList.setAttribute('id', 'footerMenu');
 var appendBox = document.createElement('div');
 docFooter.appendChild(appendBox);
 function rdMenu() {
-  var innerW = document.body.clientWidth;
+  var innerW = document.documentElement.clientWidth;
   if (innerW <= 1110) {
     appendBox.appendChild(menuList);
   } else {
@@ -480,7 +480,7 @@ var pres   = document.querySelectorAll('article pre');
 var mainDi = document.querySelector('#main');
 function wrapElsSetWidth(e, tName) {
   var w  = parseFloat(getCompSty(e.querySelector(tName), 'width'));
-  var wI = document.body.clientWidth;
+  var wI = document.documentElement.clientWidth;
   var mL = parseFloat(getCompSty(mainDi, 'margin-left'));
   var pL = parseFloat(getCompSty(mainDi, 'padding-left'));
   var pN = e;
@@ -548,11 +548,149 @@ async function checkElsWidth(els, tName) {
   }
 }
 
+// zoom image
+var imgs = document.querySelectorAll('#centre img');
+async function zoomImage(e, stage) {
+  var wO = e.naturalWidth;
+  var hO = e.naturalHeight;
+  var wI = document.documentElement.clientWidth;
+  var hI = document.documentElement.clientHeight;
+  if (stage != undefined) {
+    var wP = parseFloat(getCompSty(e.parentNode, 'width'));
+    var mL = parseFloat(getCompSty(mainDi, 'margin-left'));
+    var pL = parseFloat(getCompSty(mainDi, 'padding-left'));
+    var pN = e;
+    while (pN.id != 'main') {
+      mL += parseFloat(getCompSty(pN, 'margin-left'));
+      pL += parseFloat(getCompSty(pN, 'padding-left'));
+      pN = pN.parentNode;
+    }
+    var rImage  = parseFloat(e.getAttribute('customr')) || hO / wO;
+    switch(stage) {
+      case "toBody":
+        e.style.height = (wI * rImage) + 'px';
+        e.style.width  = wI + 'px';
+        e.style.left   = (0 - mL - pL) + 'px';
+        break;
+      case "toOrig":
+        e.style.height = (wO * rImage) + 'px';
+        e.style.width  = wO + 'px';
+        if (wO >= wI) {
+          e.style.left   = (0 - mL - pL) + 'px';
+        } else {
+          e.style.left   = (wI / 2 - wO / 2 - mL - pL) + 'px';
+        }
+        break;
+      case "toNorm":
+        e.style.height = e.getAttribute('customh') || (wP * rImage) + 'px';
+        e.style.width  = e.getAttribute('customw') || wP + 'px';
+        e.style.left   = '0px';
+        break;
+      case "toUnhd":
+        e.style.height = e.getAttribute('customh');
+        e.style.width  = e.getAttribute('customw');
+        e.style.left   = '';
+        break;
+    }
+    return true;
+  }
+  if (e.classList.contains('zoomed')) {
+    // zoom to original width
+    zoomImage(e, 'toOrig');
+    e.classList.remove('zoomed');
+    e.classList.add('maximized');
+  } else if (e.classList.contains('maximized')) {
+    // zoom to its parent width or custom with
+    zoomImage(e, 'toNorm');
+    e.classList.remove('maximized');
+  } else {
+    // zoom to body width/height or original width
+    if (wO > wI) {
+      zoomImage(e, 'toBody');
+      e.classList.add('zoomed');
+    } else {
+      zoomImage(e, 'toOrig');
+      e.classList.add('maximized');
+    }
+  }
+}
+async function setImgC(e, init) {
+  if (init) {
+    e.setAttribute('customw', e.style.width || "");
+    e.setAttribute('customh', e.style.height || "");
+    if (e.style.height != '' && e.style.width != '') {
+      e.setAttribute('customr', parseFloat(e.style.height) / parseFloat(e.style.width));
+    }
+  }
+
+  var wO = e.naturalWidth;
+  var wC = parseFloat(getCompSty(e, 'width'));
+  var wI = document.documentElement.clientWidth;
+  var wP = parseFloat(getCompSty(e.parentNode, 'width'));
+
+  // resize image when window resized or rotated
+  if (e.classList.contains('zoomed')) {
+    if (wO > wI) {
+      zoomImage(e, 'toBody');
+    } else if ((wO > wP) || (parseFloat(e.getAttribute('customw')) && wO > parseFloat(e.getAttribute('customw')))) {
+      zoomImage(e, 'toOrig');
+      e.classList.remove('zoomed');
+      e.classList.add('maximized');
+    } else {
+      zoomImage(e, 'toNorm');
+      e.classList.remove('zoomed');
+    }
+  } else if (e.classList.contains('maximized')) {
+    if ((wO > wP) || (parseFloat(e.getAttribute('customw')) && wO > parseFloat(e.getAttribute('customw')))) {
+      zoomImage(e, 'toOrig');
+    } else {
+      zoomImage(e, 'toNorm');
+      e.classList.remove('maximized');
+    }
+  } else if (e.classList.contains('smalled')) {
+    zoomImage(e, 'toNorm');
+  }
+
+  // add or remove click event
+  if (!e.listeFunc) {
+    e.listeFunc = function() {
+      zoomImage(e);
+    }
+  }
+  if (e.getAttribute('customw') == "") {
+    if (wO > wP && !e.classList.contains('smalled')) {
+      e.classList.add('smalled');
+      e.addEventListener('click', e.listeFunc);
+      zoomImage(e, 'toNorm');
+    } else if (wO <= wP && e.classList.contains('smalled')) {
+      e.removeEventListener('click', e.listeFunc);
+      e.classList.remove('smalled');
+      zoomImage(e, 'toUnhd');
+    }
+  } else if (parseFloat(e.getAttribute('customw')) && wO > parseFloat(e.getAttribute('customw')) && !e.classList.contains('smalled')) {
+    e.classList.add('smalled');
+    e.addEventListener('click', e.listeFunc);
+    zoomImage(e, 'toNorm');
+  }
+}
+async function handleImgs(init) {
+  for (var i = 0; i < imgs.length; ++i) {
+    if (imgs[i].naturalWidth != 0) {
+      setImgC(imgs[i], init);
+    } else {
+      imgs[i].addEventListener('load', function() {
+        setImgC(imgs[i], init);
+      });
+    }
+  }
+}
+
 window.addEventListener('load', function(){
   wrapEls(tables, 'table');
   wrapEls(pres, 'pre');
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
+  handleImgs(true);
 });
 
 window.addEventListener('resize', function(){
@@ -560,10 +698,12 @@ window.addEventListener('resize', function(){
   rdMenu();
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
+  handleImgs(false);
 });
 window.addEventListener('orientationchange', function(){
   htsTools();
   rdMenu();
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
+  handleImgs(false);
 });
