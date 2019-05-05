@@ -291,9 +291,9 @@ chBg.addEventListener('click', function() {
   gray.style.marginLeft        = (mw * 2) + 'px';
   gray.style.backgroundColor   = '#eee';
   gray.style.borderColor       = '#e7e7e7';
-  yellow.style.backgroundColor = '#f5eab3';
+  yellow.style.backgroundColor = '#fff9c4';
   yellow.style.borderColor     = '#ede2df';
-  green.style.backgroundColor  = '#c8e6c9';
+  green.style.backgroundColor  = '#dcedc8';
   green.style.borderColor      = '#c0dec1';
 
   /* check the validity of color value

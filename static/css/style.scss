@@ -320,8 +320,10 @@ header {
       }
       background-color: $bg;
       img {
-        width: 100%;
+        display: block;
+        width: 98%;
         height: 100%;
+        margin: auto;
       }
     }
     span {

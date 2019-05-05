@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
 
-  <link rel="icon" type="image/png" href="/static/images/fav.png" sizes="600x600" />
+  <link rel="icon" type="image/png" href="/static/images/fav.png" sizes="340x340" />
   <link rel="manifest" href="/static/manifest.json" />
   <link rel="apple-touch-icon" type="image/png" href="/static/images/touch.png" sizes="600x600" />
   <link rel="mask-icon" href="/static/images/mask-icon.svg" color="#162d50" />
@@ -162,7 +162,7 @@
           s.parentNode.insertBefore(gcse, s);
         });
         xhr.addEventListener('error', function() {
-          console.log("Here may be a '" + gcse.src + "' CORS error occured. It's not a mistake but a connection check for those don't have access to Google.");
+          console.warn("A '" + gcse.src + "' CORS error may occur here.\n It's not a mistake but a connection check for those who don't have access to Google.");
           s.parentNode.insertBefore(gcse, s);
         });
         xhr.open('HEAD', gcse.src);
