@@ -289,7 +289,7 @@ chBg.addEventListener('click', function() {
     };
   }
   gray.style.marginLeft        = (mw * 2) + 'px';
-  gray.style.backgroundColor   = '#eee';
+  gray.style.backgroundColor   = '#fff';
   gray.style.borderColor       = '#e7e7e7';
   yellow.style.backgroundColor = '#fff9c4';
   yellow.style.borderColor     = '#ede2df';

@@ -3,11 +3,11 @@ body {
   -webkit-text-size-adjust: none;
   height: 100%;
   width: 100%;
-  font-family: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", SimSun, 宋体, STXihei, 华文细黑, arial, sans-serif;
+  font-family: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", sans-serif;
   font-size: 16px;
   line-height: 1.5em;
   color: #212121;
-  background: #fff;
+  background: #e8eaed;
   margin: 0;
   padding: 0;
   transition-property: background-color;
@@ -141,7 +141,7 @@ ul, menu, dir {
     vertical-align: top; }
     #search > div:first-child > div.gsc-control-cse, #footerSearch > div:first-child > div.gsc-control-cse {
       padding: 0;
-      font-family: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", SimSun, 宋体, STXihei, 华文细黑, arial, sans-serif;
+      font-family: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", sans-serif;
       font-size: 12px;
       border: none;
       background-color: transparent;
@@ -229,15 +229,16 @@ header {
       display: block;
       position: relative;
       width: 150px;
-      height: 100%;
+      height: 150px;
       margin: 0 auto;
       border: 0;
         border-radius: 50%;
-      background-color: #fff; }
+      background-color: #e8eaed; }
       header #logo a img {
         display: block;
-        width: 98%;
-        height: 100%;
+        width: 85%;
+        height: 85%;
+        padding: 3% 0;
         margin: auto; }
     header #logo span {
       display: block;
@@ -302,6 +303,8 @@ header {
           left: 0; }
           #main #centre #article-list section > a:hover {
             left: -5px; }
+          #main #centre #article-list section > a h2 {
+            display: inline-block; }
         #main #centre #article-list section summary {
           margin: 0 0 0 50px;
           opacity: 0.9;
@@ -434,7 +437,7 @@ header {
             margin: 10px 0;
             background-color: #f8fafc;
             page-break-inside: avoid;
-            font-family: monospace;
+            font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
             font-size: 90%;
             line-height: 1.5em; }
             @media screen and (max-height: 700px) {
@@ -454,7 +457,7 @@ header {
                 border: 1px solid #212121; } }
           #main #centre #article article #content code, #main #centre #page article #content code {
             background-color: #edf2f7;
-            font-family: monospace;
+            font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
             font-size: 80%;
             padding: 2px 5px;
             border-radius: 3px;
@@ -467,8 +470,8 @@ header {
             box-sizing: border-box;
             width: 100%;
             page-break-inside: avoid;
-            background-color: #fff;
-            border-color: #fff;
+            background-color: #f8fafc;
+            border-color: #e8eaed;
             border-width: 0;
             border-collapse: collapse; }
             #main #centre #article article #content table th, #main #centre #page article #content table th, #main #centre #article article #content table td, #main #centre #page article #content table td {
@@ -495,6 +498,8 @@ header {
                 background-color: transparent; }
           #main #centre #article article #content a.fn-backref, #main #centre #page article #content a.fn-backref {
             word-break: keep-all; }
+          #main #centre #article article #content a.internal:hover, #main #centre #page article #content a.internal:hover {
+            color: #212121; }
           #main #centre #article article #content img, #main #centre #page article #content img {
             display: block;
             position: relative;
@@ -576,11 +581,12 @@ header {
           max-width: 100%;
           padding: 15px 10px;
           display: none;
-          font-family: monospace;
-          font-size: 12px;
           line-height: 1.5em;
           overflow: auto;
           background-color: #f8fafc; }
+          #main #centre #article article #source pre, #main #centre #page article #source pre {
+            font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
+            font-size: 12px; }
       #main #centre #article #prevnext, #main #centre #page #prevnext {
         margin: 0;
         padding: 0;
@@ -726,7 +732,7 @@ header {
             display: inline-block;
             text-decoration: none;
             padding: 0 10px;
-            font-family: monospace;
+            font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
             font-weight: bold; }
             #main #centre #page.categories ul li a:hover, #main #centre #page.authors ul li a:hover, #main #centre #page.archives ul li a:hover {
               background-color: #d7e3f4; }
@@ -870,7 +876,7 @@ footer {
   width: 100%;
   text-align: center;
   font-size: 12px;
-  font-family: monospace;
+  font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
   line-height: 1.5em; }
   footer:before {
     display: block;

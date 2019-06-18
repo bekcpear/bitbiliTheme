@@ -313,7 +313,7 @@ header {
       display: block;
       position: relative;
       width: $heh;
-      height: 100%;
+      height: $heh;
       margin: 0 auto;
       border: 0 {
         radius: 50%;
@@ -321,8 +321,9 @@ header {
       background-color: $bg;
       img {
         display: block;
-        width: 98%;
-        height: 100%;
+        width: 85%;
+        height: 85%;
+        padding: 3% 0;
         margin: auto;
       }
     }
@@ -390,6 +391,9 @@ header {
           left: 0;
           &:hover {
             left: -5px;
+          }
+          h2 {
+            display: inline-block;
           }
         }
         summary {
@@ -581,7 +585,7 @@ header {
             box-sizing: border-box;
             width: 100%;
             page-break-inside: avoid;
-            background-color: $bg;
+            background-color: $cbg;
             border: {
               color: $bg;
               width: 0;
@@ -630,6 +634,9 @@ header {
           a {
             &.fn-backref {
               word-break: keep-all;
+            }
+            &.internal:hover {
+              color: $fg;
             }
           }
           img {
@@ -717,13 +724,15 @@ header {
           max-width: 100%;
           padding: 15px 10px;
           display: none;
-          font: {
-            family: $monofont;
-            size: $sis;
-          }
           line-height: 1.5em;
           overflow: auto;
           background-color: $cbg;
+          pre {
+            font: {
+              family: $monofont;
+              size: $sis;
+            }
+          }
         }
       }
       #prevnext {

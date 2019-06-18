@@ -58,14 +58,14 @@
         "@type": "Person",
         "name": "{{ article.author }}"
       },
-       "publisher": {
+      "publisher": {
         "@type": "Organization",
         "name": "{{ SITENAME }}",
         "logo": {
           "@type": "ImageObject",
           "url": "{{ MAINSITEURL }}{{ SITELOGO }}",
           "width": 600,
-          "height": 600,
+          "height": 600
         }
       },
       {% if article.description %}
