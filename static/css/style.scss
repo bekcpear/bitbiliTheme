@@ -680,6 +680,10 @@ header {
               background-color: $icbg;
             }
           }
+          .footnote-reference {
+            font-size: 60%;
+            vertical-align: super;
+          }
           .elWrapper {
             position: relative;
             z-index: 1;

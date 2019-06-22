@@ -531,6 +531,9 @@ header {
                 filter: invert(1); }
             #main #centre #article article #content blockquote code, #main #centre #page article #content blockquote code {
               background-color: #214478; }
+          #main #centre #article article #content .footnote-reference, #main #centre #page article #content .footnote-reference {
+            font-size: 60%;
+            vertical-align: super; }
           #main #centre #article article #content .elWrapper, #main #centre #page article #content .elWrapper {
             position: relative;
             z-index: 1;

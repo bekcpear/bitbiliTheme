@@ -8,7 +8,7 @@
 var w       = '20px';
 var h       = '30px';
 var f       = '12px';
-var ff      = '"Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", SimSun, 宋体, STXihei, 华文细黑, arial, sans-serif';
+var ff      = '"Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", sans-serif';
 var iw      = 68;
 var cw      = 14;
 var bw      = 1;
