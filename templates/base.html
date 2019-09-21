@@ -79,7 +79,10 @@
           if (existed) {
             caches.open(cacheName).then(function(cache) {
               var url = document.URL
-              if ( ! url.endsWith("html")) url = url + "index.html";
+              if ( ! url.endsWith("html")) {
+                url = url + "index.html#";
+                url = url.match(/([^#]+)(?:#)/)[1];
+              }
               cache.match(url, {ignoreSearch: true}).then(function(response) {
                 if (response) {
                   response.text().then(function(content) {

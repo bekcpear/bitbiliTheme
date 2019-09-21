@@ -13,6 +13,14 @@ body {
   transition-property: background-color;
   transition-duration: 0.1s; }
 
+::-moz-selection {
+  color: inherit;
+  background-color: #ffab40; }
+
+::selection {
+  color: inherit;
+  background-color: #ffab40; }
+
 a {
   color: #212121;
   text-decoration: solid underline;
@@ -529,6 +537,8 @@ header {
               color: #fdfdfd; }
               #main #centre #article article #content blockquote a.external:after, #main #centre #page article #content blockquote a.external:after {
                 filter: invert(1); }
+              #main #centre #article article #content blockquote a.internal:hover, #main #centre #page article #content blockquote a.internal:hover {
+                color: #fdfdfd; }
             #main #centre #article article #content blockquote code, #main #centre #page article #content blockquote code {
               background-color: #214478; }
           #main #centre #article article #content .footnote-reference, #main #centre #page article #content .footnote-reference {

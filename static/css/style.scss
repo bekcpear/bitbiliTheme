@@ -20,6 +20,15 @@ body {
   transition-duration: 0.1s;
 }
 
+::-moz-selection {
+  color: inherit;
+  background-color: #ffab40;
+}
+::selection {
+  color: inherit;
+  background-color: #ffab40;
+}
+
 @mixin icon($url, $width, $height, $opacity: 1) {
   display: inline-block;
   width: $width;
@@ -674,6 +683,9 @@ header {
               color: $ifg;
               &.external:after {
                 filter: invert(1);
+              }
+              &.internal:hover {
+                color: $ifg;
               }
             }
             code {
