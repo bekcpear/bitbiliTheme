@@ -5,7 +5,6 @@
 // compontents
 body {
   -webkit-text-size-adjust: none;
-  height: 100%;
   width: 100%;
   font: {
     family: $font;
@@ -18,6 +17,16 @@ body {
   padding: 0;
   transition-property: background-color;
   transition-duration: 0.1s;
+  @media print {
+    background: transparent !important;
+  }
+}
+
+:root {
+  --sat: env(safe-area-inset-top, "0px");
+  --sar: env(safe-area-inset-right, "0px");
+  --sab: env(safe-area-inset-bottom, "0px");
+  --sal: env(safe-area-inset-left, "0px");
 }
 
 ::-moz-selection {
@@ -148,7 +157,7 @@ ul, menu, dir {
   z-index: 1;
   transition-property: right;
   transition-duration: 0.1s;
-  @media all and (min-width: $cewd + $aswd + $aswdm + 50px) {
+  @media all and (min-width: #{$cewd + $aswd + $aswdm + 51px}) {
     right: 0;
   }
   ul {
@@ -176,7 +185,9 @@ ul, menu, dir {
   position: relative;
   top: 0;
   right: 0;
-  width: 100%;
+  padding: 0 0 env(safe-area-inset-bottom, "0px") 0;
+  margin-right: calc(env(safe-area-inset-right, "0px") + #{$aswd + $aswdrf});
+  background-color: $bc;
   ul {
     width: 100%;
     display: table;
@@ -186,6 +197,11 @@ ul, menu, dir {
         display: block;
         color: $ifg;
         background-color: $bc;
+        font-size: 14px;
+        height: 35px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 35px;
         &:hover {
           background-color: lighten($bc, 5%);
         }
@@ -202,8 +218,8 @@ ul, menu, dir {
   transition-property: left;
   transition-duration: 0.1s;
   > div:first-child {
+    min-width: 140px;
     max-width: 230px;
-    height: $sis * 2;
     display: inline-block;
     vertical-align: top;
     > div.gsc-control-cse {
@@ -335,6 +351,9 @@ header {
         padding: 3% 0;
         margin: auto;
       }
+      @media print {
+        background-color: transparent !important;
+      }
     }
     span {
       display: block;
@@ -356,25 +375,31 @@ header {
 #main {
   width: calc(100% - 50px);
   max-width: $cewd + $aswd + $aswdm;
-  padding: 30px 0 0 0;
+  padding: 30px env(safe-area-inset-right, "0px") 0 env(safe-area-inset-left, "0px");
   margin: 0 auto;
   position: relative;
   box-sizing: border-box;
-  @media all and (min-width: $cewd + 2 * ($aswd + $aswdm) + 50px) {
-    max-width: $cewd + 2 * ($aswd + $aswdm);
-    padding-left: $aswd + 20px;
+  @media all and (min-width: #{$cewd + 2 * ($aswd + $aswdm) + 51px}) {
+    max-width: #{$cewd + 2 * ($aswd + $aswdm)};
+    padding-left: calc(#{$aswd + $aswdm} + env(safe-area-inset-left, "0px"));
   }
   @media all and (max-width: 660px) {
     width: calc(100% - 32px);
+  }
+  @media print {
+    max-width: $cewdp + $aswd + $aswdm;
   }
   #centre {
     width: 100%;
     max-width: $cewd;
     margin: 0 auto;
     box-sizing: border-box;
-    @media all and (min-width: $cewd + $aswd + $aswdm + 50px) {
-      width: calc(100% - #{$aswd + $aswdm});
+    @media all and (min-width: $cewd + $aswd + $aswdm + 51px) {
+      width: calc(100% - #{$aswd + $aswdm} - env(safe-area-inset-left, "0px") - env(safe-area-inset-right, "0px"));
       float: left;
+    }
+    @media print {
+      max-width: $cewdp;
     }
     #article-list {
       @include fullWidth;
@@ -547,35 +572,6 @@ header {
               text-indent: initial;
             }
           }
-          pre {
-            @include fullWidth;
-            max-height: 800px;
-            overflow: auto;
-            padding: 10px 20px;
-            margin: 10px 0;
-            background-color: $cbg;
-            page-break-inside: avoid;
-            font: {
-              family: $monofont;
-              size: 90%;
-            }
-            line-height: 1.5em;
-            @media screen and (max-height: 700px) {
-              max-height: 500px;
-            }
-            @media screen and (max-height: 600px) {
-              max-height: 400px;
-            }
-            @media screen and (max-height: 500px) {
-              max-height: 300px;
-            }
-            @media print {
-              max-height: unset;
-              white-space: pre-wrap;
-              word-break: break-word;
-              border: 1px solid $fg;
-            }
-          }
           code {
             background-color: darken($cbg, 3%);
             font: {
@@ -593,6 +589,7 @@ header {
           table {
             box-sizing: border-box;
             width: 100%;
+            margin: 20px 0;
             page-break-inside: avoid;
             background-color: $cbg;
             border: {
@@ -696,18 +693,7 @@ header {
             font-size: 60%;
             vertical-align: super;
           }
-          .elWrapper {
-            position: relative;
-            z-index: 1;
-            overflow: auto;
-            @media print {
-              overflow-x: visible !important;
-              overflow-y: visible !important;
-            }
-            width: 100%;
-            left: 0;
-            transition-duration: 0.2s;
-            transition-property: width, left;
+          .elWrapperTop {
             button {
               @include icon('/theme/images/fa/solid/expand.svg', 20px, 20px, 0.3);
               display: none;
@@ -722,16 +708,59 @@ header {
               position: -o-sticky;
               position: sticky;
               left: calc(100% - 20px);
+              top: 0;
               transition-duration: 0.2s;
               transition-property: opacity;
+              &.compress {
+                background-image: url('/theme/images/fa/solid/compress.svg');
+              }
               &:hover {
                 opacity: 0.5;
                 transition-duration: 0.2s;
                 transition-property: opacity;
               }
-              &.compress {
-                background-image: url('/theme/images/fa/solid/compress.svg');
+              @media print {
+                display: none !important;
               }
+            }
+            .elWrapper {
+              position: relative;
+              z-index: 1;
+              overflow-x: auto;
+              overflow-y: auto;
+              @media print {
+                height: min-content !important;
+                white-space: pre-wrap;
+                word-break: break-word;
+                border: 1px solid $fg;
+                overflow-x: visible !important;
+                overflow-y: visible !important;
+              }
+              width: 100%;
+              left: 0;
+              transition-duration: 0.2s;
+              transition-property: width, left, height;
+            }
+          }
+          pre {
+            @include fullWidth;
+            overflow: visible !important;
+            background-color: $cbg;
+            page-break-inside: avoid;
+            margin: 20px 0;
+            padding: 20px;
+            font: {
+              family: $monofont;
+              size: 90%;
+            }
+            line-height: 1.5em;
+            @media print {
+              white-space: pre-wrap;
+              white-space: -moz-pre-wrap;
+              white-space: -pre-wrap;
+              white-space: -o-pre-wrap;
+              word-wrap: break-word;
+              word-break: break-word;
             }
           }
         }
@@ -994,18 +1023,21 @@ header {
       transition-duration: 0.2s;
       transition-property: opacity;
     }
-    @media all and (min-width: $cewd + $aswd + $aswdm + 50px) {
+    @media all and (min-width: #{$cewd + $aswd + $aswdm + 51px}) {
       display: block;
       float: left;
       margin-left: $aswdm;
       width: $aswd;
       position: relative;
       top: (3 * 0.83 + 3) * $si + 30px;
+      &#narrow {
+        display: none;
+      }
     }
     &.codeNow {
       display: none !important;
     }
-    max-height: 1250px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
+    max-height: 1350px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
     @media print {
       float: left !important;
       max-height: 100% !important;
@@ -1013,6 +1045,9 @@ header {
       top: (3 * 0.83 + 3) * $si + 30px !important;
       left: 0 !important;
       opacity: 1 !important;
+    }
+    @media screen and (max-height: 1250px) {
+      max-height: 1250px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
     }
     @media screen and (max-height: 1150px) {
       max-height: 1150px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
@@ -1027,15 +1062,65 @@ header {
       max-height: 850px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
     }
     @media screen and (max-height: 750px) {
-      max-height: 750px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
+      max-height: 750px - $heh - 65px - (3 * 0.83 + 3) * $si - 50px;
     }
     @media screen and (max-height: 650px) {
-      max-height: 650px - $heh - 65px - (3 * 0.83 + 3) * $si - 110px;
+      max-height: 650px - $heh - 65px - (3 * 0.83 + 3) * $si - 50px;
+    }
+    @media screen and (max-height: 550px) {
+      max-height: 550px - $heh - 65px - (3 * 0.83 + 3) * $si - 50px;
+    }
+    @media screen and (max-width: #{$cewd + $aswd + $aswdm + 50px}) {
+      &#narrow {
+        display: block;
+        position: fixed;
+        z-index: 999;
+        bottom: calc(45px - 100% + env(safe-area-inset-bottom, "0px"));
+        right: $aswdrf;
+        width: calc(#{$aswd} + env(safe-area-inset-right, "0px"));
+        padding-right: env(safe-area-inset-right, "0px");
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        transition-property: bottom, right, border-color;
+        transition-duration: 0.5s;
+        transition-timing-function: cubic-bezier(0.65, 0.21, 0.43, 0.86);
+        box-shadow: 0 1px 8px 0 rgba(60,64,67,0.302), -2px -1px 8px 3px rgba(60,64,67,0.149);
+        border-left: 5px solid transparentize($bc, 0.5);
+        box-sizing: border-box;
+        &:hover, &:focus {
+          bottom: 0;
+          right: 0;
+          outline: none;
+          border-left: 5px solid transparentize($bc, 0.2);
+          #toc {
+            .toc {
+              opacity: 1;
+              transition: opacity 0.5s;
+              transition-timing-function: cubic-bezier(0, 1, 0.68, 0.68);
+            }
+          }
+        }
+        #toc {
+          height: 100%;
+          .toc {
+            max-height: calc(100% - 40px);
+            margin-top: 10px;
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.5s;
+            transition-timing-function: cubic-bezier(0.32, 0.32, 1, 0);
+          }
+        }
+      }
     }
     #toc {
       h3 {
         margin: 0;
         border-bottom: 1px solid $bc;
+      }
+      .topic-title {
+        display: none;
       }
       ul {
         list-style-type: none;
@@ -1079,6 +1164,8 @@ footer {
     width: 100%;
     border-top: 2px solid $bc;
     opacity: 0.1;
+    position: relative;
+    z-index: -1;
   }
   position: relative;
   margin: 30px 0 0 0;
@@ -1087,6 +1174,9 @@ footer {
   font-size: $sis;
   font-family: $monofont;
   line-height: 1.5em;
+  &.thelast {
+    padding-bottom: env(safe-area-inset-bottom, "0px");
+  }
   div.t {
     display: inline-block;
     margin: 10px auto 0 auto;
@@ -1136,5 +1226,6 @@ footer {
     right: 0;
     bottom: 0;
     white-space: pre;
+    padding: 0 env(safe-area-inset-right, "0px") env(safe-area-inset-bottom, "0px") 0;
   }
 }

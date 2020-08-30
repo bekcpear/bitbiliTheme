@@ -4,18 +4,35 @@
     var asideLeft    = 0;
     var headE        = document.querySelector('body header');
     var asideE       = document.querySelector('#main aside');
+    var articleE     = document.querySelector('#main #centre');
+    let asideEcP     = asideE.cloneNode(true);
+  
+    asideEcP.setAttribute('id', 'narrow');
+    asideEcP.setAttribute('tabindex', '-1');
+    asideEcP.addEventListener('click', function(){
+      asideEcP.focus();
+    });
+    articleE.parentNode.parentNode.addEventListener('click', function(){
+      asideEcP.blur();
+    });
+    asideE.after(asideEcP);
 
     function getCPro(e, p) {
       return parseFloat(window.getComputedStyle(e, null).getPropertyValue(p));
     }
 
     async function scrollCheck() {
+      var mainE   = document.getElementById('main');
+      var centreE = document.getElementById('centre');
       if (document.querySelector('html').scrollTop >= 
-        parseFloat(window.getComputedStyle(headE, null).getPropertyValue('height'))) {
-        asideE.style.position = 'fixed';
-        asideE.style.top      = asideTop;
-        asideE.style.left     = asideLeft;
-        asideE.style.opacity  = 0.6;
+        getCPro(headE, 'height') + asideTopInit
+        + getCPro(mainE, 'padding-top') + getCPro(mainE, 'margin-top')
+        + getCPro(centreE, 'padding-top') + getCPro(centreE, 'margin-top')) {
+        asideE.style.position  = 'fixed';
+        asideE.style.top       = asideTop;
+        asideE.style.left      = asideLeft;
+        asideE.style.maxHeight = document.documentElement.clientHeight + 'px';
+        asideE.style.opacity   = 0.6;
       } else {
         asideE.style.position = 'relative';
         asideE.style.top      = asideTopInit + 'px';
@@ -32,29 +49,37 @@
                   + (getCPro(centreE, 'margin-right') > getCPro(asideE, 'margin-left')
                       ?
                      getCPro(centreE, 'margin-right') : getCPro(asideE, 'margin-left'));
+      /*
       var top     = getCPro(headE, 'margin-top')
                   + (getCPro(headE, 'margin-bottom') > getCPro(mainE, 'margin-top')
                       ?
                      getCPro(headE, 'margin-bottom') : getCPro(mainE, 'margin-top'))
                   + getCPro(mainE, 'padding-top');
-      if (asideTopInit === 0) {
+      asideTop      = (asideTopInit + top) + 'px';
+      */
+      if (asideTopInit === 0 || isNaN(asideTopInit)) {
         asideTopInit = getCPro(asideE, 'top');
       }
       asideLeft     = (left - getCPro(asideE, 'margin-left')) + 'px';        
-      asideTop      = (asideTopInit + top) + 'px';
+      asideE.style.maxHeight = 'unset';
       if (window.getComputedStyle(asideE, null).getPropertyValue('position') == 'fixed') {
         asideE.style.top      = asideTop;
         asideE.style.left     = asideLeft;
+        asideE.style.maxHeight = document.documentElement.clientHeight + 'px';
       }
     }
 
-    window.addEventListener('load', function() {
+    fixToc();
+    scrollCheck();
+    window.addEventListener('scroll', scrollCheck);
+    window.addEventListener('resize', function() {
       fixToc();
       scrollCheck();
-      window.addEventListener('scroll', scrollCheck);
     });
-    window.addEventListener('resize', fixToc);
-    window.addEventListener('orientationchange', fixToc);
+    window.addEventListener('orientationchange', function() {
+      fixToc();
+      scrollCheck();
+    });
 
     var tocLinks = document.querySelectorAll('aside #toc a');
     for (var i = 0; i < tocLinks.length; ++i) {

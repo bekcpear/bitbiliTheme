@@ -5,22 +5,25 @@
 
 'use strict';
 
-window.addEventListener('load', function(){
-  var ignoreBrowserCheck = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent('iBc').replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
-
-  if (ignoreBrowserCheck) return false;
+async function checkBrowser() {
+  if (localStorage.getItem('iBc') || sessionStorage.getItem('iBc')) return false;
   else if (navigator.userAgent.indexOf('Edge/') > -1) true;
   // 不是很懂为什么之前未使用 Blink 引擎的 Edge 浏览器也会有 AppleWebKit 和 Chrome 字段，可能是使用了老版本的引擎？反正渲染出错。
   else if (navigator.userAgent.indexOf('Chrome/') > -1
         && parseInt(navigator.userAgent.match(/Chrome\/(\d+)\./)[1]) >= 70) return true;
   else if ( navigator.userAgent.indexOf('AppleWebKit/') > -1
-            && ( navigator.userAgent.indexOf('iPhone') > -1
-                 || navigator.userAgent.indexOf('iPad') > -1) ) return true;
-  // iOS 上的 Safari 实测问题也不大，不过要是显示范围扩大的话，大概会和 MacOS 上的 Safari 一样出现菜单无法固定显示的问题。
+            && navigator.userAgent.indexOf('Version/') > -1
+            && parseInt(navigator.userAgent.match(/Version\/(\d+)\./)[1]) >= 13 ) return true;
+  // Safari 版本大于 13 实测问题不大
+  else if ( navigator.userAgent.indexOf('AppleWebKit/') > -1
+            && parseInt(navigator.userAgent.match(/AppleWebKit\/(\d+)\./)[1]) >= 604 ) return true;
+  // AppleWebkit 引擎目前看着问题不大 以后再二次确认
+  else if ( navigator.userAgent.indexOf('Firefox/') > -1
+            && parseInt(navigator.userAgent.match(/Firefox\/(\d+)\./)[1]) >= 68 ) return true;
 
   var popd    = document.createElement("div");
   var popd_t  = document.createElement("div");
-  var popd_tt = document.createTextNode("本站仅对基于 Chromium 且内核较新的浏览器（Chromium, Google Chrome, Opera, Vivaldi 等）做最佳阅读支持。");
+  var popd_tt = document.createTextNode("本站仅对主流且内核较新的浏览器（Chromium, Google Chrome, Firefox, Safari, Opera 等）做最佳阅读支持。");
   var popd_a  = document.createElement("a");
   var popd_at = document.createTextNode("本次关闭");
   var popd_s  = document.createElement("span");
@@ -79,14 +82,14 @@ window.addEventListener('load', function(){
 
   popd_a.addEventListener("click", function() {
     popd.style.bottom = "-200px";
-    document.cookie = "iBc=true; path=/"
+    sessionStorage.setItem('iBc', true);
     setTimeout(function() {
       document.body.removeChild(popd);
     }, 500);
   });
   popd_d.addEventListener("click", function() {
     popd.style.bottom = "-200px";
-    document.cookie = "iBc=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/"
+    localStorage.setItem('iBc', true);
     setTimeout(function() {
       document.body.removeChild(popd);
     }, 500);
@@ -95,5 +98,6 @@ window.addEventListener('load', function(){
   document.body.appendChild(popd);
   setTimeout(function() {
     popd.style.bottom = '0';
-  }, 500);
-});
+  }, 2000);
+}
+checkBrowser();

@@ -1,20 +1,21 @@
   {% if page %}
   {% set article = page  %}
   {% endif %}
-  <script id="dsq-count-scr" src="/count.js" async></script>
   <script>
     // toggle source code
     var articleBtn = document.getElementById('showArticle');
     var sourceBtn = document.getElementById('showSourceCode');
     var sourceDiv = document.getElementById('source');
     var contentDiv = document.getElementById('content');
-    var tocDiv = document.getElementsByTagName('aside')[0];
+    var tocDiv0 = document.getElementsByTagName('aside')[0];
+    var tocDiv1 = document.getElementsByTagName('aside')[1];
     async function showArticle(){
       sourceBtn.style.display = '';
       articleBtn.style.display = '';
       sourceDiv.style.display = '';
       contentDiv.style.display = '';
-      tocDiv.classList.remove("codeNow");
+      tocDiv0.classList.remove("codeNow");
+      tocDiv1.classList.remove("codeNow");
     }
     async function showSourceCode(){
       if (sourceDiv.innerHTML.length < 100) {
@@ -42,7 +43,8 @@
       articleBtn.style.display = 'inline-block';
       sourceDiv.style.display = 'block';
       contentDiv.style.display = 'none';
-      tocDiv.classList.add("codeNow");
+      tocDiv0.classList.add("codeNow");
+      tocDiv1.classList.add("codeNow");
     }
     articleBtn.addEventListener('click', function(e) {
       showArticle();
@@ -75,3 +77,4 @@
       udCommentC();
     });
   </script>
+  <script async id="dsq-count-scr" src="/count.js"></script>

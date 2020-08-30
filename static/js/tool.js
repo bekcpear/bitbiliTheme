@@ -201,17 +201,17 @@ async function showMsg(o) {
 /**
  * do action:
  * m => array[{msg: '', act: num}, ...]
- *  act => 0: set cookie
+ *  act => 0: set localStorage
  *         1: show error
  *         2: show warning
- *        -1: clear cookie
+ *        -1: clear localStorage
  **/
 async function doAct(m) {
   for (var i = 0; i < m.length; i++) {
     switch(m[i].act) {
       case 0:
-        var c  = window.getComputedStyle(b, null).getPropertyValue('background-color');
-        document.cookie = "bgColor=" + encodeURIComponent(c) + "; expires=Tue, 19 Jan 2038 03:14:07 GMT; path=/";
+        var c  = getCompSty(b, 'background-color');
+        localStorage.setItem('bgColor', c);
         showMsg({el: colorNotif, msg: m[i].msg});
         closePanel();
         break;
@@ -222,7 +222,7 @@ async function doAct(m) {
         showMsg({el: colorWarni, msg: m[i].msg});
         break;
       case -1:
-        document.cookie = "bgColor=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        localStorage.removeItem('bgColor');
         showMsg({el: colorNotif, msg: m[i].msg});
         closePanel();
         break;
@@ -236,7 +236,7 @@ chBg.addEventListener('click', function() {
     closePanel();
     return;
   }
-  var cc = window.getComputedStyle(b, null).getPropertyValue('background-color');
+  var cc = getCompSty(b, 'background-color');
   chBg.setAttribute('opened', 1);
   chBgDiv.style.transitionProperty = 'width';
   chBgDiv.style.transitionDuration = '0.1s';
@@ -261,7 +261,7 @@ chBg.addEventListener('click', function() {
   colorInput.style.fontSize = '12px';
   colorInput.style.textAlign = 'center';
   colorInput.setAttribute('spellcheck', false);
-  colorInput.value = rgbToHex(window.getComputedStyle(b, null).getPropertyValue('background-color'));
+  colorInput.value = rgbToHex(getCompSty(b, 'background-color'));
 
   colorSubmi.style.cursor = 'pointer';
   colorReset.style.cursor = 'pointer';
@@ -367,7 +367,7 @@ chBg.addEventListener('click', function() {
     } else if (typeof(c) == "object") {
       m[m.length] = {msg: '我对过暗的底色未配置前景色转换', act: 2};
     }
-    m[m.length] = {msg: '当前底色已存入 Cookie', act: 0};
+    m[m.length] = {msg: '当前底色已存入 Local Storage', act: 0};
     doAct(m);
   };
 
@@ -380,7 +380,7 @@ chBg.addEventListener('click', function() {
   colorReset.onclick = function() {
     setBackground(null);
     colorInput.value = dc;
-    doAct([{msg: '已重置底色并移除该 Cookie', act: -1}]);
+    doAct([{msg: '已重置底色并移除了对应值', act: -1}]);
   };
 
   chBgDiv.appendChild(gray);
@@ -396,7 +396,7 @@ chBg.addEventListener('click', function() {
 var docFooter = document.querySelector('footer');
 var footerHeight = parseInt(getCompSty(docFooter, 'height'));
 function htsTools() {
-  var innerW = document.documentElement.clientWidth;
+  var innerW = window.innerWidth;
   if (innerW < 1110) {
     bc = bcLL;
     bcl = '#fff';
@@ -463,13 +463,19 @@ menuList.setAttribute('id', 'footerMenu');
 var appendBox = document.createElement('div');
 docFooter.appendChild(appendBox);
 function rdMenu() {
-  var innerW = document.documentElement.clientWidth;
+  var innerW = window.innerWidth;
   if (innerW <= 1110) {
+    if(document.querySelector('#toc') == null) {
+      menuList.style.marginRight = '0';
+    }
     appendBox.appendChild(menuList);
+    docFooter.className = '';
   } else {
     while(appendBox.firstChild) {
+      menuList.style.marginRight = '';
       appendBox.removeChild(appendBox.firstChild);
     }
+    docFooter.className = 'thelast';
   }
 }
 rdMenu();
@@ -478,8 +484,31 @@ rdMenu();
 var tables = document.querySelectorAll('article table');
 var pres   = document.querySelectorAll('article pre');
 var mainDi = document.querySelector('#main');
-function wrapElsSetWidth(e, tName) {
+var scrET0 = document.createElement('div');
+var scrET1 = document.createElement('div');
+scrET0.style.width     = '50px';
+scrET0.style.height    = '50px';
+scrET0.style.overflow  = 'scroll';
+scrET0.style.boxSizing = 'content-box';
+scrET1.style.width     = '100%';
+scrET1.style.height    = '100%';
+scrET0.appendChild(scrET1);
+document.querySelector('body').appendChild(scrET0);
+var scrWid = 50 - scrET1.getBoundingClientRect().width;
+document.querySelector('body').removeChild(scrET0);
+function wrapElsSetHeight(e, tName, isScr) {
+  var h  = parseFloat(getCompSty(e.querySelector(tName), 'height'));
+  var hP = parseFloat(getCompSty(e, 'height'));
+  if (isScr) {
+    h = h + scrWid;
+  }
+  e.style.height = h + 'px';
+}
+function wrapElsSetWidth(e, tName, isScr) {
+  var sl = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sal'));
+  var sr = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sar'));
   var w  = parseFloat(getCompSty(e.querySelector(tName), 'width'));
+  var wP = parseFloat(getCompSty(e, 'width'));
   var wI = document.documentElement.clientWidth;
   var mL = parseFloat(getCompSty(mainDi, 'margin-left'));
   var pL = parseFloat(getCompSty(mainDi, 'padding-left'));
@@ -489,60 +518,180 @@ function wrapElsSetWidth(e, tName) {
     pL += parseFloat(getCompSty(pN, 'padding-left'));
     pN = pN.parentNode;
   }
-  if (wI < w) {
-    w = wI;
+  if (tName == 'pre') {
+    if (sl > 20) {
+      e.querySelector(tName).style.paddingLeft = sl + 'px';
+      w = w - 20 + sl;
+      e.querySelector(tName).style.width = w + 'px';
+    }
+    if (sr > 20) {
+      e.querySelector(tName).style.paddingRight = sr + 'px';
+      w = w - 20 + sr;
+      e.querySelector(tName).style.width = w + 'px';
+    }
+  }
+  if (isScr) {
+    if (wI < (w + scrWid)) {
+      w = wI;
+    } else {
+      w = w + scrWid;
+    }
+  } else {
+    if (wI < w) {
+      w = wI;
+    }
   }
   e.style.left = (wI / 2 - w / 2 - mL - pL) + 'px';
   e.style.width = w + 'px';
 }
+function getWrapperResetHeight(e, tName, isScr) {
+  var hi = document.documentElement.clientHeight;
+  var hp = 0;
+  // > 900px -> 800pxBox
+  // < 900px -> 600pxBox
+  // < 700px -> 400pxBox
+  // < 500px -> 300pxBox
+  // < 350px -> 200pxBox
+  if (hi <= 400) {
+    hp = 200;
+  } else if (hi <= 600) {
+    hp = 300;
+  } else if (hi <= 700) {
+    hp = 400;
+  } else if (hi <= 800) {
+    hp = 500;
+  } else if (hi <= 900) {
+    hp = 600;
+  } else {
+    hp = 800;
+  }
+  var zd = true;
+  var hA = e.querySelector(tName).getBoundingClientRect().height;
+  /*
+  var hA = e.getAttribute('actheight');
+  if (hA == null) {
+    hA = e.querySelector(tName).getBoundingClientRect().height;
+    e.setAttribute('actheight', hA);
+  } else {
+    hA = parseFloat(hA);
+  }
+  */
+  if (isScr) {
+    hA = hA + scrWid;
+  }
+  if (hA < hp || hA - hp < 200) {
+    zd = false;
+    hp = hA;
+  }
+  return [hp, zd];
+}
 async function wrapEls(els, tName) {
   for (var i = 0; i < els.length; ++i) {
-    var marginT = window.getComputedStyle(els[i], null).getPropertyValue('margin-top');
-    var marginB = window.getComputedStyle(els[i], null).getPropertyValue('margin-bottom');
-    els[i].style.width = 'fit-content';
+    var marginT = getCompSty(els[i], 'margin-top');
+    var marginR = getCompSty(els[i], 'margin-right');
+    var marginB = getCompSty(els[i], 'margin-bottom');
+    var marginL = getCompSty(els[i], 'margin-left');
+    els[i].style.width = 'min-content';
+    els[i].style.height = 'min-content';
     els[i].style.minWidth = '100%';
     els[i].style.overFlow = 'visiable';
     els[i].style.marginTop = 0;
+    els[i].style.marginRight = 0;
     els[i].style.marginBottom = 0;
+    els[i].style.marginLeft = 0;
+    els[i].style.padding = '20px';
+    var wrapperTop = document.createElement('div');
+    wrapperTop.className = "elWrapperTop"
+    wrapperTop.style.padding = 0;
+    wrapperTop.style.width = '100%';
+    wrapperTop.style.height = 'min-content';
+    wrapperTop.style.overflow = 'visiable';
+    wrapperTop.style.marginTop = marginT;
+    wrapperTop.style.marginRight = marginR;
+    wrapperTop.style.marginBottom = marginB;
+    wrapperTop.style.marginLeft = marginL;
     var wrapper = document.createElement('div');
     wrapper.className = "elWrapper"
-    wrapper.style.marginTop = marginT;
-    wrapper.style.marginBottom = marginB;
+    wrapper.style.padding = 0;
+    wrapper.style.overflowY = "auto";
     var adjWrapper = document.createElement('button');
     adjWrapper.className = 'expand';
+    adjWrapper.style.display = '';
     adjWrapper.addEventListener('click', function() {
       if (this.className == 'expand') {
-        wrapElsSetWidth(this.parentNode, tName);
+        if (this.nextSibling.style.overflowX == 'scroll') {
+          wrapElsSetWidth(this.nextSibling, tName, this.nextSibling.style.overflowY == 'scroll');
+        }
+        if (this.nextSibling.style.overflowY == 'scroll') {
+          wrapElsSetHeight(this.nextSibling, tName, this.nextSibling.style.overflowX == 'scroll');
+        }
         this.className = 'compress';
       } else {
-        this.parentNode.style.left = ''; 
-        this.parentNode.style.width = '';
+        this.nextSibling.style.width = '';
+        this.nextSibling.style.left = ''; 
+        this.nextSibling.style.height = getWrapperResetHeight(this.nextSibling, tName, this.nextSibling.style.overflowX == 'scroll')[0] + 'px';
+        this.nextSibling.querySelector(tName).style.width = 'min-content';
+        this.nextSibling.querySelector(tName).style.paddingLeft = '20px';
+        this.nextSibling.querySelector(tName).style.paddingRight = '20px';
         this.className = 'expand';
       }
     });
-    wrapper.appendChild(adjWrapper);
-    els[i].parentNode.insertBefore(wrapper, els[i]);
+    if (navigator.userAgent.indexOf('Mobile') > -1) {
+      adjWrapper.style.width = '30px';
+      adjWrapper.style.height = '30px';
+      adjWrapper.style.left = 'calc(100% - 30px)';
+    }
+    wrapperTop.appendChild(adjWrapper);
+    wrapperTop.appendChild(wrapper);
+    els[i].parentNode.insertBefore(wrapperTop, els[i]);
     wrapper.appendChild(els[i].parentNode.removeChild(els[i]));
   }
 };
 async function checkElsWidth(els, tName) {
   for (var i = 0; i < els.length; ++i) {
     if (els[i].parentNode.className == 'elWrapper') {
-      var w  = parseFloat(window.getComputedStyle(els[i], null).getPropertyValue("width"));
-      var wp = parseFloat(window.getComputedStyle(els[i].parentNode.parentNode, null).getPropertyValue("width"));
-      var b  = els[i].parentNode.firstChild;
-      if (w > wp) {
-        b.style.display = "block";
-        b.parentNode.style.overflowX = "scroll";
+      var w  = parseFloat(getCompSty(els[i], "width"));
+      var wp = parseFloat(getCompSty(els[i].parentNode.parentNode, "width"));
+      var b  = els[i].parentNode.parentNode.firstChild;
+      var h  = parseFloat(getCompSty(els[i], "height"));
+      var wS = false;
+      var bD = false;
+      var eX = true;
+
+      var ha = getWrapperResetHeight(els[i].parentNode, tName, w > wp);
+      if(w > wp) {
+        wS = true;
+        bD = true;
+        els[i].parentNode.style.overflowX = "scroll";
         if (b.className == 'compress') {
-          wrapElsSetWidth(els[i].parentNode, tName);
+          eX = false;
+          wrapElsSetWidth(els[i].parentNode, tName, ha[1]);
         }
       } else {
-        b.style.display = "";
-        b.parentNode.style.overflowX = "";
-        b.className = 'expand';
+        els[i].parentNode.style.overflowX = "";
         els[i].parentNode.style.left = '';
         els[i].parentNode.style.width = '';
+      }
+      if(ha[1]) {
+        bD = true;
+        els[i].parentNode.style.overflowY = "scroll";
+        if (b.className == 'compress') {
+          eX = false;
+          wrapElsSetHeight(els[i].parentNode, tName, wS);
+        } else {
+          els[i].parentNode.style.height = ha[0] + 'px';
+        }
+      } else {
+        els[i].parentNode.style.overflowY = "";
+        els[i].parentNode.style.height = ha[0] + 'px';
+      }
+      if (bD) {
+        b.style.display = 'block';
+      } else {
+        b.style.display = '';
+      }
+      if (eX) {
+        b.className = 'expand';
       }
     }
   }
@@ -685,11 +834,141 @@ async function handleImgs(init) {
   }
 }
 
+// bingding keys
+var broTyp = 'chr'
+if (navigator.userAgent.indexOf('Trident') > -1
+    || ( navigator.userAgent.indexOf('Safari') > -1
+      && navigator.userAgent.indexOf('Chrome') <= -1)) broTyp = 'nchr';
+function cusScroll(x, y, act) {
+  if (broTyp == 'chr') {
+    if (act == 'by') {
+      window.scrollBy({
+        top: y,
+        left: x,
+        behavior: 'smooth'
+      });
+    } else if (act == 'to') {
+      window.scrollTo({
+        top: y,
+        left: x,
+        behavior: 'smooth'
+      });
+    }
+  } else {
+    if (act == 'by') {
+      window.scrollBy(x, y);
+    } else if (act == 'to') {
+      window.scrollTo(x, y);
+    }
+  }
+}
+var lastKeyup = [-1, 0];
+var lastCoor = [0, 0];
+var htmlE = document.querySelector('html');
+async function handleKeysdown(e) {
+  // fix line-height to 24px
+  var lHei = 24;
+  switch (e.keyCode) {
+    case 75: //up k
+      if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, 0 - lHei, 'by');
+      }
+      break;
+    case 74: //down j
+      if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, lHei, 'by');
+      }
+      break;
+    case 69: //down line with Alt-Ctrl-E
+      if (e.altKey && e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, lHei, 'by');
+      }
+      break;
+    case 89: //up line with Alt-Ctrl-Y
+      if (e.altKey && e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, 0 - lHei, 'by');
+      }
+      break;
+    case 85: //up half screen with Alt-Ctrl-U
+      if (e.altKey && e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, 0 - window.innerHeight / 2, 'by');
+      }
+      break;
+    case 68: //down half screen with Alt-Ctrl-D
+      if (e.altKey && e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, window.innerHeight / 2), 'by';
+      }
+      break;
+    case 66: //up whole screen with Alt-Ctrl-B
+      if (e.altKey && e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, 50 - window.innerHeight, 'by');
+      }
+      break;
+    case 70: //down whole screen with Alt-Ctrl-F
+      if (e.altKey && e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, window.innerHeight - 50, 'by');
+      }
+      break;
+  }
+}
+async function handleKeysup(e) {
+  switch (e.keyCode) {
+    case 71: //scroll to bottom with shift-g
+      if (!e.altKey && !e.ctrlKey && !e.metaKey && e.shiftKey) {
+        lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+        cusScroll(0, document.body.scrollHeight, 'to');
+      } else if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) { //scroll to top with gg
+        var gKeyupT = Date.now();
+        if (lastKeyup[0] == 71 && (gKeyupT - lastKeyup[1]) < 1000) {
+          lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
+          cusScroll(0, 0, 'to');
+        }
+        lastKeyup[0] = 71;
+        lastKeyup[1] = gKeyupT;
+      }
+      break;
+    case 79: //scroll to last coordinate with Alt-Ctrl-O
+      if (e.altKey && e.ctrlKey && !e.metaKey && e.shiftKey) {
+          cusScroll(lastCoor[0], lastCoor[1], 'to');
+      }
+      break;
+  }
+}
+function handleKeysAddEve() {
+  window.addEventListener('keyup', handleKeysup);
+  window.addEventListener('keydown', handleKeysdown);
+}
+function handleKeysRemoveEve() {
+  window.removeEventListener('keyup', handleKeysup);
+  window.removeEventListener('keydown', handleKeysdown);
+}
+async function handleKeysInit() {
+  handleKeysAddEve();
+  var gSear0 = document.querySelector('#search');
+  var gSear1 = document.querySelector('#footerSearch');
+  var gTools = document.querySelector('#tool');
+  gSear0.addEventListener('focusin', handleKeysRemoveEve);
+  gSear0.addEventListener('focusout', handleKeysAddEve);
+  gSear1.addEventListener('focusin', handleKeysRemoveEve);
+  gSear1.addEventListener('focusout', handleKeysAddEve);
+  gTools.addEventListener('focusin', handleKeysRemoveEve);
+  gTools.addEventListener('focusout', handleKeysAddEve);
+}
+
+wrapEls(tables, 'table');
+wrapEls(pres, 'pre');
+checkElsWidth(tables, 'table');
+checkElsWidth(pres, 'pre');
+handleKeysInit();
 window.addEventListener('load', function(){
-  wrapEls(tables, 'table');
-  wrapEls(pres, 'pre');
-  checkElsWidth(tables, 'table');
-  checkElsWidth(pres, 'pre');
   handleImgs(true);
 });
 
@@ -699,6 +978,7 @@ window.addEventListener('resize', function(){
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
   handleImgs(false);
+  htmlE = document.querySelector('html');
 });
 window.addEventListener('orientationchange', function(){
   htsTools();
@@ -706,4 +986,5 @@ window.addEventListener('orientationchange', function(){
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
   handleImgs(false);
+  htmlE = document.querySelector('html');
 });

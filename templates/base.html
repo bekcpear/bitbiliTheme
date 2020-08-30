@@ -5,7 +5,10 @@
   <title>{% macro title() -%}{% block title %}{{ SITENAME }}{% endblock %}{%- endmacro %}{{title()}}</title>
   <!-- Using the latest rendering mode for IE -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover,shrink-to-fit=no" />
+  <meta name="theme-color" content="#fdfdfd" />
+  <meta name="msapplication-navbutton-color" content="#fdfdfd" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#fdfdfd" />
 
   <link rel="icon" type="image/png" href="/static/images/fav.png" sizes="340x340" />
   <link rel="manifest" href="/static/manifest.json" />
@@ -13,9 +16,6 @@
   <link rel="mask-icon" href="/static/images/mask-icon.svg" color="#162d50" />
   {# Favicons are a touchy subject. also can see: http://stackoverflow.com/a/23851464/872397 #}
 
-  <meta name="theme-color" content="#fdfdfd" />
-  <meta name="msapplication-navbutton-color" content="#fdfdfd" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="#fdfdfd" />
   {% block canonical_rel %}{% endblock %}
   {% block meta %}
   <meta name="author" content="{{ AUTHOR }}" />
@@ -73,7 +73,7 @@
   {% if SERVICEWORKER %}
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
+      window.addEventListener('DOMContentLoaded', function() {
         cacheName = 'sw-precache-moego-me';
         caches.has(cacheName).then(function(existed) {
           if (existed) {
@@ -102,8 +102,8 @@
                                     var popr_at = document.createTextNode("这里");
                                     var popr_t1 = document.createTextNode("刷新");
 
-                                    popr_a.href = url;
-                                    popr_a.style= "color: #fff; font-weight: bold; margin: 0 5px; text-decoration: underline dotted;";
+                                    popr_a.addEventListener('click', function(){window.location.reload(true);});
+                                    popr_a.style= "cursor: pointer; color: #fff; font-weight: bold; margin: 0 5px; text-decoration: underline dotted;";
                                     popr_a.appendChild(popr_at);
                                     popr.appendChild(popr_t0);
                                     popr.appendChild(popr_a);
@@ -114,7 +114,7 @@
                                     var popr_d  = document.createElement("a");
                                     var popr_dt = document.createTextNode("忽略");
                                     popr_d.appendChild(popr_dt);
-                                    popr_d.style= "display: block; padding: 5px 10px; box-sizing: border-box; position: absolute; bottom: -25px; right: 0; font-size: 10px; line-height: 1.5em; text-decoration: none; color: #fff; background-color: #2c5aa0; cursor: pointer;";
+                                    popr_d.style= "display: block; padding: 5px 10px; box-sizing: border-box; position: absolute; bottom: -25px; right: env(safe-area-inset-right, '0px'); font-size: 10px; line-height: 1.5em; text-decoration: none; color: #fff; background-color: #2c5aa0; cursor: pointer;";
                                     popr_d.addEventListener("click", function() {
                                       popr.style.top = "-100px";
                                       setTimeout(function() {
@@ -154,29 +154,6 @@
     }
   </script>
   {% endif %}
-  <script>
-    window.addEventListener('load', function() {
-      (async function() {
-        var cx = '016855202528329427677:gpowcz722_s';
-        var gcse = document.createElement('script');
-        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-        gcse.type = 'text/javascript';
-        gcse.async = true;
-        var s = document.getElementsByTagName('script')[0];
-        var xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', function() {
-          s.parentNode.insertBefore(gcse, s);
-        });
-        xhr.addEventListener('error', function() {
-          console.warn("A '" + gcse.src + "' CORS error may occur here.\n It's not a mistake but a connection check for those who don't have access to Google.");
-          s.parentNode.insertBefore(gcse, s);
-        });
-        xhr.open('HEAD', gcse.src);
-        xhr.timeout = 3000;
-        xhr.send();
-      })();
-    });
-  </script>
 </head>
 <body>
 
@@ -194,18 +171,18 @@
     <div id="menu" class="hidden-print">
       <ul>
         <li>
-          <a href="/{{ TAGS_URL | default('tags.html') }}">
+          <a href="/{{ TAGS_URL | default('tags.html') }}" tabindex="-1">
             <span>文章标签</span>
           </a>
         </li>
         <li>
-          <a href="/{{ BLOGROLL_PAGE | default('blogroll.html') }}">
+          <a href="/{{ BLOGROLL_PAGE | default('blogroll.html') }}" tabindex="-1">
             <span>一些博客</span>
           </a>
         </li>
         <li>
           {% block feed %}
-          <a href="/{{ FEED_URL | default('feeds/rss.xml') }}">
+          <a href="/{{ FEED_URL | default('feeds/rss.xml') }}" tabindex="-1">
             <span>订阅全站</span>
           </a>
           {% endblock %}
@@ -225,9 +202,13 @@
         lg.style.backgroundColor = '';
       }
     }
-    var bgColor = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent('bgColor').replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+    var bgColor = localStorage.getItem('bgColor') || null;
     if (bgColor != null) {
       setBackground(bgColor);
+    }
+    var searchParams = new URLSearchParams(new URL(document.URL).search);
+    if (searchParams.has('gavisitor')) {
+      localStorage.setItem('ga_visitor', searchParams.get('gavisitor'));
     }
   </script>
   <div id="main">
@@ -243,10 +224,6 @@
   </div>
 
   {% include 'includes/footer.html' %}
-
-  {% include 'includes/ga.html' %}
-
-  {% block scripts %}{% endblock %}
   <script>
     window.addEventListener('load', function() {
       var externalLinks = document.querySelectorAll('a.external');
@@ -275,5 +252,29 @@
   </script>
   <script src='/theme/js/bchk.js'></script>
   <script src='/theme/js/tool.js'></script>
+  {% block scripts %}{% endblock %}
+  {% include 'includes/ga.html' %}
+  <script>
+    window.addEventListener('load', function() {
+      (async function() {
+        var s      = document.getElementsByTagName('script');
+        s          = s[s.length - 1];
+        var gcse   = document.createElement('script');
+        gcse.src   = 'https://cse.google.com/cse.js?cx=016855202528329427677:gpowcz722_s';
+        gcse.type  = 'text/javascript';
+        gcse.async = true;
+        gcse.defer = true;
+        const fcontroller = new AbortController();
+        const fsignal = fcontroller.signal;
+        setTimeout(() => fcontroller.abort(), 5000);
+        fetch(gcse.src, {signal: fsignal, mode: 'no-cors'}).then(response => {s.parentNode.insertBefore(gcse, s);}).catch(err => {
+          if (err.name === 'AbortError') {
+            console.warn('Connection to Google custom search engine timed out.');
+          } else {
+            console.warn('Cannot connected to Google custom search engine.');
+          }});
+      })();
+    });
+  </script>
 </body>
 </html>

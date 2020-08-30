@@ -20,7 +20,7 @@
 {% if GOOGLE_ANALYTICS_UNIVERSAL %}
   <!-- Google Analytics Universal -->
   <script type="text/javascript">
-    var ga_visitor = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent('_ga_visitor').replace(/[\- \.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || 'guest';
+    var ga_visitor = localStorage.getItem('ga_visitor') || 'guest';
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -32,4 +32,14 @@
     });
   </script>
   <!-- End Google Analytics Universal Code -->
+{% endif %}
+{% if GOOGLE_ANALYTICS_UNIVERSAL_ASYNC %}
+  <script>
+    var ga_visitor = localStorage.getItem('ga_visitor') || 'guest';
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', '{{ GOOGLE_ANALYTICS_UNIVERSAL_ASYNC }}', '{{ GOOGLE_ANALYTICS_UNIVERSAL_PROPERTY }}');
+    ga('set', 'dimension1', ga_visitor);
+    ga('send', 'pageview');
+  </script>
+  <script async src='{{ GOOGLE_ANALYTICS_URL }}/analytics.js'></script>
 {% endif %}
