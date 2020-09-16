@@ -531,7 +531,7 @@ header {
       @include fullWidth;
       article {
         @include fullWidth;
-        border-bottom: 5px solid $fg;
+        border-bottom: 5px solid $bc;
         margin-bottom: 5px;
         #header {
           @include fullWidth;
@@ -863,7 +863,7 @@ header {
           text-decoration: none;
           padding: 5px 10px;
           color: $ifg;
-          background-color: $fg;
+          background-color: $bctddd;
           position: relative;
           left: 0px;
           &:hover {

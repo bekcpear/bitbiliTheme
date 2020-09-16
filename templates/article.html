@@ -160,9 +160,9 @@
 
             <div id='info'>
               {% if article.modified %}
-              <time class="modified" datetime="{{ article.modified.isoformat() }}" title="{{ article.modified.strftime('%H:%M%z') }}">{{ article.locale_modified }}</time>
+              <time class="modified" datetime="{{ article.modified.isoformat() }}" title="{{ article.modified.strftime('%A %H:%M %Z') }}">{{ article.locale_modified }}</time>
               {% endif %}
-              <time class="published" datetime="{{ article.date.isoformat() }}" title="{{ article.date.strftime('%H:%M%z') }}">{{ article.locale_date }}</time>
+              <time class="published" datetime="{{ article.date.isoformat() }}" title="{{ article.date.strftime('%A %H:%M %Z') }}">{{ article.locale_date }}</time>
               {% if article.license %}
               <div id="diff-license">{{ article.license }}</div>
               {% endif %}

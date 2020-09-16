@@ -442,7 +442,7 @@ header {
         padding: 0;
         width: calc(100% - 0px);
         box-sizing: border-box;
-        border-bottom: 5px solid #232323;
+        border-bottom: 5px solid #eb1846;
         margin-bottom: 5px; }
         #main.base #centre #article article #header, #main.base #centre #page article #header {
           margin: 0;
@@ -727,7 +727,7 @@ header {
           text-decoration: none;
           padding: 5px 10px;
           color: #fdfdfd;
-          background-color: #232323;
+          background-color: #eb1846c0;
           position: relative;
           left: 0px; }
           #main.base #centre #article #prevnext a:hover, #main.base #centre #page #prevnext a:hover {
