@@ -2,3 +2,9 @@
   {% block canonical_rel %}
   <link rel="canonical" href="{{ SITEURL }}">
   {% endblock %}
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/{{ INDEXCSSFILE }}" rel="stylesheet" />
+  {% endblock %}
+  {% block mainDivStart %}
+  <div id="main" class="index">
+  {% endblock %}

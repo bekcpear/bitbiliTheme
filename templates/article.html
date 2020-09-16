@@ -115,6 +115,24 @@
   <link rel="canonical" href="{{ SITEURL }}/{{ article.url }}">
   {% endblock %}
 
+  {% block nearbodyscripts %}
+  <script>
+    var thisisanarticle = true;
+    function setBackground(c) {
+      var bd = document.getElementsByTagName('body')[0];
+      if (c !== null) {
+        bd.style.backgroundColor = c;
+      } else {
+        bd.style.backgroundColor = '';
+      }
+    }
+    var bgColor = localStorage.getItem('bgColor') || null;
+    if (bgColor != null) {
+      setBackground(bgColor);
+    }
+  </script>
+  {% endblock %}
+
       {% block toc %}
         {% if article.toc %}
       <div id="toc">

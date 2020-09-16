@@ -1,21 +1,35 @@
-// style for moego.me
+// style for bitbili.net
 
 // variables
 $font: "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Source Han Sans", "Source Han Sans SC", "Source Han Sans TC", "Hiragino Sans GB", sans-serif;
 $monofont: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
-$bc: #162d50;
-$bct: #162d5009;
-$bctd: #162d500f;
-$bg: #e8eaed;
-$fg: #212121;
+$bc: #eb1846;
+$bca: #2b8acf;
+$bct: #eb184609;
+$bctd: #eb184621;
+$bctdd: #eb184660;
+$bctddd: #eb1846c0;
+$bgi: #ffffff;
+$bg: #fdfdfd;
+$bghd: #a9a9a910;
+$bghdd: #23232330;
+$bgd: #fafafa;
+$bgdd: #d0d0d0;
+$bgt: #fdfdfd52;
+$fg: #232323;
+$xfg: #393939;
 $fgt: #757575;
+$ftbg: #161616;
+$ftbgt: #16161660;
+$ftbgtl: #16161616;
+$ftbgtll: #16161606;
 $si: 16px;
 $lh: 1.5em;
 $sis: 12px;
 $heh: 150px;
 $lno: solid underline;
 $lho: solid underline;
-$cbg: #f8fafc;
+$cbg: #f6f8fa;
 $ifg: #fdfdfd;
 $icbg: lighten($bc, 10%);
 $cewd: 860px;

@@ -1,5 +1,5 @@
 /**
- * A browser checking script for moego.me
+ * A browser checking script for bitbili.net
  * @author Bekcpear
  * */
 

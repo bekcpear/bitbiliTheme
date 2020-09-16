@@ -10,14 +10,21 @@
           {% block listtitle %}
           {% endblock %}
           {% for article in (articles_page.object_list if articles_page else articles) %}
-        <section>
-          <hr class="hidden" />
-          <a href="/{{ article.url }}">
-            <h2>{{ article.title }}</h2>
-          </a>
-          <summary>
-            {{ article.summary }}
-          </summary>
+        <section style="--section-color: {{ article.color|default('#eb1846') }}; --section-color-t: {{ article.color|default('#eb1846') }}a0; --section-color-tl: {{ article.color|default('#eb1846') }}60">
+          <span class="datex">{% if article.modified %}{{ article.modified.strftime('%Y %b') }}{% else %}{{ article.date.strftime('%Y %b') }}{% endif %}</span>
+          <span class="datey">{% if article.modified %}{{ article.modified.strftime('%Y %b') }}{% else %}{{ article.date.strftime('%Y %b') }}{% endif %}</span>
+          <div class='hasum'>
+            <h2>
+              <a class="atitle" href="/{{ article.url }}">
+                {{ article.title }}
+              </a>
+            </h2>
+            <summary>
+              {{ article.summary }}
+              <div style="height: 0; word-break: break-all; visibility: hidden; overflow: hidden">/*This is placeholder text. This is placeholder text. This is placeholder text. This is placeholder text. |bitbili.net| This is placeholder text. This is placeholder text. This is placeholder text. This is placeholder text.*/</div>
+            </summary>
+          </div>
+          <div class="afterarrow"></div>
         </section>
           {% endfor %}
       </div>
@@ -25,3 +32,46 @@
         {% include 'includes/pagination.html' %}
 
       {% endblock content %}
+  {% block scripts %}
+  <script>
+    // remove toc-backref link
+    var tocbackrefs = document.querySelectorAll('.toc-backref');
+    tocbackrefs.forEach((ele, i) => {
+      ele.removeAttribute('href');
+    });
+    // animate article list
+    var atitles;
+    var atitleTouch = false;
+    var atitlesFin = [];
+    var atitlesFout = [];
+    window.addEventListener('DOMContentLoaded', () => {
+      atitles = document.querySelectorAll('.atitle');
+      atitles.forEach((ele, i) => {
+        ele.addEventListener('touchstart', function(event){
+          atitleTouch = true;
+        });
+        ele.addEventListener('mouseover', function(event){
+          if (!atitleTouch) {
+            atitlesFin[i] = true;
+            atitlesFout[i] = false;
+            setTimeout(function(){
+              if (!atitlesFout[i])
+                event.target.parentNode.parentNode.parentNode.className = 'onmouse';
+            }, 100);
+          }
+        });
+        ele.addEventListener('mouseout', function(event){
+          if (!atitleTouch) {
+            atitlesFin[i] = false;
+            atitlesFout[i] = true;
+            setTimeout(function(){
+              if (!atitlesFin[i])
+                event.target.parentNode.parentNode.parentNode.className = '';
+            }, 100);
+          }
+          atitleTouch = false;
+        });
+      });
+    });
+  </script>
+  {% endblock %}

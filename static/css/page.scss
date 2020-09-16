@@ -1,8 +1,8 @@
-// style for moego.me
+// style for bitbili.net
 
 @import 'variable.scss';
 
-#main {
+#main.base {
   max-width: $cewd;
   @media all and (min-width: $cewd + 2 * ($aswd + $aswdm) + 50px) {
     max-width: $cewd;

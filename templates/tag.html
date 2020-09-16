@@ -5,6 +5,12 @@
   <meta name="author" content="{{ AUTHOR }}" />
   <meta name="keywords" content="{{ tag }}" />
   {% endblock %}
+  {% block othercss %}
+  <link href="/{{ THEME_STATIC_DIR }}/css/{{ INDEXCSSFILE }}" rel="stylesheet" />
+  {% endblock %}
+  {% block mainDivStart %}
+  <div id="main" class="index">
+  {% endblock %}
 
           {% block feed %}
           <a href="{{ SITEURL }}/feeds/tag-{{ tag|lower }}.rss.xml">

@@ -1,9 +1,10 @@
-// style for moego.me
+// style for bitbili.net
 
 @import 'variable.scss';
 
 // compontents
 body {
+  position: relative;
   -webkit-text-size-adjust: none;
   width: 100%;
   font: {
@@ -31,11 +32,11 @@ body {
 
 ::-moz-selection {
   color: inherit;
-  background-color: #ffab40;
+  background-color: #ffab40aa;
 }
 ::selection {
   color: inherit;
-  background-color: #ffab40;
+  background-color: #ffab40aa;
 }
 
 @mixin icon($url, $width, $height, $opacity: 1) {
@@ -84,6 +85,7 @@ a {
     content: ' ';
     vertical-align: super;
     margin-left: 2px;
+    filter: grayscale(1);
     @include icon('/theme/images/fa/solid/external-link-alt.svg', 10px, 10px, 0.3);
     @include transition;
     @media print {
@@ -91,23 +93,24 @@ a {
     }
   }
   &.external:hover:after {
-    opacity: 1;
+    opacity: 0.8;
+    filter: grayscale(0);
     @include transition;
   }
   &.disabled {
     text-decoration: none;
-    opacity: 0.6;
+    opacity: 0.3;
     &:hover {
-      color: $fg;
+      color: inherit;
     }
     &:before, &:after {
-      opacity: 0.6 !important;
+      opacity: 0.3 !important;
     }
   }
   &.toc-backref {
     text-decoration: none;
     &:hover {
-      color: $fg;
+      color: inherit;
     }
   }
 }
@@ -152,9 +155,11 @@ ul, menu, dir {
 #menu {
   display: block;
   position: absolute;
-  top: $heh / 600 * 68;
+  top: 0;
   right: -270px;
   z-index: 1;
+  width: 230px;
+  max-width: 230px;
   transition-property: right;
   transition-duration: 0.1s;
   @media all and (min-width: #{$cewd + $aswd + $aswdm + 51px}) {
@@ -165,16 +170,22 @@ ul, menu, dir {
     padding: 0;
     margin: 0;
     li {
-      display: inline;
+      display: block;
+      float: left;
+      width: calc(100% / 3);
       font-size: $sis;
       line-height: 1.5em;
       a {
+        display: inline-block;
         color: $fgt;
-        padding: 5px 10px;
-        background-color: $bct;
+        padding: 10px 0;
+        width: 100%;
+        text-align: center;
+        background-color: $ftbgtl;
         text-decoration: none;
         &:hover {
-          background-color: $bctd;
+          color: $bgd;
+          background-color: $bctddd;
         }
       }
     }
@@ -185,6 +196,8 @@ ul, menu, dir {
   position: relative;
   top: 0;
   right: 0;
+  width: calc(100% - env(safe-area-inset-right, "0px") - #{$aswd + $aswdrf});
+  max-width: unset;
   padding: 0 0 env(safe-area-inset-bottom, "0px") 0;
   margin-right: calc(env(safe-area-inset-right, "0px") + #{$aswd + $aswdrf});
   background-color: $bc;
@@ -196,14 +209,14 @@ ul, menu, dir {
       a {
         display: block;
         color: $ifg;
-        background-color: $bc;
+        background-color: $ftbg;
         font-size: 14px;
         height: 35px;
         text-align: center;
         vertical-align: middle;
         line-height: 35px;
         &:hover {
-          background-color: lighten($bc, 5%);
+          background-color: $ftbgtll;
         }
       }
     }
@@ -211,67 +224,89 @@ ul, menu, dir {
 }
 
 #search {
-  position: absolute;
-  z-index: 10;
-  top: $heh / 600 * 68;
-  left: 0;
-  transition-property: left;
-  transition-duration: 0.1s;
-  > div:first-child {
-    min-width: 140px;
+  @extend #menu;
+  top: $sis * 1.5 + 20px;
+  > div[dir=ltr]:first-child {
+    width: 230px;
     max-width: 230px;
+    height: $sis * 1.5 + 20px;
+    padding: 0;
+    box-sizing: border-box;
     display: inline-block;
+    background-color: transparent;
     vertical-align: top;
-    > div.gsc-control-cse {
-      padding: 0;
-      font: {
-        family: $font;
-        size: $sis;
-      }
-      border: none;
-      background-color: transparent;
-      line-height: 1.5em;
-      form {
-        margin: 0;
-        table.gsc-search-box {
-          margin-bottom: 0;
-          tbody {
-            border-collapse: collapse;
-            td.gsc-input {
-              padding: 3px;
-              background-color: $bct;
-              div.gsc-input-box {
-                border: none;
-                background-color: transparent;
-                tbody {
-                  border-collapse: collapse;
-                  td.gsib_a {
-                    vertical-align: bottom;
-                    padding: 0;
-                    input {
-                      font-size: $sis;
-                      line-height: 17px;
-                      box-sizing: border-box;
-                      vertical-align: top;
-                      padding: 0 5px 0 10px !important;
-                      background-color: transparent !important;
-                      background-position-x: 10px !important;
-                      &::placeholder {
-                        opacity: 0;
-                      }
+    font: {
+      family: $font;
+      size: $si;
+    }
+    line-height: 1em;
+    form {
+      margin: 0;
+      table.gsc-search-box {
+        margin-bottom: 0;
+        tbody {
+          border-collapse: collapse;
+          td.gsc-input {
+            display: block;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: transparent;
+            div.gsc-input-box {
+              border: none;
+              padding: 0;
+              background-color: transparent;
+              color: $fg;
+              font-weight: bold;
+              tbody {
+                border-collapse: collapse;
+                td.gsib_a {
+                  vertical-align: bottom;
+                  padding: 0;
+                  input {
+                    font-size: $si;
+                    line-height: 1em;
+                    box-sizing: border-box;
+                    vertical-align: top;
+                    height: $sis * 1.5 + 20px !important;
+                    padding: 9px 3px 13px 20px !important;
+                    background-color: $ftbgtl !important;
+                    box-shadow: none;
+                    border-radius: 0;
+                    -webkit-appearance: none;
+                    background-position-x: 10px !important;
+                    transition-property: background-color, box-shadow;
+                    transition-duration: 0.2s;
+                    &::placeholder {
+                      opacity: 0;
+                    }
+                    &:focus {
+                      background-color: $ftbgtll !important;
+                      box-shadow: inset 5px -5px 0 $bctddd;
+                      transition-property: background-color, box-shadow;
+                      transition-duration: 0.2s;
                     }
                   }
-                  td.gsib_b {
-                    vertical-align: bottom;
-                    .gsst_b {
+                }
+                td.gsib_b {
+                  display: inline-block;
+                  width: 0;
+                  vertical-align: top;
+                  background-color: $ftbgtll !important;
+                  .gsst_b {
+                    padding: 10px 0 12px 0;
+                    left: -13px;
+                    .gsst_a {
                       padding: 0;
-                      font-size: $sis;
-                      .gsst_a {
-                        padding: 0 2px;
+                      .gscb_a {
+                        font-size: $si;
+                        color: lighten($fgt, 30%);
+                        line-height: 1em;
+                        vertical-align: bottom;
+                      }
+                      &:hover, &:focus {
                         .gscb_a {
-                          font-size: $sis;
-                          line-height: 1.5em;
-                          vertical-align: bottom;
+                          color: $fgt;
                         }
                       }
                     }
@@ -279,22 +314,22 @@ ul, menu, dir {
                 }
               }
             }
-            td.gsc-search-button {
-              .gsc-search-button-v2 {
-                margin: 0;
-                padding: 5px;
-                border: none;
-                outline: none;
-                background-color: transparent;
-                cursor: pointer;
-                &:hover, &:active, &:focus {
-                  background-color: transparent;
-                }
-                svg {
-                  width: 14px;
-                  height: 14px;
-                  fill: #888;
-                }
+          }
+          td.gsc-search-button {
+            .gsc-search-button-v2 {
+              margin: 0;
+              padding: 10px;
+              border: none;
+              outline: none;
+              background-color: $ftbgtl;
+              cursor: pointer;
+              &:hover, &:active, &:focus {
+                background-color: $ftbgtl;
+              }
+              svg {
+                width: 18px;
+                height: 18px;
+                fill: $fgt;
               }
             }
           }
@@ -302,20 +337,19 @@ ul, menu, dir {
       }
     }
   }
-  @media all and (max-width: 660px) {
-    left: -230px;
-  }
 }
 #footerSearch {
   @extend #search;
   display: none;
   position: relative;
-  @media all and (max-width: 660px) {
+  @media all and (max-width: #{$cewd + $aswd + $aswdm + 50px}) {
     display: block;
     width: 100%;
+    max-width: unset;
     left: 0;
     top: 0;
-    > div:first-child {
+    > div[dir=ltr]:first-child {
+      width: 100%;
       max-width: unset;
       .gs-title {
         text-align: left;
@@ -328,51 +362,77 @@ header {
   height: $heh;
   width: 100%;
   box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
   position: relative;
   overflow: hidden;
   #logo {
-    width: 100%;
+    max-width: $cewd;
     height: $heh;
     position: relative;
+    margin: 0 auto;
+    @media all and (min-width: $cewd + $aswd + $aswdm + 51px) {
+      max-width: $cewd + $aswd;
+    }
+    @media all and (min-width: #{$cewd + 2 * ($aswd + $aswdm) + 51px}) {
+      max-width: $cewd;
+    }
     a {
       display: block;
       position: relative;
-      width: $heh;
-      height: $heh;
-      margin: 0 auto;
+      width: $heh / 2;
+      height: $heh / 2;
+      margin: 0;
+      padding: calc(#{$heh / 4} + env(safe-area-inset-top, "0px")) $heh / 4 $heh / 4 calc(#{$heh / 4} + env(safe-area-inset-left, "0px"));
+      background-color: transparent !important;
       border: 0 {
         radius: 50%;
       }
-      background-color: $bg;
       img {
         display: block;
-        width: 85%;
-        height: 85%;
-        padding: 3% 0;
-        margin: auto;
-      }
-      @media print {
-        background-color: transparent !important;
-      }
-    }
-    span {
-      display: block;
-      width: 100%;
-      position: absolute;
-      z-index: -1;
-      top: $heh / 600 * 68 - 1;
-      height: 5px;
-      opacity: 0.1;
-      border-top: {
-        width: 1px;
-        style: solid;
-        color: $bc;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
       }
     }
   }
+  /*
+  #logowm {
+    display: block;
+		width: $heh / 4;
+    height: $heh / 4;
+    position: fixed;
+    top: $heh / -2;
+    left: $heh / -2;
+    opacity: 0;
+    transform: rotate(180deg);
+    background-image: url(/static/logo/logo.svg);
+    background-size: contain;
+    transition-property: opacity, top, left, transform;
+    transition-duration: 0.6s;
+    @media all and (max-width: 1000px) {
+      display: none;
+    }
+    @media all and (min-width: 1111px) {
+      display: none;
+    }
+    @media all and (min-width: 1200px) {
+      display: block;
+    }
+    > a {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+  */
 }
 
-#main {
+#main.base {
   width: calc(100% - 50px);
   max-width: $cewd + $aswd + $aswdm;
   padding: 30px env(safe-area-inset-right, "0px") 0 env(safe-area-inset-left, "0px");
@@ -401,6 +461,7 @@ header {
     @media print {
       max-width: $cewdp;
     }
+    /*
     #article-list {
       @include fullWidth;
       #listtitle {
@@ -465,11 +526,12 @@ header {
         }
       }
     }
+    */
     #article {
       @include fullWidth;
       article {
         @include fullWidth;
-        border-bottom: 5px solid $bc;
+        border-bottom: 5px solid $fg;
         margin-bottom: 5px;
         #header {
           @include fullWidth;
@@ -491,7 +553,7 @@ header {
             line-height: 2em;
             margin-left: 4 * $si;
             padding-left: 10px;
-            box-shadow: -3px 0 $bc;
+            box-shadow: -3px 0 $bctddd;
             box-sizing: border-box;
             a {
               white-space: pre;
@@ -499,7 +561,7 @@ header {
             }
             @media print {
               box-shadow: none;
-              border-left: 3px solid $bc;
+              border-left: 3px solid $bctddd;
             }
           }
           #ctrl {
@@ -582,6 +644,7 @@ header {
             border-radius: 3px;
             position: relative;
             bottom: 1px;
+            white-space: pre;
             @media print {
               border: 1px solid $fg;
             }
@@ -591,7 +654,7 @@ header {
             width: 100%;
             margin: 20px 0;
             page-break-inside: avoid;
-            background-color: $cbg;
+            background-color: transparent;
             border: {
               color: $bg;
               width: 0;
@@ -600,23 +663,20 @@ header {
             th {
               padding: 5px 10px;
               border-top: none;
-              border-bottom: 3px solid $bc;
+              border-bottom: 3px solid $bctdd;
               border-left: none;
-              border-right: 1px solid $bc;
+              border-right: 1px solid $bctdd;
               &:last-child {
                 border-right: none;
               }
             }
             td {
               @extend th;
-              border-bottom: 1px solid $bc;
-            }
-            thead tr {
-              background-color: lighten($bc, 60%);
+              border-bottom: 1px solid $bctdd;
             }
             tbody tr {
               &:hover {
-                background-color: lighten($bc, 75%);
+                background-color: $bctdd;
               }
               &:focus {
                 @extend :hover;
@@ -629,9 +689,8 @@ header {
               }
             }
             &.footnote {
-              background-color: lighten($bc, 77%);
+              background-color: transparent;
               margin-bottom: 10px;
-              border-bottom: 3px solid $bc;
               tbody tr:hover {
                 background-color: transparent;
               }
@@ -670,24 +729,34 @@ header {
             }
           }
           blockquote {
-            padding: 5px 20px;
+            position: relative;
+            padding: 9px 30px 9px 30px;
             margin-right: 0;
             font-size: 85%;
+            box-sizing: border-box;
             line-height: 1.5em;
-            color: $ifg;
-            background-color: lighten($bc, 20%);
-            a {
+            border-left: 1px solid $bc;
+            box-shadow: inset 6px 0 0 $bctddd;
+            background-color: $bctd;
+            /*
+            &:before {
+              content: '小记';
+              position: absolute;
+              display: block;
+              top: -15px;
+              left: 10px;
+              background-color: $bca;
               color: $ifg;
-              &.external:after {
-                filter: invert(1);
-              }
-              &.internal:hover {
-                color: $ifg;
-              }
+              font-size: $sis;
+              font-weight: bold;
+              line-height: 1em;
+              width: 70px;
+              height: 30px;
+              box-sizing: border-box;
+              padding: 9px 0;
+              text-align: center;
             }
-            code {
-              background-color: $icbg;
-            }
+            */
           }
           .footnote-reference {
             font-size: 60%;
@@ -698,7 +767,7 @@ header {
               @include icon('/theme/images/fa/solid/expand.svg', 20px, 20px, 0.3);
               display: none;
               background-size: 12px;
-              background-color: lighten($bc, 60%);
+              background-color: $bghdd;
               cursor: pointer;
               border: none;
               outline: none;
@@ -794,9 +863,12 @@ header {
           text-decoration: none;
           padding: 5px 10px;
           color: $ifg;
-          background-color: $bc;
+          background-color: $fg;
           position: relative;
           left: 0px;
+          &:hover {
+            background-color: $bc;
+          }
           &#prev {
             text-align: left;
             &:before {
@@ -839,7 +911,7 @@ header {
         @include fullWidth;
         margin: 15px 0;
         padding: 5px 5px 10px 15px;
-        box-shadow: -3px 0 $bc;
+        box-shadow: -3px 0 $bctddd;
         h4 {
           margin: 5px 0 5px 0;
         }
@@ -883,7 +955,7 @@ header {
         ul {
           list-style: none;
           padding: 30px 30px 40px 30px;
-          background-color: $bc;
+          background-color: $bctdd;
           li {
             display: inline-block;
             margin: 0;
@@ -961,59 +1033,12 @@ header {
         }
       }
     }
-    #pager {
-      padding: 0;
-      text-align: center;
-      li {
-        display: inline-block;
-        font-size: $sis;
-        line-height: 1.5em;
-        a {
-          position: relative;
-          left: 0;
-          transition-property: left;
-          transition-duration: 0.1s;
-          text-decoration: none;
-        }
-        a:hover {
-          transition-property: left;
-          transition-duration: 0.1s;
-        }
-        a.disabled:hover {
-          left: 0 !important;;
-        }
-        &.previous {
-          margin-right: 10px;
-          a:before {
-            content: ' ';
-            @include icon('/theme/images/fa/solid/chevron-left.svg', $sis - 1px, $sis - 1px, 0.8);
-            position: relative;
-            top: 1px;
-          }
-          a:hover {
-            left: -3px;
-          }
-        }
-        &.next {
-          margin-left: 10px;
-          a:after {
-            content: ' ';
-            @include icon('/theme/images/fa/solid/chevron-right.svg', $sis - 1px, $sis - 1px, 0.8);
-            position: relative;
-            top: 1px;
-          }
-          a:hover {
-            left: 3px;
-          }
-        }
-      }
-    }
   }
   aside {
     display: none;
     box-sizing: border-box;
     box-shadow: -5px 0 $bc;
-    background-color: lighten($bc, 77%);
+    background-color: transparent;
     padding: 10px 0 10px 10px;
     overflow: auto;
     transition-duration: 0.2s;
@@ -1072,10 +1097,11 @@ header {
     }
     @media screen and (max-width: #{$cewd + $aswd + $aswdm + 50px}) {
       &#narrow {
+        background-color: $bg;
         display: block;
         position: fixed;
         z-index: 999;
-        bottom: calc(45px - 100% + env(safe-area-inset-bottom, "0px"));
+        bottom: calc(55px - 100% + env(safe-area-inset-bottom, "0px"));
         right: $aswdrf;
         width: calc(#{$aswd} + env(safe-area-inset-right, "0px"));
         padding-right: env(safe-area-inset-right, "0px");
@@ -1158,29 +1184,48 @@ header {
 }
 
 footer {
-  &:before {
-    display: block;
-    content: ' ';
-    width: 100%;
-    border-top: 2px solid $bc;
-    opacity: 0.1;
-    position: relative;
-    z-index: -1;
-  }
   position: relative;
+  z-index: 99;
   margin: 30px 0 0 0;
   width: 100%;
   text-align: center;
   font-size: $sis;
   font-family: $monofont;
-  line-height: 1.5em;
+  line-height: 1.6em;
+  overflow: hidden;
+  &:before {
+    content: ' ';
+    position: absolute;
+    z-index: -1;
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: $ftbgtll;
+  }
   &.thelast {
     padding-bottom: env(safe-area-inset-bottom, "0px");
+    /*
+    padding-bottom: calc(45px + env(safe-area-inset-bottom, "0px"));
+    &:after {
+      content: ' ';
+      position: absolute;
+      z-index: -1;
+      display: block;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      bottom: calc(45px + env(safe-area-inset-bottom, "0px") - 100%);
+      background-color: $ftbg;
+    }
+    */
   }
   div.t {
     display: inline-block;
     margin: 10px auto 0 auto;
     position: relative;
+    padding: 20px 10px 2px 10px;
     @media screen and (max-width: 650px) {
       display: table;
     }
@@ -1227,5 +1272,10 @@ footer {
     bottom: 0;
     white-space: pre;
     padding: 0 env(safe-area-inset-right, "0px") env(safe-area-inset-bottom, "0px") 0;
+  }
+  + div, + div + div {
+    position: fixed;
+    z-index: 99999;
+    right: -100%;
   }
 }

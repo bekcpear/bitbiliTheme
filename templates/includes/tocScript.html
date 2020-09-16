@@ -3,6 +3,7 @@
     var asideTop     = 0;
     var asideLeft    = 0;
     var headE        = document.querySelector('body header');
+    var footE        = document.querySelector('body footer');
     var asideE       = document.querySelector('#main aside');
     var articleE     = document.querySelector('#main #centre');
     let asideEcP     = asideE.cloneNode(true);
@@ -24,15 +25,21 @@
     async function scrollCheck() {
       var mainE   = document.getElementById('main');
       var centreE = document.getElementById('centre');
-      if (document.querySelector('html').scrollTop >= 
-        getCPro(headE, 'height') + asideTopInit
+      let scTopHeight = document.querySelector('html').scrollTop;
+      if ( scTopHeight >= getCPro(headE, 'height') + asideTopInit
         + getCPro(mainE, 'padding-top') + getCPro(mainE, 'margin-top')
         + getCPro(centreE, 'padding-top') + getCPro(centreE, 'margin-top')) {
+        let aMaxHeight         = document.documentElement.clientHeight;
         asideE.style.position  = 'fixed';
         asideE.style.top       = asideTop;
         asideE.style.left      = asideLeft;
-        asideE.style.maxHeight = document.documentElement.clientHeight + 'px';
         asideE.style.opacity   = 0.6;
+        let maxScTopHeight     = document.querySelector('html').offsetHeight - aMaxHeight;
+        let footerHeight       = getCPro(footE, 'height');
+        if ((maxScTopHeight - footerHeight) <= scTopHeight) {
+          aMaxHeight -= footerHeight - maxScTopHeight + scTopHeight;
+        }
+        asideE.style.maxHeight =  + aMaxHeight + 'px';
       } else {
         asideE.style.position = 'relative';
         asideE.style.top      = asideTopInit + 'px';
@@ -61,7 +68,7 @@
         asideTopInit = getCPro(asideE, 'top');
       }
       asideLeft     = (left - getCPro(asideE, 'margin-left')) + 'px';        
-      asideE.style.maxHeight = 'unset';
+      asideE.style.maxHeight = document.documentElement.clientHeight + 'px';
       if (window.getComputedStyle(asideE, null).getPropertyValue('position') == 'fixed') {
         asideE.style.top      = asideTop;
         asideE.style.left     = asideLeft;

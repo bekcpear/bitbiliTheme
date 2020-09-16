@@ -5,15 +5,15 @@
   <title>{% macro title() -%}{% block title %}{{ SITENAME }}{% endblock %}{%- endmacro %}{{title()}}</title>
   <!-- Using the latest rendering mode for IE -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover,shrink-to-fit=no" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,shrink-to-fit=no" />
   <meta name="theme-color" content="#fdfdfd" />
   <meta name="msapplication-navbutton-color" content="#fdfdfd" />
   <meta name="apple-mobile-web-app-status-bar-style" content="#fdfdfd" />
 
-  <link rel="icon" type="image/png" href="/static/images/fav.png" sizes="340x340" />
+  <link rel="icon" type="image/png" href="/static/logo/fav.png" sizes="340x340" />
   <link rel="manifest" href="/static/manifest.json" />
-  <link rel="apple-touch-icon" type="image/png" href="/static/images/touch.png" sizes="600x600" />
-  <link rel="mask-icon" href="/static/images/mask-icon.svg" color="#162d50" />
+  <link rel="apple-touch-icon" type="image/png" href="/static/logo/logoForiOS.png" sizes="800x800" />
+  <link rel="mask-icon" href="/static/logo/logoForiOS.svg" color="{{ MAINCOLOR }}" />
   {# Favicons are a touchy subject. also can see: http://stackoverflow.com/a/23851464/872397 #}
 
   {% block canonical_rel %}{% endblock %}
@@ -38,7 +38,7 @@
     {% endif %}
   {% endblock %}
 
-  <link href="/{{ THEME_STATIC_DIR }}/css/style.min.css" rel="stylesheet" />
+  <link href="/{{ THEME_STATIC_DIR }}/css/{{ MAINCSSFILE }}" rel="stylesheet" />
   <link href="/{{ THEME_STATIC_DIR }}/css/pygments/{{ PYGMENTS_STYLE|default('native') }}.css" rel="stylesheet" />
   {% block othercss %}
   {% endblock %}
@@ -56,7 +56,7 @@
       "@context": "http://schema.org",
       "@type": "Organization",
       "url": "{{ MAINSITEURL }}",
-      "logo": "{{ MAINSITEURL }}/static/images/favicon/favicon-96x96.png"
+      "logo": "{{ MAINSITEURL }}/static/logo/fav.png"
     }
   </script>
   <script type="application/ld+json">
@@ -74,7 +74,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('DOMContentLoaded', function() {
-        cacheName = 'sw-precache-moego-me';
+        cacheName = 'sw-precache-bitbili-net';
         caches.has(cacheName).then(function(existed) {
           if (existed) {
             caches.open(cacheName).then(function(cache) {
@@ -156,19 +156,19 @@
   {% endif %}
 </head>
 <body>
-
+  {% block nearbodyscripts %}{% endblock %}
   <div style="display:none" id="title">{{ title() }}</div>
   <header>
     <nav>
     </nav>
     <div id="logo">
-      <span></span>
       <a href="/" title="{{ SITENAME }}">
         <img src="{{ SITELOGO }}" />
       </a>
     </div>
-    <div id="search" class="hidden-print"><gcse:search></gcse:search></div>
+    <!-- <div id="logowm"><a href="/" title="{{ SITENAME }}"></a></div> -->
     <div id="menu" class="hidden-print">
+    <div id="search" class="hidden-print"><div class="gcse-searchbox" data-gname="headersearch"></div></div>
       <ul>
         <li>
           <a href="/{{ TAGS_URL | default('tags.html') }}" tabindex="-1">
@@ -190,28 +190,9 @@
       </ul>
     </div>
   </header>
-  <script>
-    function setBackground(c) {
-      var bd = document.getElementsByTagName('body')[0];
-      var lg = document.querySelector('body #logo a');
-      if (c !== null) {
-        bd.style.backgroundColor = c;
-        lg.style.backgroundColor = c;
-      } else {
-        bd.style.backgroundColor = '';
-        lg.style.backgroundColor = '';
-      }
-    }
-    var bgColor = localStorage.getItem('bgColor') || null;
-    if (bgColor != null) {
-      setBackground(bgColor);
-    }
-    var searchParams = new URLSearchParams(new URL(document.URL).search);
-    if (searchParams.has('gavisitor')) {
-      localStorage.setItem('ga_visitor', searchParams.get('gavisitor'));
-    }
-  </script>
-  <div id="main">
+  {% block mainDivStart %}
+  <div id="main" class="base">
+  {% endblock %}
     <div id="centre">
       {% block content %}
       {% endblock %}
@@ -222,10 +203,15 @@
     </aside>
     <div class="clearfix"></div>
   </div>
-
   {% include 'includes/footer.html' %}
+  <div class="gcse-searchresults" data-gname="headersearch"></div>
+  <div class="gcse-searchresults" data-gname="footersearch"></div>
   <script>
-    window.addEventListener('load', function() {
+    var searchParams = new URLSearchParams(new URL(document.URL).search);
+    if (searchParams.has('gavisitor')) {
+      localStorage.setItem('ga_visitor', searchParams.get('gavisitor'));
+    }
+    window.addEventListener('DOMContentLoaded', function() {
       var externalLinks = document.querySelectorAll('a.external');
       for (var i = 0; i < externalLinks.length; i++) {
         if(externalLinks[i].href !== '') {

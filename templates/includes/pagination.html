@@ -1,14 +1,14 @@
         {% if articles_page and articles_paginator.num_pages > 1 %}
-        <ul id="pager">
+        <div id="pager">
             {% if articles_page.has_previous() %}
-          <li class="previous"><a href="/{{ articles_previous_page.url }}">新的</a></li>
+          <a class="previous" href="/{{ articles_previous_page.url }}"><span>新的</span><div class="indexbg"></div></a>
             {% else %}
-          <li class="previous"><a class="disabled">新的</a></li>
+          <a class="previous disabled"><span>新的</span><div class="indexbg"></div></a>
             {% endif %}
             {% if articles_page.has_next() %}
-          <li class="next"><a href="/{{ articles_next_page.url }}">旧的</a></li>
+          <a class="next" href="/{{ articles_next_page.url }}"><span>旧的</span><div class="indexbg"></div></a>
             {% else %}
-          <li class="next"><a class="disabled">旧的</a></li>
+          <a class="next disabled"><span>旧的</span><div class="indexbg"></div></a>
             {% endif %}
-        </ul>
+        </div>
         {% endif %}

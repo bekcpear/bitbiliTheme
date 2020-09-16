@@ -1,15 +1,15 @@
-#main {
+#main.base {
   max-width: 860px; }
   @media all and (min-width: 1310px) {
-    #main {
+    #main.base {
       max-width: 860px;
       width: calc(100% - 50px);
       padding-left: 0; } }
   @media all and (min-width: 1110px) {
-    #main #centre {
+    #main.base #centre {
       width: 100%; } }
   @media all and (min-width: 1110px) {
-    #main aside {
+    #main.base aside {
       display: none; } }
 
 /*# sourceMappingURL=page.css.map */

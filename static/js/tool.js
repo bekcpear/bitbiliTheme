@@ -1,5 +1,5 @@
 /**
- * A script for moego.me
+ * A script for bitbili.net
  * @author Bekcpear
  * */
 
@@ -14,12 +14,12 @@ var cw      = 14;
 var bw      = 1;
 var pw      = 2;
 var mw      = 5;
-var bcLL    = '#a1aab8';
-var bcNN    = '#2c5aa0';
+var bcLL    = '#a0a0a0';
+var bcNN    = '#eb1846';
 var bc      = bcNN;
-var bcd     = '#162d50';
-var bcL     = '#95accf';
-var bcl     = bcl;
+var bcd     = '#eb1846';
+var bcL     = '#ededed';
+var bcl     = '';
 var dc      = '#ffffff';
 
 var b       = document.getElementsByTagName('body')[0];
@@ -87,6 +87,9 @@ jTop.style.width = h;
 setMaskImage(jTop, 'url(/theme/images/fa/solid/caret-square-up.svg)');
 chBg.style.width = h;
 setMaskImage(chBg, 'url(/theme/images/fa/solid/fill.svg)');
+if (typeof(thisisanarticle) == 'undefined' || !thisisanarticle) {
+  chBg.style.display = 'none';
+}
 
 var chBgDiv = document.createElement('div');
 chBgDiv.style.width = 0;
@@ -289,7 +292,7 @@ chBg.addEventListener('click', function() {
     };
   }
   gray.style.marginLeft        = (mw * 2) + 'px';
-  gray.style.backgroundColor   = '#fff';
+  gray.style.backgroundColor   = '#e8eaed';
   gray.style.borderColor       = '#e7e7e7';
   yellow.style.backgroundColor = '#fff9c4';
   yellow.style.borderColor     = '#ede2df';
@@ -429,7 +432,6 @@ function htsTools() {
     colorWarni.style.bottom = '60px';
   }
 }
-htsTools();
 // check footer height 10 times
 (async function() {
   var loopTime = 0;
@@ -467,18 +469,19 @@ function rdMenu() {
   if (innerW <= 1110) {
     if(document.querySelector('#toc') == null) {
       menuList.style.marginRight = '0';
+      menuList.style.width = '100%';
     }
     appendBox.appendChild(menuList);
     docFooter.className = '';
   } else {
     while(appendBox.firstChild) {
       menuList.style.marginRight = '';
+      menuList.style.width = '';
       appendBox.removeChild(appendBox.firstChild);
     }
     docFooter.className = 'thelast';
   }
 }
-rdMenu();
 
 // wrap pre and table
 var tables = document.querySelectorAll('article table');
@@ -963,11 +966,38 @@ async function handleKeysInit() {
   gTools.addEventListener('focusout', handleKeysAddEve);
 }
 
+// logo water mark
+/*
+var logowm = document.getElementById('logowm');
+async function gScrCheck() {
+  if (document.querySelector('html').scrollTop >= 125) {
+    logowm.style.top = '0';
+    logowm.style.left = '0';
+    logowm.style.opacity = '0.1';
+    logowm.style.transform = 'rotate(0deg)';
+  } else {
+    logowm.style.top = '';
+    logowm.style.left = '';
+    logowm.style.opacity = '';
+    logowm.style.transform = '';
+  }
+}*/
+
 wrapEls(tables, 'table');
 wrapEls(pres, 'pre');
 checkElsWidth(tables, 'table');
 checkElsWidth(pres, 'pre');
 handleKeysInit();
+/*
+gScrCheck();
+window.addEventListener('scroll', function(){
+  gScrCheck();
+});
+*/
+window.addEventListener('DOMContentLoaded', function(){
+  htsTools();
+  rdMenu();
+});
 window.addEventListener('load', function(){
   handleImgs(true);
 });
@@ -975,6 +1005,7 @@ window.addEventListener('load', function(){
 window.addEventListener('resize', function(){
   htsTools();
   rdMenu();
+  //gScrCheck();
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
   handleImgs(false);
@@ -983,6 +1014,7 @@ window.addEventListener('resize', function(){
 window.addEventListener('orientationchange', function(){
   htsTools();
   rdMenu();
+  //gScrCheck();
   checkElsWidth(tables, 'table');
   checkElsWidth(pres, 'pre');
   handleImgs(false);
