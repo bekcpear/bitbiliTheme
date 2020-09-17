@@ -530,11 +530,14 @@ header {
             background-color: #ecf0f5;
             font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
             font-size: 80%;
-            padding: 2px 5px;
+            padding: 0 8px;
             border-radius: 3px;
             position: relative;
-            bottom: 1px;
-            white-space: pre; }
+            bottom: -6px;
+            white-space: pre;
+            display: inline-block;
+            max-width: 100%;
+            overflow: auto; }
             @media print {
               #main.base #centre #article article #content code, #main.base #centre #page article #content code {
                 border: 1px solid #232323; } }
@@ -624,7 +627,7 @@ header {
             display: inline-block;
             width: 20px;
             height: 20px;
-            opacity: 0.3;
+            opacity: 0.5;
             background-color: transparent;
             background-image: url("/theme/images/fa/solid/expand.svg");
             background-repeat: no-repeat;
@@ -632,7 +635,7 @@ header {
             background-position: center;
             display: none;
             background-size: 12px;
-            background-color: #23232330;
+            background-color: #ecf0f5;
             cursor: pointer;
             border: none;
             outline: none;
@@ -648,7 +651,7 @@ header {
             #main.base #centre #article article #content .elWrapperTop button.compress, #main.base #centre #page article #content .elWrapperTop button.compress {
               background-image: url("/theme/images/fa/solid/compress.svg"); }
             #main.base #centre #article article #content .elWrapperTop button:hover, #main.base #centre #page article #content .elWrapperTop button:hover {
-              opacity: 0.5;
+              opacity: 0.8;
               transition-duration: 0.2s;
               transition-property: opacity; }
             @media print {

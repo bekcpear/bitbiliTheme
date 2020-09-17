@@ -635,17 +635,19 @@ header {
             }
           }
           code {
-            background-color: darken($cbg, 3%);
+            background-color: $cbgd;
             font: {
               family: $monofont;
               size: 80%;
             }
-            padding: 2px 5px;
+            padding: 0 8px;
             border-radius: 3px;
             position: relative;
-            bottom: 1px;
+            bottom: -6px;
             white-space: pre;
-            word-break: break-word;
+            display: inline-block;
+            max-width: 100%;
+            overflow: auto;
             @media print {
               border: 1px solid $fg;
             }
@@ -765,10 +767,10 @@ header {
           }
           .elWrapperTop {
             button {
-              @include icon('/theme/images/fa/solid/expand.svg', 20px, 20px, 0.3);
+              @include icon('/theme/images/fa/solid/expand.svg', 20px, 20px, 0.5);
               display: none;
               background-size: 12px;
-              background-color: $bghdd;
+              background-color: $cbgd;
               cursor: pointer;
               border: none;
               outline: none;
@@ -785,7 +787,7 @@ header {
                 background-image: url('/theme/images/fa/solid/compress.svg');
               }
               &:hover {
-                opacity: 0.5;
+                opacity: 0.8;
                 transition-duration: 0.2s;
                 transition-property: opacity;
               }
