@@ -645,6 +645,7 @@ header {
             position: relative;
             bottom: 1px;
             white-space: pre;
+            word-break: break-word;
             @media print {
               border: 1px solid $fg;
             }
