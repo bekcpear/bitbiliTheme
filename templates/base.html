@@ -10,10 +10,10 @@
   <meta name="msapplication-navbutton-color" content="#fdfdfd" />
   <meta name="apple-mobile-web-app-status-bar-style" content="#fdfdfd" />
 
-  <link rel="icon" type="image/png" href="/static/logo/fav.png" sizes="340x340" />
+  <link rel="icon" type="image/png" href="/static/logo/fav.png" sizes="600x600" />
   <link rel="manifest" href="/static/manifest.json" />
-  <link rel="apple-touch-icon" type="image/png" href="/static/logo/logoForiOS.png" sizes="800x800" />
-  <link rel="mask-icon" href="/static/logo/logoForiOS.svg" color="{{ MAINCOLOR }}" />
+  <link rel="apple-touch-icon" type="image/png" href="/static/logo/logoMaskable.png" sizes="300x300" />
+  <link rel="mask-icon" href="/static/logo/logoMaskable.svg" color="{{ MAINCOLOR }}" />
   {# Favicons are a touchy subject. also can see: http://stackoverflow.com/a/23851464/872397 #}
 
   {% block canonical_rel %}{% endblock %}
@@ -174,7 +174,6 @@
     </div>
     <!-- <div id="logowm"><a href="/" title="{{ SITENAME }}"></a></div> -->
     <div id="menu" class="hidden-print">
-    <div id="search" class="hidden-print"><div class="gcse-searchbox" data-gname="headersearch"></div></div>
       <ul>
         <li>
           <a href="/{{ TAGS_URL | default('tags.html') }}" tabindex="-1">
@@ -195,6 +194,7 @@
         </li>
       </ul>
     </div>
+    <div id="search" class="hidden-print"><div class="gcse-searchbox" data-gname="headersearch"></div></div>
   </header>
   {% block mainDivStart %}
   <div id="main" class="base">
@@ -213,10 +213,6 @@
   <div class="gcse-searchresults" data-gname="headersearch"></div>
   <div class="gcse-searchresults" data-gname="footersearch"></div>
   <script>
-    var searchParams = new URLSearchParams(new URL(document.URL).search);
-    if (searchParams.has('gavisitor')) {
-      localStorage.setItem('ga_visitor', searchParams.get('gavisitor'));
-    }
     window.addEventListener('DOMContentLoaded', function() {
       var externalLinks = document.querySelectorAll('a.external');
       for (var i = 0; i < externalLinks.length; i++) {

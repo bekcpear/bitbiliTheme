@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block html_lang %}{{ page.lang }}{% endblock %}
+  {% set langname = dict(zh_hans="zh-Hans", en="en-US") %}
+  {% block html_lang %}{{ langname[page.lang] }}{% endblock %}
   {% block title %}{{ page.title }}&ensp;-&ensp;{{ SITENAME }}{% endblock %}
 
   {% block meta %}

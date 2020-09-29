@@ -1,10 +1,50 @@
 /**
- * A browser checking script for bitbili.net
+ * check scripts for bitbili.net
  * @author Bekcpear
  * */
 
 'use strict';
 
+// Set google analystic ignore param
+var searchParams = new URLSearchParams(new URL(document.URL).search);
+if (searchParams.has('gavisitor')) {
+  localStorage.setItem('ga_visitor', searchParams.get('gavisitor'))
+}
+
+// check if from my old domain and notify
+if (searchParams.has('from')) {
+  if(searchParams.get('from') == "moego") {
+    var popf        = document.createElement("div");
+    popf.id     = "popf";
+		var closePopf = function() {
+      let popfparams = new URL(document.URL).search;
+      popfparams = popfparams.replace(/(&from=moego)|(from=moego[&]?)/, '');
+      window.history.replaceState(null, '', popfparams);
+      popf.style.bottom = "-100px";
+      setTimeout(function() {
+        document.body.removeChild(popf);
+      }, 500);
+    }
+    var popf_t0     = document.createTextNode("您好，本站原域名 moego.me 已经停用，之后请改用新域名 bitbili.net 访问。 ");
+    var popf_a      = document.createElement("a");
+		var popf_at     = document.createTextNode("已知悉");
+    popf.style  = "position: fixed; bottom: -100px; left: 0; padding: 20px 10px; width: 100%; box-sizing: border-box; text-align: center; background-color: #eb1846; color: #fff; font-size: 16px; z-index: 99; transition-property: bottom; transition-duration: 0.2s;";
+
+    popf_a.addEventListener("click", closePopf);
+		popf_a.style= "cursor: pointer; color: #fff; font-weight: bold; margin: 0 5px; text-decoration: underline dotted;";
+    popf_a.appendChild(popf_at);
+
+    popf.appendChild(popf_t0);
+    popf.appendChild(popf_a);
+
+    document.body.appendChild(popf);
+    setTimeout(function() {
+      popf.style.bottom = 0;
+    }, 500);
+  }
+}
+
+// Browser checking script START
 async function checkBrowser() {
   if (localStorage.getItem('iBc') || sessionStorage.getItem('iBc')) return false;
   else if (navigator.userAgent.indexOf('Edge/') > -1) true;
@@ -101,3 +141,4 @@ async function checkBrowser() {
   }, 2000);
 }
 checkBrowser();
+// Browser checking script END 

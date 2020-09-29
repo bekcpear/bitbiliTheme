@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block html_lang %}{{ article.lang }}{% endblock %}
+  {% set langname = dict(zh_hans="zh-Hans", en="en-US") %}
+  {% block html_lang %}{{ langname[article.lang] }}{% endblock %}
   {% block title %}{{ article.title|striptags }}&ensp;-&ensp;{{ SITENAME }}{% endblock %}
 
   {% block meta %}
@@ -43,7 +44,7 @@
         {% if article.featured_image %}
         "url": "{{ MAINSITEURL }}/{{ article.featured_image }}",
         {% else %}
-        "url": "{{ MAINSITEURL }}{{ SITELOGO }}",
+        "url": "{{ MAINSITEURL }}{{ SITELOGOPNG }}",
         {% endif %}
         "width": 600,
         "height": 600
@@ -63,7 +64,7 @@
         "name": "{{ SITENAME }}",
         "logo": {
           "@type": "ImageObject",
-          "url": "{{ MAINSITEURL }}{{ SITELOGO }}",
+          "url": "{{ MAINSITEURL }}{{ SITELOGOPNG }}",
           "width": 600,
           "height": 600
         }

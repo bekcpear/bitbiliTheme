@@ -9,6 +9,8 @@
 * 优化打印效果
 * 简单的 vim 移动快捷键，冲突键加 Alt
 
+主题使用了部分免费的 Font Awesome 图标：https://fontawesome.com/icons?d=gallery&m=free
+
 代码许可： **MIT**
 
 Logo 版权所有 请勿使用

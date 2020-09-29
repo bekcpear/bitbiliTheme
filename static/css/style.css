@@ -40,6 +40,24 @@ a {
     text-decoration: solid underline;
     transition-property: all;
     transition-duration: 0.2s; }
+  a.package {
+    background-color: #54487A;
+    color: #fdfdfd;
+    font-size: 80%;
+    padding: 0 8px;
+    margin-right: 13px;
+    border-radius: 3px;
+    position: relative;
+    bottom: 2px;
+    white-space: pre;
+    display: inline-flex;
+    max-width: 100%;
+    overflow: visible;
+    text-indent: 0px;
+    text-decoration: none; }
+    @media print {
+      a.package {
+        margin-right: 0; } }
   a.external:after {
     content: ' ';
     vertical-align: super;
@@ -58,6 +76,27 @@ a {
     transition-duration: 0.2s; }
     @media print {
       a.external:after {
+        display: none; } }
+  a.package:after {
+    content: ' ';
+    vertical-align: super;
+    margin-left: 2px;
+    filter: grayscale(1);
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    opacity: 0.3;
+    background-color: transparent;
+    background-image: url("/theme/images/fa/solid/cube.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    right: -12px;
+    transition-property: all;
+    transition-duration: 0.2s; }
+    @media print {
+      a.package:after {
         display: none; } }
   a.external:hover:after {
     opacity: 0.8;
@@ -526,20 +565,35 @@ header {
             word-break: break-word; }
           #main.base #centre #article article #content li p, #main.base #centre #page article #content li p {
             text-indent: initial; }
-          #main.base #centre #article article #content code, #main.base #centre #page article #content code {
-            background-color: #ecf0f5;
+          #main.base #centre #article article #content code, #main.base #centre #page article #content code, #main.base #centre #article article #content kbd, #main.base #centre #page article #content kbd {
             font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
             font-size: 80%;
-            padding: 0 8px;
             border-radius: 3px;
             position: relative;
-            bottom: -6px;
+            bottom: 2px;
             white-space: pre;
-            display: inline-block;
+            display: inline-flex;
             max-width: 100%;
-            overflow: auto; }
+            text-indent: 0px; }
+          #main.base #centre #article article #content kbd, #main.base #centre #page article #content kbd {
+            padding: 0 5px;
+            background-color: #2b2b2b;
+            font-weight: bold;
+            color: #fdfdfd;
+            box-shadow: 1px 1px 3px #00000070; }
             @media print {
-              #main.base #centre #article article #content code, #main.base #centre #page article #content code {
+              #main.base #centre #article article #content kbd, #main.base #centre #page article #content kbd {
+                box-shadow: none; } }
+          #main.base #centre #article article #content code, #main.base #centre #page article #content code {
+            background-color: #ecf0f5;
+            padding: 0 8px;
+            overflow: auto; }
+            #main.base #centre #article article #content code.file, #main.base #centre #page article #content code.file {
+              padding: 0;
+              bottom: 1px;
+              background-color: transparent; }
+            @media print {
+              #main.base #centre #article article #content code.code, #main.base #centre #page article #content code.code {
                 border: 1px solid #232323; } }
           #main.base #centre #article article #content table, #main.base #centre #page article #content table {
             box-sizing: border-box;
@@ -934,6 +988,7 @@ header {
         bottom: calc(55px - 100% + env(safe-area-inset-bottom, "0px"));
         right: -100px;
         width: calc(180px + env(safe-area-inset-right, "0px"));
+        padding: 0;
         padding-right: env(safe-area-inset-right, "0px");
         height: 100%;
         max-height: 100%;
@@ -954,14 +1009,51 @@ header {
             transition: opacity 0.5s;
             transition-timing-function: cubic-bezier(0, 1, 0.68, 0.68); }
         #main.base aside#narrow #toc {
+          padding: 0 0 10px;
+          position: relative;
+          box-sizing: border-box;
           height: 100%; }
+          #main.base aside#narrow #toc h3 {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            height: 40px;
+            padding: 10px 0 0 15px;
+            border-bottom: none;
+            box-sizing: border-box;
+            background-color: #ffffff60;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); }
           #main.base aside#narrow #toc .toc {
-            max-height: calc(100% - 40px);
-            margin-top: 10px;
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            left: 10px;
+            padding: 0;
+            max-height: 100%;
+            margin: 0;
             overflow: auto;
             opacity: 0;
             transition: opacity 0.5s;
-            transition-timing-function: cubic-bezier(0.32, 0.32, 1, 0); } }
+            transition-timing-function: cubic-bezier(0.32, 0.32, 1, 0); }
+            #main.base aside#narrow #toc .toc > ul {
+              margin: 0;
+              padding-top: 50px;
+              padding-bottom: 40px;
+              padding-right: 5px; }
+          #main.base aside#narrow #toc:after {
+            content: ' ';
+            position: absolute;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            height: 30px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff60;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); } }
     #main.base aside #toc h3 {
       margin: 0;
       border-bottom: 1px solid #eb1846; }

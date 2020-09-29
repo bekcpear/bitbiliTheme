@@ -81,12 +81,44 @@ a {
     text-decoration: $lho;
     @include transition;
   }
+  &.package {
+    background-color: $pkgbg;
+    color: $ifg;
+    font-size: 80%;
+    padding: 0 8px;
+    margin-right: 13px;
+    border-radius: 3px;
+    position: relative;
+    bottom: 2px;
+    white-space: pre;
+    display: inline-flex;
+    max-width: 100%;
+    overflow: visible;
+    text-indent: 0px;
+    text-decoration: none;
+    @media print {
+      margin-right: 0;
+    }
+  }
   &.external:after {
     content: ' ';
     vertical-align: super;
     margin-left: 2px;
     filter: grayscale(1);
     @include icon('/theme/images/fa/solid/external-link-alt.svg', 10px, 10px, 0.3);
+    @include transition;
+    @media print {
+      display: none;
+    }
+  }
+  &.package:after {
+    content: ' ';
+    vertical-align: super;
+    margin-left: 2px;
+    filter: grayscale(1);
+    @include icon('/theme/images/fa/solid/cube.svg', 10px, 10px, 0.3);
+    position: absolute;
+    right: -12px;
     @include transition;
     @media print {
       display: none;
@@ -634,22 +666,42 @@ header {
               text-indent: initial;
             }
           }
-          code {
-            background-color: $cbgd;
+          code, kbd {
             font: {
               family: $monofont;
               size: 80%;
             }
-            padding: 0 8px;
             border-radius: 3px;
             position: relative;
-            bottom: -6px;
+            bottom: 2px;
             white-space: pre;
-            display: inline-block;
+            display: inline-flex;
             max-width: 100%;
-            overflow: auto;
+            text-indent: 0px;
+          }
+          kbd {
+            padding: 0 5px;
+            background-color: #2b2b2b;
+            font-weight: bold;
+            color: $ifg;
+            box-shadow: 1px 1px 3px #00000070;
             @media print {
-              border: 1px solid $fg;
+              box-shadow: none;
+            }
+          }
+          code {
+            background-color: $cbgd;
+            padding: 0 8px;
+            overflow: auto;
+            &.file {
+              padding: 0;
+              bottom: 1px;
+              background-color: transparent;
+            }
+            @media print {
+              &.code {
+                border: 1px solid $fg;
+              }
             }
           }
           table {
@@ -1107,6 +1159,7 @@ header {
         bottom: calc(55px - 100% + env(safe-area-inset-bottom, "0px"));
         right: $aswdrf;
         width: calc(#{$aswd} + env(safe-area-inset-right, "0px"));
+        padding: 0;
         padding-right: env(safe-area-inset-right, "0px");
         height: 100%;
         max-height: 100%;
@@ -1131,14 +1184,54 @@ header {
           }
         }
         #toc {
+          padding: 0 0 10px;
+          position: relative;
+          box-sizing: border-box;
           height: 100%;
+          h3 {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            height: 40px;
+            padding: 10px 0 0 15px;
+            border-bottom: none;
+            box-sizing: border-box;
+            background-color: #ffffff60;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+          }
           .toc {
-            max-height: calc(100% - 40px);
-            margin-top: 10px;
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            left: 10px;
+            padding: 0;
+            max-height: 100%;
+            margin: 0;
             overflow: auto;
             opacity: 0;
             transition: opacity 0.5s;
             transition-timing-function: cubic-bezier(0.32, 0.32, 1, 0);
+            > ul {
+              margin: 0;
+              padding-top: 50px;
+              padding-bottom: 40px;
+              padding-right: 5px;
+            }
+          }
+          &:after {
+            content: ' ';
+            position: absolute;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            height: 30px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff60;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
           }
         }
       }
