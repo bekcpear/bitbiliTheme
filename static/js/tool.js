@@ -842,19 +842,19 @@ var broTyp = 'chr'
 if (navigator.userAgent.indexOf('Trident') > -1
     || ( navigator.userAgent.indexOf('Safari') > -1
       && navigator.userAgent.indexOf('Chrome') <= -1)) broTyp = 'nchr';
-function cusScroll(x, y, act) {
+function cusScroll(x, y, act, behav = 'smooth') {
   if (broTyp == 'chr') {
     if (act == 'by') {
       window.scrollBy({
         top: y,
         left: x,
-        behavior: 'smooth'
+        behavior: behav
       });
     } else if (act == 'to') {
       window.scrollTo({
         top: y,
         left: x,
-        behavior: 'smooth'
+        behavior: behav
       });
     }
   } else {
@@ -866,6 +866,8 @@ function cusScroll(x, y, act) {
   }
 }
 var lastKeyup = [-1, 0];
+var kDown = false;
+var jDown = false;
 var lastCoor = [0, 0];
 var htmlE = document.querySelector('html');
 async function handleKeysdown(e) {
@@ -875,13 +877,23 @@ async function handleKeysdown(e) {
     case 75: //up k
       if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
         lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
-        cusScroll(0, 0 - lHei, 'by');
+        if (kDown) {
+          cusScroll(0, 0 - lHei, 'by', 'auto');
+        } else {
+          cusScroll(0, 0 - lHei, 'by');
+        }
+        kDown = true;
       }
       break;
     case 74: //down j
       if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
         lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];
-        cusScroll(0, lHei, 'by');
+        if (jDown) {
+          cusScroll(0, lHei, 'by', 'auto');
+        } else {
+          cusScroll(0, lHei, 'by');
+        }
+        jDown = true;
       }
       break;
     case 69: //down line with Alt-Ctrl-E
@@ -924,6 +936,12 @@ async function handleKeysdown(e) {
 }
 async function handleKeysup(e) {
   switch (e.keyCode) {
+    case 75: //up k
+      kDown = false;
+      break;
+    case 74: //down j
+      jDown = false;
+      break;
     case 71: //scroll to bottom with shift-g
       if (!e.altKey && !e.ctrlKey && !e.metaKey && e.shiftKey) {
         lastCoor = [htmlE.scrollLeft, htmlE.scrollTop];

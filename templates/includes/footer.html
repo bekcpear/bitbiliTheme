@@ -6,7 +6,7 @@
         <li class="hidden-print"><a href="/archives.html">文章归档</a></li>
         <li>作者： <a href="/{{ ABOUT_PAGE | default('about.html') }}">{{ AUTHOR }}</a></li>
         <li>网站由 <a href="http://docs.getpelican.com/" target="_blank">Pelican</a> 驱动</li>
-        <li class="hidden-print" title="文章内容或主题的最后更新时间与总次数">更新于 {{MIGVERSION | default('0')}}</li>
+        <li class="hidden-print" title="文章内容或主题的最后更新时间与总次数">更新于 <span id="vernum">loading..</span></li>
       </ul>
       <div id="license">
         <img class="cc" src="/theme/images/fa/brands/creative-commons.svg" />

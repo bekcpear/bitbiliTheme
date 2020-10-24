@@ -6,9 +6,9 @@
   <!-- Using the latest rendering mode for IE -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,shrink-to-fit=no" />
-  <meta name="theme-color" content="#fdfdfd" />
-  <meta name="msapplication-navbutton-color" content="#fdfdfd" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="#fdfdfd" />
+  <meta name="theme-color" content="#eb1846" />
+  <meta name="msapplication-navbutton-color" content="#eb1846" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#eb1846" />
 
   <link rel="icon" type="image/png" href="/static/logo/fav.png" sizes="600x600" />
   <link rel="manifest" href="/static/manifest.json" />
@@ -25,16 +25,13 @@
   {# Open Graph tags #}
   {% block opengraph %}
   <!-- Open Graph tags -->
-    {% if OPEN_GRAPH_FB_APP_ID %}
-  <meta property="fb:app_id" content="{{ OPEN_GRAPH_FB_APP_ID }}" />
-    {% endif %}
   <meta property="og:site_name" content="{{ SITENAME }}" />
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="{{ SITENAME }}" />
   <meta property="og:url" content="{{ SITEURL }}" />
   <meta property="og:description" content="{{ SITEDESC }}" />
     {% if OPEN_GRAPH_IMAGE %}
-  <meta property="og:image" content="{{ SITEURL }}/{{ OPEN_GRAPH_IMAGE }}" />
+  <meta property="og:image" content="{{ SITEURL }}{{ OPEN_GRAPH_IMAGE }}" />
     {% endif %}
   {% endblock %}
 
@@ -51,24 +48,19 @@
   {% endif %}
   {% block indentJudge %}
   {% endblock %}
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "Organization",
-      "url": "{{ MAINSITEURL }}",
-      "logo": "{{ MAINSITEURL }}/static/logo/fav.png"
-    }
-  </script>
+  {% block schemaMeta %}
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
       "@type": "WebSite",
       "name": "{{ SITENAME }}",
-      "alternateName": "{{ SITECNAME }}",
-      "url": "{{ MAINSITEURL }}"
+      "url": "{{ MAINSITEURL }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ AUTHOR }}"
+      }
     }
   </script>
-  {% block schemaMeta %}
   {% endblock %}
   {% if SERVICEWORKER %}
   <script>
@@ -260,7 +252,6 @@
             console.warn('Connection to Google custom search engine timed out.');
           } else {
             console.warn('Cannot connected to Google custom search engine.');
-            console.log(err);
           }});
       })();
     });

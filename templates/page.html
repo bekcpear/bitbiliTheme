@@ -1,7 +1,7 @@
 {% extends "base.html" %}
   {% set langname = dict(zh_hans="zh-Hans", en="en-US") %}
   {% block html_lang %}{{ langname[page.lang] }}{% endblock %}
-  {% block title %}{{ page.title }}&ensp;-&ensp;{{ SITENAME }}{% endblock %}
+  {% block title %}{{ page.title }}&ensp;-&ensp;{{ SITENAMEL }}{% endblock %}
 
   {% block meta %}
     {% if page.author %}
@@ -19,7 +19,7 @@
   {% endblock %}
 
   {% block indentJudge %}
-    {% if (page.lang == 'zh' or page.lang == 'zh-Hans' or page.lang == 'zh-Hant') and page.indent %}
+    {% if (page.lang == 'zh' or page.lang == 'zh_hans' or page.lang == 'zh_hant') and page.indent %}
   <style>
     p {
       text-indent: 2em;
@@ -29,20 +29,40 @@
   {% endblock %}
 
   {% block opengraph %}
-    {% if OPEN_GRAPH_FB_APP_ID %}
-  <meta property="fb:app_id" content="{{ OPEN_GRAPH_FB_APP_ID }}"/>
-    {% endif %}
   <meta property="og:site_name" content="{{ SITENAME }}" />
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="{{ page.title|striptags|escape }}"/>
   <meta property="og:url" content="{{ SITEURL }}/{{ page.url }}"/>
   <meta property="og:description" content="{{ page.summary|striptags|escape }}" />
-    {% if page.og_image %}
-  <meta property="og:image" content="{{ SITEURL }}/{{ page.og_image }}"/>
-    {% elif OPEN_GRAPH_IMAGE %}
-  <meta property="og:image" content="{{ SITEURL }}/{{ OPEN_GRAPH_IMAGE }}"/>
+  {% endblock %}
+
+  {% block schemaMeta %}
+    {% if page.slug == 'about' %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ SITENAME }}",
+      "url": "{{ MAINSITEURL }}",
+      "logo": "{{ MAINSITEURL }}{{ SITELOGOPNG }}"
+    }
+  </script>
+    {% else %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ SITENAME }}",
+      "url": "{{ MAINSITEURL }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ AUTHOR }}"
+      }
+    }
+  </script>
     {% endif %}
   {% endblock %}
+
 
   {% block canonical_rel %}
   <link rel="canonical" href="{{ SITEURL }}/{{ page.url }}">

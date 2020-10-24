@@ -647,33 +647,84 @@ header {
             text-indent: initial; }
           #main.base #centre #article article #content blockquote, #main.base #centre #page article #content blockquote {
             position: relative;
-            padding: 9px 30px 9px 30px;
-            margin-right: 0;
             font-size: 85%;
+            line-height: 1.5em;
+            padding: 9px 30px 9px 30px;
+            background-color: #a9a9a910; }
+            #main.base #centre #article article #content blockquote:before, #main.base #centre #page article #content blockquote:before {
+              content: ' ';
+              display: inline-block;
+              width: 1.8em;
+              height: 1.8em;
+              opacity: 0.2;
+              background-color: transparent;
+              background-image: url("/theme/images/fa/solid/quote-left.svg");
+              background-repeat: no-repeat;
+              background-size: contain;
+              background-position: center;
+              position: absolute;
+              z-index: -1;
+              top: 5px;
+              left: 20px; }
+          #main.base #centre #article article #content .admonition, #main.base #centre #page article #content .admonition {
+            display: block;
+            margin: 1em 0 1em 40px;
+            position: relative;
+            padding: 9px 30px 9px 30px;
             box-sizing: border-box;
+            font-size: 85%;
             line-height: 1.5em;
             border-left: 1px solid #eb1846;
             box-shadow: inset 6px 0 0 #eb1846c0;
-            background-color: #eb184621;
-            /*
-            &:before {
-              content: '小记';
-              position: absolute;
-              display: block;
-              top: -15px;
-              left: 10px;
-              background-color: $bca;
-              color: $ifg;
-              font-size: $sis;
-              font-weight: bold;
-              line-height: 1em;
-              width: 70px;
-              height: 30px;
-              box-sizing: border-box;
+            background-color: #eb184621; }
+            #main.base #centre #article article #content .admonition .admonition-title, #main.base #centre #page article #content .admonition .admonition-title {
+              display: none; }
+            #main.base #centre #article article #content .admonition.admonition-t-s, #main.base #centre #page article #content .admonition.admonition-t-s {
+              margin: 1em 0;
               padding: 9px 0;
-              text-align: center;
-            }
-            */ }
+              font-size: 100%;
+              box-shadow: none;
+              border-left: none;
+              background-color: #2b8acf03; }
+              #main.base #centre #article article #content .admonition.admonition-t-s .admonition-title, #main.base #centre #page article #content .admonition.admonition-t-s .admonition-title {
+                font-size: 85%;
+                font-weight: bold;
+                display: inline-block;
+                height: 2em;
+                line-height: 2em;
+                width: 60px;
+                margin-bottom: 0;
+                padding: 0;
+                text-align: center;
+                vertical-align: top;
+                background-color: #eb1846;
+                color: #fdfdfd; }
+              #main.base #centre #article article #content .admonition.admonition-t-s p, #main.base #centre #page article #content .admonition.admonition-t-s p {
+                padding: 3px 20px 3px 2em; }
+              #main.base #centre #article article #content .admonition.admonition-t-s .elWrapperTop, #main.base #centre #page article #content .admonition.admonition-t-s .elWrapperTop {
+                margin-bottom: 0 !important; }
+              #main.base #centre #article article #content .admonition.admonition-t-s .last, #main.base #centre #page article #content .admonition.admonition-t-s .last {
+                position: relative;
+                box-shadow: 0 -2px 0 0 #2b8acf;
+                padding-top: 9px;
+                padding-bottom: 9px;
+                margin: 0; }
+                #main.base #centre #article article #content .admonition.admonition-t-s .last:before, #main.base #centre #page article #content .admonition.admonition-t-s .last:before {
+                  content: ' ';
+                  position: absolute;
+                  display: inline-block;
+                  width: 1.5em;
+                  height: 2em;
+                  opacity: 1;
+                  background-color: transparent;
+                  background-image: url("/theme/images/fa/solid/check-white.svg");
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  background-position: center;
+                  background-color: #2b8acf;
+                  background-size: 0.8em;
+                  top: 0;
+                  left: 0; }
           #main.base #centre #article article #content .footnote-reference, #main.base #centre #page article #content .footnote-reference {
             font-size: 60%;
             vertical-align: super; }
@@ -1005,8 +1056,10 @@ header {
           outline: none;
           border-left: 5px solid rgba(235, 24, 70, 0.8); }
           #main.base aside#narrow:hover #toc .toc, #main.base aside#narrow:focus #toc .toc {
+            left: 10px;
             opacity: 1;
-            transition: opacity 0.5s;
+            transition-property: opacity, left;
+            transition-duration: 0.5s;
             transition-timing-function: cubic-bezier(0, 1, 0.68, 0.68); }
         #main.base aside#narrow #toc {
           padding: 0 0 10px;
@@ -1029,13 +1082,15 @@ header {
             position: absolute;
             z-index: 0;
             top: 0;
-            left: 10px;
+            left: 150px;
             padding: 0;
+            width: calc(100% - 10px);
             max-height: 100%;
             margin: 0;
             overflow: auto;
             opacity: 0;
-            transition: opacity 0.5s;
+            transition-property: opacity, left;
+            transition-duration: 0.5s;
             transition-timing-function: cubic-bezier(0.32, 0.32, 1, 0); }
             #main.base aside#narrow #toc .toc > ul {
               margin: 0;

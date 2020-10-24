@@ -142,3 +142,17 @@ async function checkBrowser() {
 }
 checkBrowser();
 // Browser checking script END 
+
+
+// get version number and write to html footer
+async function setVernum(){
+  var vernumE = document.getElementById('vernum');
+  function vernumComplete () {
+    vernumE.innerText = this.responseText;
+  }
+  var vernumReq = new XMLHttpRequest();
+  vernumReq.addEventListener("load", vernumComplete);
+  vernumReq.open("GET", "https://bitbili.net/version.txt");
+  vernumReq.send();
+}
+setVernum();

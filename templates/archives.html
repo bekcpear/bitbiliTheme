@@ -2,6 +2,10 @@
 
   {% block title %}归档 - {{ SITENAME }}{% endblock %}
 
+  {% block canonical_rel %}
+  <link rel="canonical" href="{{ SITEURL }}/archives.html">
+  {% endblock %}
+
   {% block othercss %}
   <link href="/{{ THEME_STATIC_DIR }}/css/page.css" rel="stylesheet" />
   {% endblock %}

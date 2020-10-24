@@ -785,33 +785,77 @@ header {
           }
           blockquote {
             position: relative;
-            padding: 9px 30px 9px 30px;
-            margin-right: 0;
             font-size: 85%;
+            line-height: 1.5em;
+            &:before {
+              content: ' ';
+              @include icon('/theme/images/fa/solid/quote-left.svg', 1.8em, 1.8em, 0.2);
+              position: absolute;
+              z-index: -1;
+              top: 5px;
+              left: 20px;
+            }
+            padding: 9px 30px 9px 30px;
+            background-color: $bghd;
+          }
+          .admonition {
+            .admonition-title {
+              display: none;
+            }
+            display: block;
+            margin: 1em 0 1em 40px;
+            position: relative;
+            padding: 9px 30px 9px 30px;
             box-sizing: border-box;
+            font-size: 85%;
             line-height: 1.5em;
             border-left: 1px solid $bc;
             box-shadow: inset 6px 0 0 $bctddd;
             background-color: $bctd;
-            /*
-            &:before {
-              content: '小记';
-              position: absolute;
-              display: block;
-              top: -15px;
-              left: 10px;
-              background-color: $bca;
-              color: $ifg;
-              font-size: $sis;
-              font-weight: bold;
-              line-height: 1em;
-              width: 70px;
-              height: 30px;
-              box-sizing: border-box;
+            &.admonition-t-s {
+              .admonition-title {
+                font-size: 85%;
+                font-weight: bold;
+                display: inline-block;
+                height: 2em;
+                line-height: 2em;
+                width: 60px;
+                margin-bottom: 0;
+                padding: 0;
+                text-align: center;
+                vertical-align: top;
+                background-color: $bc;
+                color: $ifg;
+              }
+              margin: 1em 0;
               padding: 9px 0;
-              text-align: center;
+              font-size: 100%;
+              box-shadow: none;
+              border-left: none;
+              background-color: $bcatd;
+              p {
+                padding: 3px 20px 3px 2em;
+              }
+              .elWrapperTop {
+                margin-bottom: 0 !important;
+              }
+              .last {
+                position: relative;
+                box-shadow: 0 -2px 0 0 $bca;
+                padding-top: 9px;
+                padding-bottom: 9px;
+                margin: 0;
+                &:before {
+                  content: ' ';
+                  position: absolute;
+                  @include icon('/theme/images/fa/solid/check-white.svg', 1.5em, 2em, 1);
+                  background-color: $bca;
+                  background-size: 0.8em;
+                  top: 0;
+                  left: 0;
+                }
+              }
             }
-            */
           }
           .footnote-reference {
             font-size: 60%;
@@ -1177,8 +1221,10 @@ header {
           border-left: 5px solid transparentize($bc, 0.2);
           #toc {
             .toc {
+              left: 10px;
               opacity: 1;
-              transition: opacity 0.5s;
+              transition-property: opacity, left;
+              transition-duration: 0.5s;
               transition-timing-function: cubic-bezier(0, 1, 0.68, 0.68);
             }
           }
@@ -1205,13 +1251,15 @@ header {
             position: absolute;
             z-index: 0;
             top: 0;
-            left: 10px;
+            left: 150px;
             padding: 0;
+            width: calc(100% - 10px);
             max-height: 100%;
             margin: 0;
             overflow: auto;
             opacity: 0;
-            transition: opacity 0.5s;
+            transition-property: opacity, left;
+            transition-duration: 0.5s;
             transition-timing-function: cubic-bezier(0.32, 0.32, 1, 0);
             > ul {
               margin: 0;
