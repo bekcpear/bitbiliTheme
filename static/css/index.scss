@@ -207,6 +207,9 @@ body {
           color: var(--section-color);
           opacity: 0.3;
           width: 320px;
+          overflow: visible;
+          word-break: keep-all;
+          white-space: pre;
           text-align: right;
           transition-property: color;
           transition-duration: 0.2s;
