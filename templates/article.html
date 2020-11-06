@@ -9,7 +9,10 @@
     {% else %}
   <meta name="author" content="{{ AUTHOR }}" />
     {% endif %}
-    {% if article.tags %}
+    {% if article.mykeywords %}
+      {% set mykeywords = article.mykeywords.split(',') %}
+  <meta name="keywords" content="{{ mykeywords|join(',')|striptags }}" />
+    {% elif article.tags %}
   <meta name="keywords" content="{{ article.tags|join(',')|striptags }}" />
     {% endif %}
     {% if article.description and article.summary %}
