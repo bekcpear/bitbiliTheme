@@ -649,7 +649,7 @@ header {
             position: relative;
             font-size: 85%;
             line-height: 1.5em;
-            padding: 9px 30px 9px 30px;
+            padding: 9px 30px 9px 55px;
             background-color: #a9a9a910; }
             #main.base #centre #article article #content blockquote:before, #main.base #centre #page article #content blockquote:before {
               content: ' ';
@@ -666,6 +666,8 @@ header {
               z-index: -1;
               top: 5px;
               left: 20px; }
+            #main.base #centre #article article #content blockquote p, #main.base #centre #page article #content blockquote p {
+              text-indent: unset; }
           #main.base #centre #article article #content .admonition, #main.base #centre #page article #content .admonition {
             display: block;
             margin: 1em 0 1em 40px;

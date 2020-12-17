@@ -795,8 +795,11 @@ header {
               top: 5px;
               left: 20px;
             }
-            padding: 9px 30px 9px 30px;
+            padding: 9px 30px 9px 55px;
             background-color: $bghd;
+            p {
+              text-indent: unset;
+            }
           }
           .admonition {
             .admonition-title {
