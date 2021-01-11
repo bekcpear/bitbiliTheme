@@ -484,7 +484,7 @@ function rdMenu() {
 }
 
 // wrap pre and table
-var tables = document.querySelectorAll('article table');
+var tables = document.querySelectorAll('article table:not(.footnote)');
 var pres   = document.querySelectorAll('article pre');
 var mainDi = document.querySelector('#main');
 var scrET0 = document.createElement('div');

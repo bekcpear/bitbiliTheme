@@ -43,7 +43,7 @@ a {
   a.package {
     background-color: #54487A;
     color: #fdfdfd;
-    font-size: 80%;
+    font-size: 12.8px;
     padding: 0 8px;
     margin-right: 13px;
     border-radius: 3px;
@@ -318,7 +318,7 @@ header {
   /*
   #logowm {
     display: block;
-		width: $heh / 4;
+    width: $heh / 4;
     height: $heh / 4;
     position: fixed;
     top: $heh / -2;
@@ -496,7 +496,7 @@ header {
             box-sizing: border-box;
             padding: 5px 0 5px 0; }
             #main.base #centre #article article #header #headline h1, #main.base #centre #page article #header #headline h1 {
-              font-size: 3em;
+              font-size: 48px;
               line-height: 1.5em;
               margin-bottom: 10px;
               word-break: break-word; }
@@ -559,7 +559,7 @@ header {
         #main.base #centre #article article #content, #main.base #centre #page article #content {
           padding: 5px 0; }
           #main.base #centre #article article #content h2, #main.base #centre #page article #content h2 {
-            font-size: 2em;
+            font-size: 32px;
             line-height: 1.5em; }
           #main.base #centre #article article #content p, #main.base #centre #page article #content p, #main.base #centre #article article #content a, #main.base #centre #page article #content a, #main.base #centre #article article #content li, #main.base #centre #page article #content li, #main.base #centre #article article #content h2, #main.base #centre #page article #content h2, #main.base #centre #article article #content h3, #main.base #centre #page article #content h3, #main.base #centre #article article #content h4, #main.base #centre #page article #content h4, #main.base #centre #article article #content h5, #main.base #centre #page article #content h5 {
             word-break: break-word; }
@@ -567,7 +567,7 @@ header {
             text-indent: initial; }
           #main.base #centre #article article #content code, #main.base #centre #page article #content code, #main.base #centre #article article #content kbd, #main.base #centre #page article #content kbd {
             font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
-            font-size: 80%;
+            font-size: 12.8px;
             border-radius: 3px;
             position: relative;
             bottom: 2px;
@@ -620,9 +620,16 @@ header {
               border-bottom: none; }
             #main.base #centre #article article #content table.footnote, #main.base #centre #page article #content table.footnote {
               background-color: transparent;
-              margin-bottom: 10px; }
+              margin-bottom: 5px;
+              font-size: 12.8px;
+              line-height: 1.5em; }
               #main.base #centre #article article #content table.footnote tbody tr:hover, #main.base #centre #page article #content table.footnote tbody tr:hover, #main.base #centre #article article #content table.footnote tbody tr:focus, #main.base #centre #page article #content table.footnote tbody tr:focus, #main.base #centre #article article #content table.footnote tbody tr:active, #main.base #centre #page article #content table.footnote tbody tr:active {
                 background-color: transparent; }
+              #main.base #centre #article article #content table.footnote tbody tr td.label, #main.base #centre #page article #content table.footnote tbody tr td.label {
+                width: 2em;
+                box-sizing: border-box; }
+              #main.base #centre #article article #content table.footnote + table.footnote, #main.base #centre #page article #content table.footnote + table.footnote {
+                margin-top: none; }
           #main.base #centre #article article #content a.fn-backref, #main.base #centre #page article #content a.fn-backref {
             word-break: keep-all; }
           #main.base #centre #article article #content a.internal:hover, #main.base #centre #page article #content a.internal:hover {
@@ -647,7 +654,7 @@ header {
             text-indent: initial; }
           #main.base #centre #article article #content blockquote, #main.base #centre #page article #content blockquote {
             position: relative;
-            font-size: 85%;
+            font-size: 13.6px;
             line-height: 1.5em;
             padding: 9px 30px 9px 55px;
             background-color: #a9a9a910; }
@@ -674,7 +681,7 @@ header {
             position: relative;
             padding: 9px 30px 9px 30px;
             box-sizing: border-box;
-            font-size: 85%;
+            font-size: 13.6px;
             line-height: 1.5em;
             border-left: 1px solid #eb1846;
             box-shadow: inset 6px 0 0 #eb1846c0;
@@ -684,12 +691,12 @@ header {
             #main.base #centre #article article #content .admonition.admonition-t-s, #main.base #centre #page article #content .admonition.admonition-t-s {
               margin: 1em 0;
               padding: 9px 0;
-              font-size: 100%;
+              font-size: 16px;
               box-shadow: none;
               border-left: none;
               background-color: #2b8acf03; }
               #main.base #centre #article article #content .admonition.admonition-t-s .admonition-title, #main.base #centre #page article #content .admonition.admonition-t-s .admonition-title {
-                font-size: 85%;
+                font-size: 13.6px;
                 font-weight: bold;
                 display: inline-block;
                 height: 2em;
@@ -728,7 +735,7 @@ header {
                   top: 0;
                   left: 0; }
           #main.base #centre #article article #content .footnote-reference, #main.base #centre #page article #content .footnote-reference {
-            font-size: 60%;
+            font-size: 9.6px;
             vertical-align: super; }
           #main.base #centre #article article #content .elWrapperTop button, #main.base #centre #page article #content .elWrapperTop button {
             display: inline-block;
@@ -792,7 +799,7 @@ header {
             margin: 20px 0;
             padding: 20px;
             font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
-            font-size: 90%;
+            font-size: 14.4px;
             line-height: 1.5em; }
             @media print {
               #main.base #centre #article article #content pre, #main.base #centre #page article #content pre {
@@ -824,7 +831,7 @@ header {
         display: table;
         margin-top: 5px;
         margin-bottom: 15px;
-        font-size: 85%;
+        font-size: 13.6px;
         font-weight: bold;
         line-height: 1.5em; }
         #main.base #centre #article #prevnext a, #main.base #centre #page #prevnext a {
@@ -918,7 +925,7 @@ header {
     #main.base #centre #page {
       padding-bottom: 20px; }
       #main.base #centre #page h1 {
-        font-size: 3em;
+        font-size: 48px;
         line-height: 1.5em;
         margin-bottom: 10px;
         word-break: break-word; }
@@ -932,19 +939,19 @@ header {
           display: inline-block;
           margin: 0; }
           #main.base #centre #page.tags ul li.tag-4 {
-            font-size: 80%; }
+            font-size: 12.8px; }
             #main.base #centre #page.tags ul li.tag-4 a {
               padding: 1px 2px; }
           #main.base #centre #page.tags ul li.tag-3 {
-            font-size: 120%; }
+            font-size: 19.2px; }
             #main.base #centre #page.tags ul li.tag-3 a {
               padding: 2px 3px; }
           #main.base #centre #page.tags ul li.tag-2 {
-            font-size: 160%; }
+            font-size: 25.6px; }
             #main.base #centre #page.tags ul li.tag-2 a {
               padding: 3px 3px; }
           #main.base #centre #page.tags ul li.tag-1 {
-            font-size: 200%; }
+            font-size: 32px; }
             #main.base #centre #page.tags ul li.tag-1 a {
               padding: 4px 5px; }
           #main.base #centre #page.tags ul li a {
@@ -1129,11 +1136,11 @@ header {
           #main.base aside #toc ul li a.lastActive, #main.base aside #toc ul li a:hover {
             text-decoration: solid underline; }
         #main.base aside #toc ul li ul {
-          font-size: 90%;
+          font-size: 14.4px;
           font-weight: normal;
           line-height: 1.5em; }
           #main.base aside #toc ul li ul ul {
-            font-size: 90%;
+            font-size: 14.4px;
             line-height: 1.5em; }
           #main.base aside #toc ul li ul strong {
             font-weight: normal; }
@@ -1193,7 +1200,7 @@ footer {
         white-space: pre; }
       @media screen and (max-width: 650px) {
         footer div.t ul {
-          font-size: 95%; } }
+          font-size: 11.4px; } }
     footer div.t div#license {
       display: table-cell;
       text-align: left;
@@ -1208,7 +1215,7 @@ footer {
         footer div.t div#license img {
           width: 18px; }
         footer div.t div#license span {
-          font-size: 95%; } }
+          font-size: 11.4px; } }
   footer #tool {
     position: fixed;
     z-index: 10;

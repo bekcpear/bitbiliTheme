@@ -84,7 +84,7 @@ a {
   &.package {
     background-color: $pkgbg;
     color: $ifg;
-    font-size: 80%;
+    font-size: 0.8 * $si;
     padding: 0 8px;
     margin-right: 13px;
     border-radius: 3px;
@@ -206,7 +206,7 @@ ul, menu, dir {
       float: left;
       width: calc(100% / 3);
       font-size: $sis;
-      line-height: 1.5em;
+      line-height: $lh;
       a {
         display: inline-block;
         color: $fgt;
@@ -432,7 +432,7 @@ header {
   /*
   #logowm {
     display: block;
-		width: $heh / 4;
+    width: $heh / 4;
     height: $heh / 4;
     position: fixed;
     top: $heh / -2;
@@ -572,8 +572,8 @@ header {
             @include fullWidth;
             padding: 5px 0 5px 0;
             h1 {
-              font-size: 3em;
-              line-height: 1.5em;
+              font-size: 3 * $si;
+              line-height: $lh;
               margin-bottom: 10px;
               word-break: break-word;
             }
@@ -629,7 +629,7 @@ header {
             width: calc(100% - #{4 * $si});
             display: block;
             font-size: $sis - 2px;
-            line-height: 1.5em;
+            line-height: $lh;
             padding-top: 10px;
             time {
               display: block;
@@ -655,8 +655,8 @@ header {
         #content {
           padding: 5px 0;
           h2 {
-            font-size: 2em;
-            line-height: 1.5em;
+            font-size: 2 * $si;
+            line-height: $lh;
           }
           p, a, li, h2, h3, h4, h5 {
             word-break: break-word;
@@ -667,13 +667,14 @@ header {
             }
           }
           code, kbd {
+            position: relative;
             font: {
               family: $monofont;
               size: 80%;
             }
+            line-height: 2em;
             border-radius: 3px;
-            position: relative;
-            bottom: 2px;
+            bottom: 0.1em;
             white-space: pre;
             display: inline-flex;
             max-width: 100%;
@@ -695,7 +696,7 @@ header {
             overflow: auto;
             &.file {
               padding: 0;
-              bottom: 1px;
+              bottom: unset;
               background-color: transparent;
             }
             @media print {
@@ -745,9 +746,23 @@ header {
             }
             &.footnote {
               background-color: transparent;
-              margin-bottom: 10px;
-              tbody tr:hover {
-                background-color: transparent;
+              margin-bottom: 5px;
+              position: relative;
+              font-size: 0.8 * $si;
+              line-height: $lh;
+              tbody {
+                tr {
+                  &:hover {
+                    background-color: transparent;
+                  }
+                  td.label {
+                    width: 2em;
+                    box-sizing: border-box;
+                  }
+                }
+              }
+              + table.footnote {
+                margin-top: 0;
               }
             }
           }
@@ -785,8 +800,8 @@ header {
           }
           blockquote {
             position: relative;
-            font-size: 85%;
-            line-height: 1.5em;
+            font-size: 0.85 * $si;
+            line-height: $lh;
             &:before {
               content: ' ';
               @include icon('/theme/images/fa/solid/quote-left.svg', 1.8em, 1.8em, 0.2);
@@ -810,14 +825,15 @@ header {
             position: relative;
             padding: 9px 30px 9px 30px;
             box-sizing: border-box;
-            font-size: 85%;
-            line-height: 1.5em;
+            position: relative;
+            font-size: 0.85 * $si;
+            line-height: $lh;
             border-left: 1px solid $bc;
             box-shadow: inset 6px 0 0 $bctddd;
             background-color: $bctd;
             &.admonition-t-s {
               .admonition-title {
-                font-size: 85%;
+                font-size: 0.85 * $si;
                 font-weight: bold;
                 display: inline-block;
                 height: 2em;
@@ -832,7 +848,8 @@ header {
               }
               margin: 1em 0;
               padding: 9px 0;
-              font-size: 100%;
+              position: relative;
+              font-size: $si;
               box-shadow: none;
               border-left: none;
               background-color: $bcatd;
@@ -861,7 +878,7 @@ header {
             }
           }
           .footnote-reference {
-            font-size: 60%;
+            font-size: 0.6 * $si;
             vertical-align: super;
           }
           .elWrapperTop {
@@ -922,9 +939,9 @@ header {
             padding: 20px;
             font: {
               family: $monofont;
-              size: 90%;
+              size: 0.9 * $si;
             }
-            line-height: 1.5em;
+            line-height: $lh;
             @media print {
               white-space: pre-wrap;
               white-space: -moz-pre-wrap;
@@ -940,7 +957,7 @@ header {
           max-width: 100%;
           padding: 15px 10px;
           display: none;
-          line-height: 1.5em;
+          line-height: $lh;
           overflow: auto;
           background-color: $cbg;
           pre {
@@ -956,9 +973,9 @@ header {
         display: table;
         margin-top: 5px;
         margin-bottom: 15px;
-        font-size: 85%;
+        font-size: 0.85 * $si;
         font-weight: bold;
-        line-height: 1.5em;
+        line-height: $lh;
         a {
           @include halfWidth;
           display: table-cell;
@@ -1022,14 +1039,14 @@ header {
           padding: 0 0 0 15px;
           margin: 0;
           font-size: 12px;
-          line-height: 1.5em;
+          line-height: $lh;
         }
       }
       #comments {
         @include fullWidth;
         font-size: $sis;
         font-weight: bold;
-        line-height: 1.5em;
+        line-height: $lh;
         > a#show-disqus {
           cursor: pointer;
           text-decoration: none;
@@ -1043,8 +1060,8 @@ header {
       @extend #article;
       padding-bottom: 20px;
       h1 {
-        font-size: 3em;
-        line-height: 1.5em;
+        font-size: 3 * $si;
+        line-height: $lh;
         margin-bottom: 10px;
         word-break: break-word;
       }
@@ -1062,25 +1079,25 @@ header {
             display: inline-block;
             margin: 0;
             &.tag-4 {
-              font-size: 80%;
+              font-size: 0.8 * $si;
               a {
                 padding: 1px 2px;
               }
             }
             &.tag-3 {
-              font-size: 120%;
+              font-size: 1.2 * $si;
               a {
                 padding: 2px 3px;
               }
             }
             &.tag-2 {
-              font-size: 160%;
+              font-size: 1.6 * $si;
               a {
                 padding: 3px 3px;
               }
             }
             &.tag-1 {
-              font-size: 200%;
+              font-size: 2 * $si;
               a {
                 padding: 4px 5px;
               }
@@ -1288,6 +1305,7 @@ header {
       }
     }
     #toc {
+      position: relative;
       h3 {
         margin: 0;
         border-bottom: 1px solid $bc;
@@ -1297,9 +1315,10 @@ header {
       }
       ul {
         list-style-type: none;
+        position: relative;
         font-size: $si * 0.8;
         font-weight: bold;
-        line-height: 1.5em;
+        line-height: $lh;
         padding-left: 1em;
         li {
           word-break: break-word;
@@ -1313,12 +1332,14 @@ header {
             }
           }
           ul {
-            font-size: 90%;
+            position: relative;
+            font-size: 0.8 * 0.9 * $si;
             font-weight: normal;
-            line-height: 1.5em;
+            line-height: $lh;
             ul {
-              font-size: 90%;
-              line-height: 1.5em;
+              position: relative;
+              font-size: 0.8 * 0.81 * $si;
+              line-height: $lh;
             }
             strong {
               font-weight: normal;
@@ -1387,7 +1408,7 @@ footer {
         white-space: pre;
       }
       @media screen and (max-width: 650px) {
-        font-size: 95%;
+        font-size: 0.95 * $sis;
       }
     }
     div#license {
@@ -1407,7 +1428,7 @@ footer {
           width: $sis * 1.5;
         }
         span {
-          font-size: 95%;
+          font-size: 0.95 * $sis;
         }
       }
     }
