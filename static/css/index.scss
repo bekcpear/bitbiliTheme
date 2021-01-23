@@ -284,6 +284,13 @@ body {
               border: none;
               word-break: break-word;
             }
+            a.package {
+              background-color: inherit;
+              bottom: unset;
+              &::after {
+                content: none;
+              }
+            }
             a:hover {
               color: $bc;
             }
