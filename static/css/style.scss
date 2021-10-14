@@ -98,6 +98,9 @@ a {
     text-decoration: none;
     @media print {
       margin-right: 0;
+      color: $pkgbg;
+      background-color: transparent;
+      border: 1px solid $pkgbg;
     }
   }
   &.external:after {
@@ -658,6 +661,18 @@ header {
             font-size: 2 * $si;
             line-height: $lh;
           }
+          h3 {
+            font-size: 1.5 * $si;
+            line-height: $lh;
+          }
+          h4 {
+            font-size: 1.2 * $si;
+            line-height: $lh;
+          }
+          h5 {
+            font-size: $si;
+            line-height: $lh;
+          }
           p, a, li, h2, h3, h4, h5 {
             word-break: break-word;
           }
@@ -796,6 +811,10 @@ header {
             dt {
               font-weight: bold;
               text-indent: initial;
+              margin-inline-start: 10px;
+            }
+            dd {
+              margin-inline-start: 40px;
             }
           }
           blockquote {
@@ -875,6 +894,16 @@ header {
                   left: 0;
                 }
               }
+            }
+            &.warning {
+              .admonition-title {
+                display: block;
+                color: $warncolor;
+                font-weight: bold;
+              }
+              border-left: 1px solid $warncolor;
+              box-shadow: inset 6px 0 0 $warncolor;
+              background-color: $warncolorlight;
             }
           }
           .footnote-reference {

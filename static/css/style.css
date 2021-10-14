@@ -57,7 +57,10 @@ a {
     text-decoration: none; }
     @media print {
       a.package {
-        margin-right: 0; } }
+        margin-right: 0;
+        color: #54487A;
+        background-color: transparent;
+        border: 1px solid #54487A; } }
   a.external:after {
     content: ' ';
     vertical-align: super;
@@ -561,16 +564,26 @@ header {
           #main.base #centre #article article #content h2, #main.base #centre #page article #content h2 {
             font-size: 32px;
             line-height: 1.5em; }
+          #main.base #centre #article article #content h3, #main.base #centre #page article #content h3 {
+            font-size: 24px;
+            line-height: 1.5em; }
+          #main.base #centre #article article #content h4, #main.base #centre #page article #content h4 {
+            font-size: 19.2px;
+            line-height: 1.5em; }
+          #main.base #centre #article article #content h5, #main.base #centre #page article #content h5 {
+            font-size: 16px;
+            line-height: 1.5em; }
           #main.base #centre #article article #content p, #main.base #centre #page article #content p, #main.base #centre #article article #content a, #main.base #centre #page article #content a, #main.base #centre #article article #content li, #main.base #centre #page article #content li, #main.base #centre #article article #content h2, #main.base #centre #page article #content h2, #main.base #centre #article article #content h3, #main.base #centre #page article #content h3, #main.base #centre #article article #content h4, #main.base #centre #page article #content h4, #main.base #centre #article article #content h5, #main.base #centre #page article #content h5 {
             word-break: break-word; }
           #main.base #centre #article article #content li p, #main.base #centre #page article #content li p {
             text-indent: initial; }
           #main.base #centre #article article #content code, #main.base #centre #page article #content code, #main.base #centre #article article #content kbd, #main.base #centre #page article #content kbd {
-            font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
-            font-size: 12.8px;
-            border-radius: 3px;
             position: relative;
-            bottom: 2px;
+            font-family: "Fira Mono", "DejaVu Sans Mono", "Noto Sans Mono CJK SC", "Noto Sans Mono CJK TC", Consolas, "Microsoft Yahei", monospace;
+            font-size: 80%;
+            line-height: 2em;
+            border-radius: 3px;
+            bottom: 0.1em;
             white-space: pre;
             display: inline-flex;
             max-width: 100%;
@@ -590,7 +603,7 @@ header {
             overflow: auto; }
             #main.base #centre #article article #content code.file, #main.base #centre #page article #content code.file {
               padding: 0;
-              bottom: 1px;
+              bottom: unset;
               background-color: transparent; }
             @media print {
               #main.base #centre #article article #content code.code, #main.base #centre #page article #content code.code {
@@ -621,6 +634,7 @@ header {
             #main.base #centre #article article #content table.footnote, #main.base #centre #page article #content table.footnote {
               background-color: transparent;
               margin-bottom: 5px;
+              position: relative;
               font-size: 12.8px;
               line-height: 1.5em; }
               #main.base #centre #article article #content table.footnote tbody tr:hover, #main.base #centre #page article #content table.footnote tbody tr:hover, #main.base #centre #article article #content table.footnote tbody tr:focus, #main.base #centre #page article #content table.footnote tbody tr:focus, #main.base #centre #article article #content table.footnote tbody tr:active, #main.base #centre #page article #content table.footnote tbody tr:active {
@@ -629,7 +643,7 @@ header {
                 width: 2em;
                 box-sizing: border-box; }
               #main.base #centre #article article #content table.footnote + table.footnote, #main.base #centre #page article #content table.footnote + table.footnote {
-                margin-top: none; }
+                margin-top: 0; }
           #main.base #centre #article article #content a.fn-backref, #main.base #centre #page article #content a.fn-backref {
             word-break: keep-all; }
           #main.base #centre #article article #content a.internal:hover, #main.base #centre #page article #content a.internal:hover {
@@ -651,7 +665,10 @@ header {
                 cursor: zoom-out; }
           #main.base #centre #article article #content dl dt, #main.base #centre #page article #content dl dt {
             font-weight: bold;
-            text-indent: initial; }
+            text-indent: initial;
+            margin-inline-start: 10px; }
+          #main.base #centre #article article #content dl dd, #main.base #centre #page article #content dl dd {
+            margin-inline-start: 40px; }
           #main.base #centre #article article #content blockquote, #main.base #centre #page article #content blockquote {
             position: relative;
             font-size: 13.6px;
@@ -681,6 +698,7 @@ header {
             position: relative;
             padding: 9px 30px 9px 30px;
             box-sizing: border-box;
+            position: relative;
             font-size: 13.6px;
             line-height: 1.5em;
             border-left: 1px solid #eb1846;
@@ -691,6 +709,7 @@ header {
             #main.base #centre #article article #content .admonition.admonition-t-s, #main.base #centre #page article #content .admonition.admonition-t-s {
               margin: 1em 0;
               padding: 9px 0;
+              position: relative;
               font-size: 16px;
               box-shadow: none;
               border-left: none;
@@ -734,6 +753,14 @@ header {
                   background-size: 0.8em;
                   top: 0;
                   left: 0; }
+            #main.base #centre #article article #content .admonition.warning, #main.base #centre #page article #content .admonition.warning {
+              border-left: 1px solid #f0b37e;
+              box-shadow: inset 6px 0 0 #f0b37e;
+              background-color: #ffedcc; }
+              #main.base #centre #article article #content .admonition.warning .admonition-title, #main.base #centre #page article #content .admonition.warning .admonition-title {
+                display: block;
+                color: #f0b37e;
+                font-weight: bold; }
           #main.base #centre #article article #content .footnote-reference, #main.base #centre #page article #content .footnote-reference {
             font-size: 9.6px;
             vertical-align: super; }
@@ -1118,32 +1145,37 @@ header {
             background-color: #ffffff60;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px); } }
-    #main.base aside #toc h3 {
-      margin: 0;
-      border-bottom: 1px solid #eb1846; }
-    #main.base aside #toc .topic-title {
-      display: none; }
-    #main.base aside #toc ul {
-      list-style-type: none;
-      font-size: 12.8px;
-      font-weight: bold;
-      line-height: 1.5em;
-      padding-left: 1em; }
-      #main.base aside #toc ul li {
-        word-break: break-word; }
-        #main.base aside #toc ul li a {
-          text-decoration: none; }
-          #main.base aside #toc ul li a.lastActive, #main.base aside #toc ul li a:hover {
-            text-decoration: solid underline; }
-        #main.base aside #toc ul li ul {
-          font-size: 14.4px;
-          font-weight: normal;
-          line-height: 1.5em; }
-          #main.base aside #toc ul li ul ul {
-            font-size: 14.4px;
+    #main.base aside #toc {
+      position: relative; }
+      #main.base aside #toc h3 {
+        margin: 0;
+        border-bottom: 1px solid #eb1846; }
+      #main.base aside #toc .topic-title {
+        display: none; }
+      #main.base aside #toc ul {
+        list-style-type: none;
+        position: relative;
+        font-size: 12.8px;
+        font-weight: bold;
+        line-height: 1.5em;
+        padding-left: 1em; }
+        #main.base aside #toc ul li {
+          word-break: break-word; }
+          #main.base aside #toc ul li a {
+            text-decoration: none; }
+            #main.base aside #toc ul li a.lastActive, #main.base aside #toc ul li a:hover {
+              text-decoration: solid underline; }
+          #main.base aside #toc ul li ul {
+            position: relative;
+            font-size: 11.52px;
+            font-weight: normal;
             line-height: 1.5em; }
-          #main.base aside #toc ul li ul strong {
-            font-weight: normal; }
+            #main.base aside #toc ul li ul ul {
+              position: relative;
+              font-size: 10.368px;
+              line-height: 1.5em; }
+            #main.base aside #toc ul li ul strong {
+              font-weight: normal; }
 
 footer {
   position: relative;
