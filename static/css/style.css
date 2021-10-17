@@ -753,6 +753,14 @@ header {
                   background-size: 0.8em;
                   top: 0;
                   left: 0; }
+            #main.base #centre #article article #content .admonition.tip, #main.base #centre #page article #content .admonition.tip {
+              border-left: 1px solid #7986cb;
+              box-shadow: inset 6px 0 0 #7986cb;
+              background-color: #e6effd; }
+              #main.base #centre #article article #content .admonition.tip .admonition-title, #main.base #centre #page article #content .admonition.tip .admonition-title {
+                display: block;
+                color: #7986cb;
+                font-weight: bold; }
             #main.base #centre #article article #content .admonition.warning, #main.base #centre #page article #content .admonition.warning {
               border-left: 1px solid #f0b37e;
               box-shadow: inset 6px 0 0 #f0b37e;
