@@ -82,7 +82,7 @@
           notificationDisplayed = true;
           // display notification
           var popup         = document.createElement("div");
-          var popupText     = document.createTextNode("当前处于脱机浏览模式");
+          var popupText     = document.createTextNode("当前处于离线浏览状态");
           var popupLink     = document.createElement("a");
           var popupLinkText = document.createTextNode("X");
           popupLink.addEventListener("click", () => {
@@ -94,9 +94,6 @@
           popup.className   = "popup";
           document.body.appendChild(popup);
         }
-        console.log(fetchDidFail);
-        console.log(handlerDidCompleteStatus);
-        console.log(notificationDisplayed);
       });
       wb.register();
     }

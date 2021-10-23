@@ -2,3 +2,7 @@
 node_modules
 .yarnclean
 yarn-error.log
+dist/*
+src/js/service-worker.js
+static/js/main.min.js
+static/css/*.css*
