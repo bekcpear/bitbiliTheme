@@ -342,7 +342,7 @@ chBg.addEventListener('click', function() {
     }
     return c;
   }
-  
+
   colorInput.oninput = function() {
     var c = checkValid(colorInput.value);
     if (typeof(c) == 'object') {
@@ -409,9 +409,9 @@ function htsTools() {
     chBg.style.backgroundColor = bc;
     jTop.style.backgroundColor = bc;
     chBgDiv.style.backgroundColor = bc;
-    var alertOffsetHeighx = window.innerHeight 
+    var alertOffsetHeighx = window.innerHeight
         - parseInt(getCompSty(document.querySelector('body'), 'height'));
-    var alertOffsetHeight = (alertOffsetHeighx > 0 ? alertOffsetHeighx : 0) 
+    var alertOffsetHeight = (alertOffsetHeighx > 0 ? alertOffsetHeighx : 0)
         + footerHeight;
     for (var i = 0; i < colorNotis.length; ++i) {
       colorNotis[i].style.bottom = alertOffsetHeight + 'px';
@@ -631,7 +631,7 @@ async function wrapEls(els, tName) {
         this.className = 'compress';
       } else {
         this.nextSibling.style.width = '';
-        this.nextSibling.style.left = ''; 
+        this.nextSibling.style.left = '';
         this.nextSibling.style.height = getWrapperResetHeight(this.nextSibling, tName, this.nextSibling.style.overflowX == 'scroll')[0] + 'px';
         this.nextSibling.querySelector(tName).style.width = 'min-content';
         this.nextSibling.querySelector(tName).style.paddingLeft = '20px';

@@ -63,92 +63,11 @@
   </script>
   {% endblock %}
   {% if SERVICEWORKER %}
-  <script>
-    var lastHtmlContent = '';
+  <script type="module">
+    import {Workbox} from '/static/workbox-window.prod.mjs';
     if ('serviceWorker' in navigator) {
-      cacheName = 'sw-precache-bitbili-net';
-      caches.has(cacheName).then((existed) => {
-        if (existed) {
-          caches.open(cacheName).then((cache) => {
-            var url = document.URL;
-            if ( ! url.endsWith("html")) {
-              url = url + "index.html#";
-              url = url.match(/([^#]+)(?:#)/)[1];
-            }
-            cache.match(url, {ignoreSearch: true}).then((response) => {
-              if (response) {
-                response.text().then((content) => {
-                  lastHtmlContent = content;
-                  navigator.serviceWorker.addEventListener('message', event => {
-                    if (event.data.msg == "newInstalled") {
-                      console.log('Got ServiceWorker new installed or updated message.');
-                      setTimeout(() => {
-                        caches.open(cacheName).then((cache) => {
-                          cache.match(url, {ignoreSearch: true}).then((response) => {
-                            if (response) {
-                              response.text().then((content) => {
-                                if (! (lastHtmlContent === content)) {
-                                  lastHtmlContent = content;
-                                  console.log('A new version of this page existed.');
-                                  var popr        = document.createElement("div");
-                                  var popr_t0     = document.createTextNode("当前页存在较新的版本，点击");
-                                  var popr_a      = document.createElement("a");
-                                  var popr_at     = document.createTextNode("这里");
-                                  var popr_t1     = document.createTextNode("刷新");
-
-                                  popr_a.addEventListener('click', function(){window.location.reload(true);});
-                                  popr_a.style= "cursor: pointer; color: #fff; font-weight: bold; margin: 0 5px; text-decoration: underline dotted;";
-                                  popr_a.appendChild(popr_at);
-                                  popr.appendChild(popr_t0);
-                                  popr.appendChild(popr_a);
-                                  popr.appendChild(popr_t1);
-                                  popr.id     = "popr";
-                                  popr.style  = "position: fixed; top: -100px; left: 0; padding: 20px 10px; width: 100%; box-sizing: border-box; text-align: center; background-color: #2c5aa0; color: #fff; font-weight: bold; z-index: 99; transition-property: top; transition-duration: 0.1s;";
-
-                                  var popr_d  = document.createElement("a");
-                                  var popr_dt = document.createTextNode("忽略");
-                                  popr_d.appendChild(popr_dt);
-                                  popr_d.style= "display: block; padding: 5px 10px; box-sizing: border-box; position: absolute; bottom: -25px; right: env(safe-area-inset-right, '0px'); font-size: 10px; line-height: 1.5em; text-decoration: none; color: #fff; background-color: #2c5aa0; cursor: pointer;";
-                                  popr_d.addEventListener("click", function() {
-                                    popr.style.top = "-100px";
-                                    setTimeout(function() {
-                                      document.body.removeChild(popr);
-                                    }, 500);
-                                  });
-                                  popr.appendChild(popr_d);
-                                  document.body.appendChild(popr);
-                                  setTimeout(function() {
-                                    popr.style.top = 0;
-                                  }, 500);
-                                }
-                              });
-                            }
-                          });
-                        });
-                      }, 1000);
-                    }
-                  });
-                });
-              }
-            });
-          });
-        }
-      });
-      window.addEventListener('DOMContentLoaded', () => {
-        navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          window.setTimeout(function() {
-            console.log('updating ServiceWorker..');
-            registration.update();
-            window.setInterval(function() {
-              console.log('updating ServiceWorker..');
-              registration.update();
-            }, 600000);
-          }, 20000);
-        }, (err) => {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      });
+      const wb = new Workbox('/sw.js');
+      wb.register();
     }
   </script>
   {% endif %}
@@ -230,8 +149,7 @@
       }
     });
   </script>
-  <script src='/theme/js/bchk.js'></script>
-  <script src='/theme/js/tool.js'></script>
+  <script src='/theme/js/main.min.js'></script>
   {% block scripts %}{% endblock %}
   {% include 'includes/ga.html' %}
   <script>
