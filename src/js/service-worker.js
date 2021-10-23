@@ -1,13 +1,14 @@
 import { registerRoute, setCatchHandler } from 'workbox-routing';
 import { cleanupOutdatedCaches, precacheAndRoute, matchPrecache } from 'workbox-precaching';
 import { NetworkFirst, StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { messageSW } from 'workbox-window';
 // Used for filtering matches based on status code, header, or both
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 // Used to limit entries in cache, remove entries after a certain period of time
 import { ExpirationPlugin } from 'workbox-expiration';
 
 // Ensure your build step is configured to include /offline.html as part of your precache manifest.
-precacheAndRoute([{"revision":"06288afb25d59bde84c059d8333e5d1c","url":"offline.html"},{"revision":"3465362be4fde67c566a2331b4536a83","url":"offline.rst"},{"revision":"473b9f586fea1686c4e081be74c14346","url":"offline.rst.html"}]);
+precacheAndRoute([{"revision":"e481949730cbd89884ed93cdb1a398f2","url":"offline.html"},{"revision":"3465362be4fde67c566a2331b4536a83","url":"offline.rst"},{"revision":"473b9f586fea1686c4e081be74c14346","url":"offline.rst.html"}]);
 cleanupOutdatedCaches();
 // Catch routing errors, like if the user is offline
 setCatchHandler(async ({ event }) => {
@@ -18,6 +19,36 @@ setCatchHandler(async ({ event }) => {
   return Response.error();
 });
 
+// custom Plugin
+const myPlugin = {
+  cacheDidUpdate: async ({cacheName, request, oldResponse, newResponse, event, state}) => {
+    // remove the old same caches
+    caches.open(cacheName).then((cache) => {
+      cache.matchAll(request, {ignoreSearch: true}).then((response) => {
+        if ( response.length > 1 ) {
+          var newestItem = response[0];
+          for ( var i = 1; i < response.length; i++ ) {
+            if ( Date.parse(response[i].headers.get('date')) > Date.parse(newestItem.headers.get('date')) ) {
+              cache.delete(newestItem.url, {ignoreSearch: false});
+              newestItem = response[i];
+            }
+          }
+        }
+      });
+    })
+  },
+  fetchDidFail: async ({originalRequest, request, error, event, state}) => {
+    self.clients.get(event.resultingClientId).then((client) => {
+      client.postMessage({type: "FETCH_DID_FAIL"});
+    });
+  },
+  handlerDidComplete: async ({request, response, error, event, state}) => {
+    self.clients.get(event.resultingClientId).then((client) => {
+      client.postMessage({type: "HANDLER_DID_COMPLETE", status: response.status});
+    });
+  }
+}
+
 // Cache page navigations (html) with a Network First strategy
 registerRoute(
   // Check to see if the request is a navigation to a new page
@@ -27,6 +58,7 @@ registerRoute(
     // Put all cached files in a cache named 'pages'
     cacheName: 'pages',
     plugins: [
+      myPlugin,
       // Ensure that only requests that result in a 200 status are cached
       new CacheableResponsePlugin({
         statuses: [200],
@@ -36,6 +68,10 @@ registerRoute(
         maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
       }),
     ],
+    // ignore URL params when matching cache
+    matchOptions: {
+      ignoreSearch: true,
+    },
   }),
 );
 

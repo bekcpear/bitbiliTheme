@@ -1,5 +1,6 @@
 // style for bitbili.net
 
+@use "sass:math";
 @import 'variable.scss';
 
 // compontents
@@ -70,6 +71,54 @@ body {
   padding: 0;
   width: 50%;
   box-sizing: border-box;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: block;
+  width: 200px;
+  height: 30px;
+  box-sizing: border-box;
+  line-height: 1em;
+  color: $ftbgt;
+  background-color: $bghdd;
+  font: {
+    size: $sis;
+    family: $monofont;
+  }
+  padding: 9px 10px;
+  a {
+    color: transparent;
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    border-left: dotted 1px $ftbgtl;
+    &:hover, &:focus {
+      color: transparent;
+    }
+    &:before, &:after {
+      position: absolute;
+      left: 13px;
+      top: 5px;
+      content: ' ';
+      height: 20px;
+      width: 4px;
+      background-color: $ftbgtlm;
+    }
+    &:before {
+      transform: rotate(45deg);
+    }
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
 }
 
 a {
@@ -415,10 +464,10 @@ header {
     a {
       display: block;
       position: relative;
-      width: $heh / 2;
-      height: $heh / 2;
+      width: math.div($heh, 2);
+      height: math.div($heh, 2);
       margin: 0;
-      padding: calc(#{$heh / 4} + env(safe-area-inset-top, "0px")) $heh / 4 $heh / 4 calc(#{$heh / 4} + env(safe-area-inset-left, "0px"));
+      padding: calc(#{math.div($heh, 4)} + env(safe-area-inset-top, "0px")) math.div($heh, 4) math.div($heh, 4) calc(#{math.div($heh, 4)} + env(safe-area-inset-left, "0px"));
       background-color: transparent !important;
       border: 0 {
         radius: 50%;

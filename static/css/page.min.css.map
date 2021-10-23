@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "AAIA,UAAW,CACT,SAAS,CC+BJ,KAAK,CD9BV,kCAAgE,CAFlE,UAAW,CAGP,SAAS,CC6BN,KAAK,CD5BR,KAAK,CAAE,iBAAiB,CACxB,YAAY,CAAE,CAAC,EAGf,kCAA0D,CAD5D,kBAAQ,CAEJ,KAAK,CAAE,IAAI,EAIb,kCAA0D,CAD5D,gBAAM,CAEF,OAAO,CAAE,IAAI",
-"sources": ["page.scss","variable.scss"],
-"names": [],
-"file": "page.min.css"
-}
+{"version":3,"sourceRoot":"","sources":["../../src/css/page.scss","../../src/css/variable.scss"],"names":[],"mappings":"AAIA,WACE,UCoCK,MDnCL,mCAFF,WAGI,UCkCG,MDjCH,wBACA,gBAGA,mCADF,mBAEI,YAIF,mCADF,iBAEI","file":"page.min.css"}

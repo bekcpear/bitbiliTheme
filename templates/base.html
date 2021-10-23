@@ -67,6 +67,37 @@
     import {Workbox} from '/static/workbox-window.prod.mjs';
     if ('serviceWorker' in navigator) {
       const wb = new Workbox('/sw.js');
+      var fetchDidFail = false;
+      var handlerDidCompleteStatus = 0;
+      var notificationDisplayed = false;
+      navigator.serviceWorker.addEventListener('message', async (event) => {
+        if (event.data.type === 'FETCH_DID_FAIL') {
+          fetchDidFail = true;
+        }
+        if (event.data.type === 'HANDLER_DID_COMPLETE') {
+          handlerDidCompleteStatus = event.data.status;
+        }
+        if ( fetchDidFail && handlerDidCompleteStatus === 200 && ! notificationDisplayed ) {
+          // carry on cache mode
+          notificationDisplayed = true;
+          // display notification
+          var popup         = document.createElement("div");
+          var popupText     = document.createTextNode("当前处于脱机浏览模式");
+          var popupLink     = document.createElement("a");
+          var popupLinkText = document.createTextNode("X");
+          popupLink.addEventListener("click", () => {
+              document.body.removeChild(popup);
+          });
+          popupLink.appendChild(popupLinkText);
+          popup.appendChild(popupText);
+          popup.appendChild(popupLink);
+          popup.className   = "popup";
+          document.body.appendChild(popup);
+        }
+        console.log(fetchDidFail);
+        console.log(handlerDidCompleteStatus);
+        console.log(notificationDisplayed);
+      });
       wb.register();
     }
   </script>

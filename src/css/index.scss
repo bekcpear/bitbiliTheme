@@ -1,5 +1,6 @@
 // style for bitbili.net
 
+@use "sass:math";
 @import 'variable.scss';
 
 @font-face {
@@ -385,14 +386,14 @@ body {
         }
         &.previous {
           float: left;
-          left: $sis * 2.5 / -8;
+          left: math.div($sis * 2.5, -8);
           >span {
-            left: $sis * 2.5 / -4;
+            left: math.div($sis * 2.5, -4);
           }
           &:hover {
             transition-property: transform;
             transition-duration: 0.2s;
-            transform: translateX($sis * 2.5 / -2);
+            transform: translateX(math.div($sis * 2.5, -2));
           }
           &:before, &:after {
             content: ' ';
@@ -413,7 +414,7 @@ body {
             position: absolute;
             top: 0;
             right: 0;
-            width: $sis * 2.5 / 4;
+            width: math.div($sis * 2.5, 4);
             height: $sis * 2.5;
             z-index: 1;
             &:before, &:after {
@@ -434,14 +435,14 @@ body {
         }
         &.next {
           float: right;
-          left: $sis * 2.5 / 8;
+          left: math.div($sis * 2.5, 8);
           >span {
-            left: $sis * 2.5 / 4;
+            left: math.div($sis * 2.5, 4);
           }
           &:hover {
             transition-property: transform;
             transition-duration: 0.2s;
-            transform: translateX($sis * 2.5 / 2);
+            transform: translateX(math.div($sis * 2.5, 2));
           }
           &:before, &:after {
             content: ' ';
@@ -461,8 +462,7 @@ body {
           .indexbg {
             position: absolute;
             top: 0;
-            //left: $sis * 2.5 / -4;
-            width: $sis * 2.5 / 4;
+            width: math.div($sis * 2.5, 4);
             height: $sis * 2.5;
             z-index: 1;
             &:before, &:after {
