@@ -8,7 +8,7 @@ import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 
 // Ensure your build step is configured to include /offline.html as part of your precache manifest.
-precacheAndRoute([{"revision":"e481949730cbd89884ed93cdb1a398f2","url":"offline.html"},{"revision":"3465362be4fde67c566a2331b4536a83","url":"offline.rst"},{"revision":"473b9f586fea1686c4e081be74c14346","url":"offline.rst.html"}]);
+precacheAndRoute([{"revision":"f3819b5e7d10d10711e4e7f2a01fabd1","url":"offline.html"},{"revision":"65f2370b5097c13f4dbd8df464751507","url":"offline.rst"},{"revision":"89c0f383f06eb9e11b4513b1226f16ce","url":"offline.rst.html"}]);
 cleanupOutdatedCaches();
 // Catch routing errors, like if the user is offline
 setCatchHandler(async ({ event }) => {
