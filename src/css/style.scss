@@ -152,6 +152,48 @@ a {
       border: 1px solid $pkgbg;
     }
   }
+  &.github {
+    background-color: $githubbg;
+    color: $ifg;
+    font-size: 0.8 * $si;
+    font-family: $monofont;
+    padding: 0 8px;
+    margin-right: 13px;
+    border-radius: 3px;
+    position: relative;
+    bottom: 2px;
+    white-space: pre;
+    display: inline-flex;
+    max-width: 100%;
+    overflow: visible;
+    text-indent: 0px;
+    text-decoration: none;
+    .reponame {
+      font-weight: bold;
+    }
+    .cob {
+      font-weight: bold;
+      font-style: italic;
+      margin-left: 2px;
+      &:before {
+        content: '@';
+      }
+    }
+    .path {
+      font-size: 90%;
+      font-style: italic;
+      margin-left: 4px;
+      padding-left: 4px;
+      border-left-style: solid;
+      border-left-width: 1px;
+    }
+    @media print {
+      margin-right: 0;
+      color: $githubbg;
+      background-color: transparent;
+      border: 1px solid $githubbg;
+    }
+  }
   &.external:after {
     content: ' ';
     vertical-align: super;
@@ -173,7 +215,20 @@ a {
     right: -12px;
     @include transition;
     @media print {
-      display: none;
+      display: inline-block;
+    }
+  }
+  &.github:after {
+    content: ' ';
+    vertical-align: super;
+    margin-left: 2px;
+    filter: grayscale(1);
+    @include icon('/theme/images/fa/brands/github-brands.svg', 10px, 10px, 0.3);
+    position: absolute;
+    right: -12px;
+    @include transition;
+    @media print {
+      display: inline-block;
     }
   }
   &.external:hover:after {
