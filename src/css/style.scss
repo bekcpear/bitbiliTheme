@@ -153,39 +153,48 @@ a {
     }
   }
   &.github {
-    background-color: $githubbg;
-    color: $ifg;
     font-size: 0.8 * $si;
     font-family: $monofont;
-    padding: 0 8px;
-    margin-right: 13px;
-    border-radius: 3px;
     position: relative;
     bottom: 2px;
+    margin-right: 2px;
+    box-sizing: border-box;
     white-space: pre;
     display: inline-flex;
     max-width: 100%;
-    overflow: visible;
+    overflow-y: visible;
+    overflow-x: auto;
     text-indent: 0px;
     text-decoration: none;
     .reponame {
+      background-color: $githubbg;
+      color: $ifg;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      padding-left: 8px;
       font-weight: bold;
     }
     .cob {
+      background-color: $githubbg;
+      color: $ifg;
       font-weight: bold;
       font-style: italic;
-      margin-left: 2px;
+      padding-left: 3px;
+      padding-right: 3px;
       &:before {
         content: '@';
       }
     }
     .path {
+      background-color: $githubbg;
+      color: $ifg;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
       font-size: 90%;
       font-style: italic;
-      margin-left: 4px;
+      margin-left: 1px;
       padding-left: 4px;
-      border-left-style: solid;
-      border-left-width: 1px;
+      padding-right: 8px;
     }
     @media print {
       margin-right: 0;
@@ -224,8 +233,6 @@ a {
     margin-left: 2px;
     filter: grayscale(1);
     @include icon('/theme/images/fa/brands/github-brands.svg', 10px, 10px, 0.3);
-    position: absolute;
-    right: -12px;
     @include transition;
     @media print {
       display: inline-block;
