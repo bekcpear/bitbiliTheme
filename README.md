@@ -1,5 +1,7 @@
 # 一个极度简约的 Pelican 主题
 
+**已放弃使用，可以看我的新主题 [bitbiliNewTheme](https://github.com/bekcpear/bitbiliNewTheme)**
+
 用于自己的博客： [bitbili.net](https://bitbili.net)
 
 优化阅读体验：
